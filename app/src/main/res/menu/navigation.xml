@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_01_overlay"
+        android:title="@string/title_home"
+        app:showAsAction="ifRoom|withText" />
+
+
+    <item
+        android:id="@+id/navigation_store"
+        android:icon="@drawable/ic_shop_01_overlay"
+        android:title="Events"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_messages_01_overlay"
+        android:title="@string/messages"
+        app:showAsAction="ifRoom|withText" />
+
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_videos"-->
+        <!--android:icon="@drawable/ic_videos_01_overlay_01"-->
+        <!--android:title="@string/videos"-->
+        <!--app:showAsAction="ifRoom|withText" />-->
+
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings_01_overlay"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom|withText" />
+
+</menu>

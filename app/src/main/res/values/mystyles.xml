@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="CustomBtn">
+        <item name="colorButtonNormal">@color/red</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
+</resources>

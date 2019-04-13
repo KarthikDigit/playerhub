@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <drawable name="location">@drawable/ic_location_on_black_24dp</drawable>
+
+</resources>

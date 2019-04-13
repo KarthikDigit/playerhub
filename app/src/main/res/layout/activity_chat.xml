@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.chat.ChatActivity">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/message_layout"
+        android:background="@color/white"
+        tools:context=".ui.dashboard.chat.ChatActivity" />
+
+
+    <LinearLayout
+        android:id="@+id/message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/temp_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:background="@drawable/temp_chat_rounded_rect_bg_green"
+
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/editor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/round_circle1"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/light_gray3"
+                app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+            <TextView
+                android:id="@+id/chat_person_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:text="@string/no_data"
+                android:textColor="@color/light_gray3"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="Messages"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/_12sdp"
+                android:textSize="@dimen/_14sdp" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:background="@color/line" />
+
+            <ImageView
+                android:id="@+id/attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:alpha=".6"
+                android:padding="@dimen/_12ssp"
+                app:srcCompat="@drawable/ic_attachment_black_24dp" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:background="@color/line" />
+
+            <ImageView
+                android:id="@+id/send_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:alpha=".6"
+                android:padding="@dimen/_12ssp"
+                app:srcCompat="@drawable/ic_send_black_24dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

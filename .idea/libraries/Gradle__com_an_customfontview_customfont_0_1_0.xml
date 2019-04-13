@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.an.customfontview:customfont-0.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/customfont-0.1.0.aar/1249b274d8804fbc0e12a28149599fba/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/customfont-0.1.0.aar/1249b274d8804fbc0e12a28149599fba/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.an.customfontview/customfont/0.1.0/6290ed80525f4c5e37426c53405ae6247a72b3df/customfont-0.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

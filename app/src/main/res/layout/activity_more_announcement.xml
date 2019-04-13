@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.dashboard.home.moreevent.MoreEventsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="@color/white"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_16sdp"
+                android:text="@string/announcement"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp" />
+
+
+            <android.support.v7.widget.SearchView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:backgroundTint="@color/white"
+                android:gravity="center"
+                android:theme="@style/searchViewTheme"
+                android:visibility="gone"
+                app:iconifiedByDefault="true"
+                app:queryBackground="@color/colorPrimary" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <com.vlonjatg.progressactivity.ProgressRelativeLayout
+        android:id="@+id/progressActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyBackgroundColor="#FFFFFF"
+        app:errorBackgroundColor="#FFFFFF"
+        app:loadingBackgroundColor="#FFFFFF"
+        tools:context=".ui.dashboard.home.moreevent.MoreEventsActivity">
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipetoReferesh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/announcementView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="@dimen/_16sdp" />
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/msg_announcement_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_announcement"
+            android:visibility="gone" />
+
+    </com.vlonjatg.progressactivity.ProgressRelativeLayout>
+</LinearLayout>

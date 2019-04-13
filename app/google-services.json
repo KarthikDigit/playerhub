@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "993013648258",
+    "firebase_url": "https://playerhub-prod.firebaseio.com",
+    "project_id": "playerhub-prod",
+    "storage_bucket": "playerhub-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993013648258:android:efb97e938864770b",
+        "android_client_info": {
+          "package_name": "com.playerhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993013648258-6m2s6p8f23femsh3lrg7rns7tgheu14p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnzzNd35WJqL9k15nnQicMUZJs2ndh8pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
