@@ -1,6 +1,7 @@
 package com.playerhub.ui.dashboard.messages;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +35,8 @@ import com.playerhub.recyclerHelper.ItemOffsetDecoration;
 import com.playerhub.ui.dashboard.chat.ChatActivity;
 import com.playerhub.ui.dashboard.chat.GroupChatActivity;
 import com.playerhub.ui.dashboard.chat.creategroupchat.CreateGroupChatActivity;
+import com.playerhub.ui.dashboard.messages.recent.OnRecyclerItemClickListener;
+import com.playerhub.ui.dashboard.messages.recent.RecentAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecentFragment extends MessageBaseFragment {
+public class RecentFragment extends MessageBaseFragment implements OnRecyclerItemClickListener {
 
 
     private static final String KEY_CONTACT_NAME = "contact_name";
@@ -69,15 +72,8 @@ public class RecentFragment extends MessageBaseFragment {
 
     private String contactName = "recent";
 
-    //create the ItemAdapter holding your Items
-    ItemAdapter itemAdapter = new ItemAdapter();
-    //create the managing FastAdapter, by passing in the itemAdapter
-    FastAdapter fastAdapter = FastAdapter.with(itemAdapter);
+    private RecentAdapter recentAdapter;
 
-    //create the ItemAdapter holding your Items
-    ItemAdapter personAdapter = new ItemAdapter();
-    //create the managing FastAdapter, by passing in the itemAdapter
-    FastAdapter personfastAdapter = FastAdapter.with(personAdapter);
 
     public RecentFragment() {
         // Required empty public constructor
@@ -110,17 +106,16 @@ public class RecentFragment extends MessageBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        callRecentContact();
 
+    }
+
+    private void callRecentContact() {
 
         if (getArguments() != null)
             contactName = getArguments().getString(KEY_CONTACT_NAME);
 
-
         getAllUsersFromFirebase(contactName);
-
-//        if (contactName != null && !TextUtils.isEmpty(contactName))
-//            getAllUsersFromFirebase(contactName);
-//        else Log.e(TAG, "onActivityResult: went wrong getAllUsersFromFirebase");
 
     }
 
@@ -139,12 +134,15 @@ public class RecentFragment extends MessageBaseFragment {
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact_list_recent, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        recentAdapter = new RecentAdapter(getContext(), new ArrayList<Object>(), this);
 
         messageView.setLayoutManager(new LinearLayoutManager(getContext()));
         personView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -154,69 +152,9 @@ public class RecentFragment extends MessageBaseFragment {
         messageView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
         personView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
 
-        messageView.setAdapter(fastAdapter);
+        messageView.setAdapter(recentAdapter);
 
-        personView.setAdapter(personfastAdapter);
-
-        personfastAdapter.withOnClickListener(new OnClickListener() {
-            @Override
-            public boolean onClick(@Nullable View v, IAdapter adapter, IItem item, int position) {
-
-                if (item instanceof User) {
-                    Log.e(TAG, "onClick: " + ((User) item).id + " " + ((User) item).name);
-
-                    Intent intent = new Intent(v.getContext(), ChatActivity.class);
-
-                    intent.putExtra("user", (User) item);
-
-                    startActivity(intent);
-                }
-
-                return false;
-            }
-        });
-
-
-        fastAdapter.withOnClickListener(new OnClickListener() {
-            @Override
-            public boolean onClick(@Nullable View v, IAdapter adapter, IItem item, int position) {
-                ConversationsLayout conversationsLayout = (ConversationsLayout) item;
-                Conversations conversations = new Conversations();
-                conversations.setTitle(conversationsLayout.getTitle());
-                conversations.setMessage_id(conversationsLayout.getMessage_id());
-                conversations.setUsers(conversationsLayout.getUsers());
-                conversations.setType(conversationsLayout.getTypeName());
-                conversations.setRequest_flag(conversationsLayout.getRequest_flag());
-                conversations.setUnread(conversationsLayout.getUnread());
-                conversations.setStatus(conversationsLayout.isStatus());
-                conversations.setLast_conversation(conversationsLayout.getLast_conversation());
-                conversations.setTimestamp(conversationsLayout.getTimestamp());
-                conversations.setIs_typing(conversationsLayout.getIs_typing());
-
-                Log.e(TAG, "onClick: conversations " + new Gson().toJson(item));
-                Intent intent = new Intent(v.getContext(), GroupChatActivity.class);
-
-                intent.putExtra("user", (Serializable) conversations);
-
-                startActivity(intent);
-
-                return false;
-            }
-
-
-        });
-
-
-        try {
-
-            if (Preferences.INSTANCE.getUserType().toLowerCase().equalsIgnoreCase("coach".toLowerCase())) {
-
-                floatingActionButton.setVisibility(View.VISIBLE);
-            }
-
-        } catch (NullPointerException e) {
-
-        }
+        showFabGroupCreateButton(floatingActionButton);
 
 
         return view;
@@ -234,71 +172,64 @@ public class RecentFragment extends MessageBaseFragment {
         getAllUsersFromFirebase(contactName);
     }
 
-
     public void getAllUsersFromFirebase(String name) {
 
 
-//        showToast("Recent Called");
+        if (recentAdapter != null) {
+            recentAdapter.clearAll();
 
-        itemAdapter.clear();
-        personAdapter.clear();
-//
 //
 //        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate());
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId());
+            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId());
 
 
-        Log.e(TAG, "getAllUsersFromFirebase: " + Preferences.INSTANCE.getMsgUserId());
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//            Log.e(TAG, "getAllUsersFromFirebase: " + Preferences.INSTANCE.getMsgUserId());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 //                Log.e(TAG, "onDataChange: " + dataSnapshot.getChildrenCount());
 
-                List<ConversationsLayout> conversationsList = new ArrayList<>();
+                    List<ConversationsLayout> conversationsList = new ArrayList<>();
 
-                for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
 
-                    try {
+                        try {
 //
-                        ConversationsLayout value = dataSnapshotChild.getValue(ConversationsLayout.class);
+                            ConversationsLayout value = dataSnapshotChild.getValue(ConversationsLayout.class);
 
-                        Log.e(TAG, "onDataChange:  recent " + new Gson().toJson(value));
+//                            Log.e(TAG, "onDataChange:  recent " + new Gson().toJson(value));
 
-                        conversationsList.add(value);
+                            conversationsList.add(value);
 //
-                    } catch (DatabaseException e) {
+                        } catch (DatabaseException e) {
 
-                        Log.e(TAG, "onDataChange: " + e.getMessage());
+                            Log.e(TAG, "onDataChange: " + e.getMessage());
+                        }
+
+
                     }
+
+
+                    getUserList(conversationsList);
 
 
                 }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                getUserList(conversationsList);
+                }
+            });
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        }
     }
 
 
     private void getUserList(final List<ConversationsLayout> list) {
 
-        itemAdapter.clear();
-        personAdapter.clear();
 
-        fastAdapter.notifyAdapterDataSetChanged();
-        personfastAdapter.notifyAdapterDataSetChanged();
-
+        recentAdapter.clearAll();
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -330,9 +261,16 @@ public class RecentFragment extends MessageBaseFragment {
                         reference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                User value = dataSnapshot.getValue(User.class);
-                                personAdapter.add(value);
-                                Log.e(TAG, "onDataChange: user " + new Gson().toJson(value));
+                                try {
+                                    User value = dataSnapshot.getValue(User.class);
+                                    recentAdapter.add(value);
+//                                    Log.e(TAG, "onDataChange: user " + new Gson().toJson(value));
+                                } catch (DatabaseException e) {
+
+                                    Log.e(TAG, "onDataChange: " + e.getMessage());
+
+                                }
+
 
                             }
 
@@ -345,7 +283,7 @@ public class RecentFragment extends MessageBaseFragment {
                 } else {
 
 
-                    itemAdapter.add(conversations);
+                    recentAdapter.add(conversations);
 
                 }
 
@@ -356,7 +294,59 @@ public class RecentFragment extends MessageBaseFragment {
     }
 
     @Override
-    protected void refreshData() {
+    public void refreshData() {
         updateAdapter();
+    }
+
+    @Override
+    public void OnItemClick(View view, Object o, int position) {
+
+
+        if (o instanceof User) {
+
+            callUserChat((User) o);
+        } else if (o instanceof ConversationsLayout) {
+
+            callGroupChat((ConversationsLayout) o);
+
+        }
+
+
+    }
+
+
+    private void callUserChat(User user) {
+
+        Log.e(TAG, "onClick: " + user.id + " " + user.name);
+
+        Intent intent = new Intent(getContext(), ChatActivity.class);
+
+        intent.putExtra("user", user);
+
+        startActivity(intent);
+
+    }
+
+    private void callGroupChat(ConversationsLayout conversationsLayout) {
+
+        Conversations conversations = new Conversations();
+        conversations.setTitle(conversationsLayout.getTitle());
+        conversations.setMessage_id(conversationsLayout.getMessage_id());
+        conversations.setUsers(conversationsLayout.getUsers());
+        conversations.setType(conversationsLayout.getTypeName());
+        conversations.setRequest_flag(conversationsLayout.getRequest_flag());
+        conversations.setUnread(conversationsLayout.getUnread());
+        conversations.setStatus(conversationsLayout.isStatus());
+        conversations.setLast_conversation(conversationsLayout.getLast_conversation());
+        conversations.setTimestamp(conversationsLayout.getTimestamp());
+        conversations.setIs_typing(conversationsLayout.getIs_typing());
+
+        Log.e(TAG, "onClick: conversations " + new Gson().toJson(conversations));
+        Intent intent = new Intent(getContext(), GroupChatActivity.class);
+
+        intent.putExtra("user", (Serializable) conversations);
+
+        startActivity(intent);
+
     }
 }

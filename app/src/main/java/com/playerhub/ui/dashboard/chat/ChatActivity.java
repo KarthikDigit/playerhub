@@ -97,6 +97,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
     private Object user;
     private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -541,11 +542,11 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     private void sendPushMessage(String title, String body, String sender_id) {
 
 
-        HashMap data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("body", body);
 
-        Map rawParameters = new Hashtable();
+        Map<String, Object> rawParameters = new Hashtable<String, Object>();
         rawParameters.put("data", new JSONObject(data));
         rawParameters.put("to", sender_id);
 
@@ -569,6 +570,38 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
 
     }
+
+//    private void sendPushMessage(String title, String body, String sender_id) {
+//
+//
+//        HashMap data = new HashMap<>();
+//        data.put("title", title);
+//        data.put("body", body);
+//
+//        Map rawParameters = new Hashtable();
+//        rawParameters.put("data", new JSONObject(data));
+//        rawParameters.put("to", sender_id);
+//
+//
+//        RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())
+//                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String s) throws Exception {
+//
+//                        Log.e(TAG, "accept: " + s);
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//
+//                        Log.e(TAG, "accept: error " + throwable.getMessage() + "  " + ((HttpException) throwable).response().errorBody().string());
+//
+//                    }
+//                });
+//
+//
+//    }
 
     @Override
     public void onImageShow(String image_url) {

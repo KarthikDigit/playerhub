@@ -135,16 +135,7 @@ public class ContactListFragment extends MessageBaseFragment {
         });
 
 
-        try {
-
-            if (Preferences.INSTANCE.getUserType().toLowerCase().equalsIgnoreCase("coach".toLowerCase())) {
-
-                floatingActionButton.setVisibility(View.VISIBLE);
-            }
-
-        } catch (NullPointerException e) {
-
-        }
+        showFabGroupCreateButton(floatingActionButton);
 
         if (getArguments() != null)
             contactName = getArguments().getString(KEY_CONTACT_NAME);
@@ -184,9 +175,9 @@ public class ContactListFragment extends MessageBaseFragment {
 //
 //
 //        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate());
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+//        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        Observable<ContactListApi> observable = RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
 
 
         observable.subscribe(new Observer<ContactListApi>() {
@@ -216,121 +207,10 @@ public class ContactListFragment extends MessageBaseFragment {
         });
 
 
-//        observable.concatMap(new Function<ContactListApi, Observable<ContactListApi.Datum>>() {
-//            @Override
-//            public Observable<ContactListApi.Datum> apply(final ContactListApi o) {
-//
-//
-//                return Observable.create(new ObservableOnSubscribe<ContactListApi.Datum>() {
-//                    @Override
-//                    public void subscribe(ObservableEmitter<ContactListApi.Datum> e) throws Exception {
-//                        List<ContactListApi.Datum> data = o.getData();
-//
-//                        for (int i = 0; i < data.size(); i++) {
-//
-//                            if (!e.isDisposed()) {
-//                                e.onNext(data.get(i));
-//                            }
-//                        }
-//
-//                        if (!e.isDisposed()) {
-//                            e.onComplete();
-//                        }
-//                    }
-//                });
-//            }
-//        }).concatMap(new Function<ContactListApi.Datum, Observable<ContactListApi.Datum>>() {
-//            @Override
-//            public Observable<ContactListApi.Datum> apply(final ContactListApi.Datum o) throws Exception {
-//                return Observable.create(new ObservableOnSubscribe<ContactListApi.Datum>() {
-//                    @Override
-//                    public void subscribe(final ObservableEmitter<ContactListApi.Datum> e) throws Exception {
-//
-//
-//                        final List<String> users = new ArrayList<>();
-//                        users.add(o.getUserID());
-//                        users.add(Preferences.INSTANCE.getMsgUserId());
-//
-//                        reference.child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                                long c = 0;
-//
-//                                for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
-//
-//
-//                                    try {
-//                                        Conversations value = dataSnapshotChild.getValue(Conversations.class);
-//                                        if (value != null && value.getUsers().containsAll(users)) {
-//
-//                                            long v = value.getUnread();
-//                                            c += v;
-//                                        }
-//                                    } catch (NullPointerException e) {
-//
-//                                        Log.e(TAG, "onDataChange: " + e.getMessage());
-//
-//                                    } catch (DatabaseException e) {
-//                                        Log.e(TAG, "onDataChange: " + e.getMessage());
-//                                    }
-//
-//                                }
-//                                o.setNotification(c);
-//
-//                                if (!e.isDisposed()) {
-//                                    e.onNext(o);
-//                                }
-//
-//                                if (!e.isDisposed()) {
-//                                    e.onComplete();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//
-//                                Log.e(TAG, "onCancelled: message count " + databaseError.getMessage());
-//
-//                            }
-//                        });
-//
-//
-//                    }
-//                });
-//            }
-//        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ContactListApi.Datum>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(ContactListApi.Datum value) {
-//
-//
-//                itemAdapter.add(value);
-//                Log.e(TAG, "onNext: feteched " + new Gson().toJson(value));
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//                Log.e(TAG, "onError: " + e.getMessage());
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-
     }
 
     @Override
-    protected void refreshData() {
+    public void refreshData() {
         updateAdapter();
     }
 }

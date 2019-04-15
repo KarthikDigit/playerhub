@@ -47,7 +47,7 @@ public class ProfileDetailsActivity extends BaseActivity {
 
     private void fetchProfileDetails() {
 
-        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchUserDetails(Preferences.INSTANCE.getAuthendicate());
+        Observable<ProfileDetails> observable = RetrofitAdapter.getNetworkApiServiceClient().fetchUserDetails(Preferences.INSTANCE.getAuthendicate());
 
         setObservableAndObserver(observable, new CallbackWrapper<ProfileDetails>(this) {
             @Override

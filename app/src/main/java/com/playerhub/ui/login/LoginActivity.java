@@ -34,6 +34,7 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.request.LoginRequest;
 import com.playerhub.network.response.LoginResponse;
 import com.playerhub.preference.Preferences;
+import com.playerhub.test.Fingerprint;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.utils.KeyboardUtils;
@@ -60,7 +61,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack {
+public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,Fingerprint {
 
 
     private static final String TAG = "LoginActivity";
@@ -90,24 +91,6 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack 
     private SMSRetriver smsRetriver;
     private AppSignatureHelper appSignatureHelper;
 
-    private boolean isSensorAvialable(Context AppContext) {
-
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return ActivityCompat.checkSelfPermission(AppContext, Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED &&
-                        AppContext.getSystemService(FingerprintManager.class).isHardwareDetected();
-            } else {
-                return FingerprintManagerCompat.from(AppContext).isHardwareDetected();
-            }
-        } catch (NullPointerException e) {
-
-            return false;
-        } catch (RuntimeException e) {
-
-            return false;
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -391,6 +374,11 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack 
         }
     }
 
+    @Override
+    public void callFingerprint() {
+
+    }
+
     /**
      * Creates a symmetric key in the Android Key Store which can only be used after the user has
      * authenticated with fingerprint.
@@ -488,8 +476,6 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack 
 
         if (getNetWorkStatus()) {
 
-//            ProgressUtils.showProgress(getContext(), "Loading");
-
             LoginRequest loginRequest = new LoginRequest();
 
             loginRequest.setEmail(mEmail.getText().toString());
@@ -569,6 +555,26 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack 
     public void onFailure(@NonNull Exception e) {
 
         showToast(e.getMessage());
+
+    }
+
+
+    private boolean isSensorAvialable(Context AppContext) {
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return ActivityCompat.checkSelfPermission(AppContext, Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED &&
+                        AppContext.getSystemService(FingerprintManager.class).isHardwareDetected();
+            } else {
+                return FingerprintManagerCompat.from(AppContext).isHardwareDetected();
+            }
+        } catch (NullPointerException e) {
+
+            return false;
+        } catch (RuntimeException e) {
+
+            return false;
+        }
 
     }
 }
