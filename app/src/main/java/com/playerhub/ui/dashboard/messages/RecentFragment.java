@@ -317,7 +317,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
     private void callUserChat(User user) {
 
-        Log.e(TAG, "onClick: " + user.id + " " + user.name);
+//        Log.e(TAG, "onClick: " + user.id + " " + user.name);
 
         Intent intent = new Intent(getContext(), ChatActivity.class);
 

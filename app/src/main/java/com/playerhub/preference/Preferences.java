@@ -227,7 +227,7 @@ public enum Preferences {
     }
 
     public String getUserName() {
-        return mPreferenceHandle.getString(USER_NAME, null);
+        return mPreferenceHandle.getString(USER_NAME, "");
     }
 
     public void putUserName(String userName) {

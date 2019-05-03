@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_active="true" android:drawable="@drawable/edit_border_black"/>
+    <item android:state_focused="true" android:drawable="@drawable/edit_border_black"/>
+    <item android:state_selected="true" android:drawable="@drawable/edit_border_black"/>
+    <item  android:drawable="@drawable/edit_border"/>
+
+</selector>
+
+
+    <!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<corners android:radius="0dp"/>--><!--<padding  android:left="@dimen/_16sdp" android:top="@dimen/_16sdp" android:right="@dimen/_16sdp" android:bottom="@dimen/_16sdp" />--><!--</shape>-->

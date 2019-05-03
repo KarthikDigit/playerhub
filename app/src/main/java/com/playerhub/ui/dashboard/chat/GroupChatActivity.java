@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -34,24 +35,35 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.playerhub.R;
 import com.playerhub.cameraorgallery.CameraAndGallary;
+import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.Messages;
+import com.playerhub.ui.dashboard.messages.User;
 import com.playerhub.utils.KeyboardUtils;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -59,7 +71,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
     private static final String TAG = "ChatActivity";
 
-    private static final String[] CAMERA_PERMISSION = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String[] CAMERA_PERMISSION = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private static final int REQUEST_CAMERA_PERMISSION_CODE = 234;
 
@@ -295,7 +307,10 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         switch (view.getId()) {
             case R.id.send_comments:
 
-                sendMessages(null);
+                String msg = comments.getText().toString();
+
+                if (!TextUtils.isEmpty(msg))
+                    sendMessages(null);
 
                 break;
 
@@ -342,6 +357,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
         String msg = comments.getText().toString();
 
+
         msg = TextUtils.isEmpty(msg) ? "" : msg;
 
         Messages messages = new Messages();
@@ -367,6 +383,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         messages.setTimestamp(new Date().getTime());
         messages.setUpload_status(1);
 
+        final String finalMsg = !TextUtils.isEmpty(msg) ? msg : "You have a message from " + conversations.getTitle();
         databaseReference.child(Constants.ARG_MESSAGES).child(conversations.getMessage_id()).child(id).setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -400,14 +417,103 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
                     comments.clearFocus();
 
                     KeyboardUtils.hideKeyboard(GroupChatActivity.this);
-
+                    sendPushNotificationToGroupUsers(finalMsg);
 
                 } else if (task.isCanceled()) {
 
                     Log.e(TAG, "onComplete: message send something wrong ");
                 }
+
+
             }
         });
+
+
+    }
+
+
+    private void sendPushNotificationToGroupUsers(final String msg) {
+
+        final List<String> users = new ArrayList<>(conversations.getUsers());
+        users.remove(Preferences.INSTANCE.getMsgUserId());
+
+        for (String u : users
+                ) {
+
+            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_USERS).child(u);
+
+
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        User value = dataSnapshot.getValue(User.class);
+
+
+                        String token_Id = null;
+                        if (value != null) {
+                            token_Id = value.token_id;
+                        }
+
+                        if (token_Id != null && !TextUtils.isEmpty(token_Id)) {
+
+                            sendPushMessage("New Message", msg, token_Id);
+
+                        }
+//                        else {
+//
+////                            showToast("There is no token id");
+//
+//                        }
+
+                    } catch (DatabaseException e) {
+
+                        Log.e(TAG, "onDataChange: " + e.getMessage());
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+
+    }
+
+    private void sendPushMessage(String title, String body, String sender_id) {
+
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("title", title);
+        data.put("body", body);
+
+        Map<String, Object> rawParameters = new Hashtable<String, Object>();
+        rawParameters.put("data", new JSONObject(data));
+        rawParameters.put("to", sender_id);
+
+
+        RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+
+                        Log.e(TAG, "accept: " + s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        Log.e(TAG, "accept: error " + throwable.getMessage() + "  " + ((HttpException) throwable).response().errorBody().string());
+
+                    }
+                });
 
 
     }

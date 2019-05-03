@@ -6,10 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +15,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.playerhub.R;
-import com.playerhub.common.CustomViewPager;
+import com.playerhub.customview.EventView;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.AnnouncementApi;
 import com.playerhub.network.response.EventListApi.EventListResponseApi;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.network.response.NotificationApi;
 import com.playerhub.preference.Preferences;
-import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
 import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
@@ -45,8 +39,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -57,7 +49,7 @@ import lombok.Setter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeEventListFragment extends BaseFragment implements EventsAdapter.OnItemClickListener<UpcommingEvent>, CardPagerAdapter.OnItemClickListener, AnnouncementAdapter.OnItemClickListener<AnnouncementApi.Datum> {
+public class HomeEventListFragment extends BaseFragment implements EventsAdapter.OnItemClickListener<UpcommingEvent>, CardPagerAdapter.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = "HomeEventListFragment";
 
@@ -69,29 +61,17 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     ProgressBar progressBar;
     @BindView(R.id.msg)
     TextView msg;
-    @BindView(R.id.todayEventsView)
-    RecyclerView todayEventsView;
-    @BindView(R.id.today_event_content)
-    CardView todayEventContent;
-    @BindView(R.id.upcomingEventView)
-    RecyclerView upcomingEventView;
-    @BindView(R.id.upcomming_event_content)
-    CardView upcommingEventContent;
-    @BindView(R.id.msg_today_event)
-    TextView msgTodayEvent;
-    @BindView(R.id.msg_upcoming_event)
-    TextView msgUpcomingEvent;
-    @BindView(R.id.announcementEventsView)
-    RecyclerView announcementEventsView;
-    @BindView(R.id.msg_announcement_event)
-    TextView msgAnnouncementEvent;
-    @BindView(R.id.announcement_event_content)
-    CardView announcementEventContent;
+
+    @BindView(R.id.today_event_view)
+    EventView eventView;
+
+    @BindView(R.id.upcoming_event_view)
+    EventView upcomingEventView;
+
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-    private EventsAdapter todayEventAdapter;
-    private EventsAdapter upComingEventAdapter;
-    private AnnouncementAdapter announcementAdapter;
+
+
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
     Unbinder unbinder;
@@ -109,7 +89,12 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
         View view = inflater.inflate(R.layout.fragment_home_event_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-//        initView();
+
+        eventView.setOnClickListener(this);
+        upcomingEventView.setOnClickListener(this);
+
+        eventView.setOnItemClickListener(this);
+        upcomingEventView.setOnItemClickListener(this);
 
 
         return view;
@@ -133,36 +118,12 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
         mCardAdapter = new CardPagerAdapter(this);
 //        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
-//        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
-//        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
-//        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
 
         mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
 
         mViewPager.setAdapter(mCardAdapter);
         mViewPager.setPageTransformer(false, mCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
-
-        todayEventAdapter = new EventsAdapter(getContext(), new ArrayList<UpcommingEvent>(), this);
-        upComingEventAdapter = new EventsAdapter(getContext(), new ArrayList<UpcommingEvent>(), this);
-        announcementAdapter = new AnnouncementAdapter(getContext(), new ArrayList<AnnouncementApi.Datum>(), this);
-
-        todayEventsView.setLayoutManager(new LinearLayoutManager(getContext()));
-        upcomingEventView.setLayoutManager(new LinearLayoutManager(getContext()));
-        announcementEventsView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        todayEventsView.setAdapter(todayEventAdapter);
-        upcomingEventView.setAdapter(upComingEventAdapter);
-        announcementEventsView.setAdapter(announcementAdapter);
-
-        todayEventsView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-        todayEventsView.setNestedScrollingEnabled(false);
-
-        upcomingEventView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-        upcomingEventView.setNestedScrollingEnabled(false);
-
-        announcementEventsView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-        announcementEventsView.setNestedScrollingEnabled(false);
 
         mViewPager.setVisibility(View.GONE);
         callEventListApi();
@@ -173,111 +134,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
 
         showHideLoading(true);
-//        RetrofitAdapter.getNetworkApiServiceClient().fetchAllEvents(Preferences.INSTANCE.getAuthendicate())
-//                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<EventListResponseApi>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(EventListResponseApi response) {
-//
-//                        showHideLoading(false);
-//                        if (response.getSuccess()) {
-//
-//
-//                            List<UpcommingEvent> list = response.getData().getUpcommingEvents();
-//                            int s = list.size();
-//                            if (s > 0) {
-//
-//                                if (s > 5) {
-//
-//
-//                                    for (int n = s - 1; n > 0; n--) {
-//                                        list.remove(n);
-//                                    }
-//                                    eventsAdapter.updateList(list);
-//
-//                                } else {
-//                                    eventsAdapter.updateList(list);
-//                                }
-//
-//
-//                            } else showErrorMsg(getString(R.string.no_events));
-//
-//                        } else {
-//
-//                            showErrorMsg(getString(R.string.no_events));
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        showHideLoading(false);
-//                        showErrorMsg(getString(R.string.no_events));
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//
-//
-//        RetrofitAdapter.getNetworkApiServiceClient().getAllNotification(Preferences.INSTANCE.getAuthendicate())
-//                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new CallbackWrapper<NotificationApi>(getActivity()) {
-//                    @Override
-//                    protected void onSuccess(NotificationApi notificationApi) {
-//
-//                        if (notificationApi.getSuccess()) {
-//                            if (mViewPager != null)
-//                                mViewPager.setVisibility(View.VISIBLE);
-//                            List<NotificationApi.Datum> list = notificationApi.getData();
-//
-//
-//                            int s = list.size();
-//                            if (s > 0) {
-//
-//                                if (s > 5) {
-//
-//
-//                                    for (int n = s - 1; n > 0; n--) {
-//                                        list.remove(n);
-//                                    }
-//                                    mCardAdapter.updateList(list);
-//
-//                                } else {
-//                                    mCardAdapter.updateList(list);
-//                                }
-//
-//
-//                            } else {
-//                                if (mViewPager != null)
-//                                    mViewPager.setVisibility(View.GONE);
-//
-//                                Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
-//                            }
-//
-//
-//                            Fragment fragment = (Fragment) ((DashBoardActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.content);
-//
-//                            if (fragment instanceof HomeFragment) {
-//
-//                                ((HomeFragment) fragment).setNotificationCount(list.size());
-//                            }
-//
-//
-//                        } else {
-//
-//                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                });
 
 
         Observable<NotificationApi> observableNoti = RetrofitAdapter.getNetworkApiServiceClient().getAllNotification(Preferences.INSTANCE.getAuthendicate())
@@ -290,105 +146,63 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
 
 
-//
-//        Observable<NotiAndEvents> notiAndEventsObservable = Observable.zip(observableNoti, observableEvents, new BiFunction<NotificationApi, EventListResponseApi, NotiAndEvents>() {
-//            @Override
-//            public NotiAndEvents apply(NotificationApi notificationApi, EventListResponseApi responseApi) throws Exception {
-//                return new NotiAndEvents(notificationApi, responseApi);
-//            }
-//        });
-
         disposable.add(Observable.combineLatest(observableNoti, observableEvents, observableAnnouncement, new Function3<NotificationApi, EventListResponseApi, AnnouncementApi, NotiAndEvents>() {
             @Override
             public NotiAndEvents apply(NotificationApi notificationApi, EventListResponseApi responseApi, AnnouncementApi announcementApi) throws Exception {
                 return new NotiAndEvents(notificationApi, responseApi, announcementApi);
             }
-        }).subscribeWith(new DisposableObserver<NotiAndEvents>() {
-            @Override
-            public void onNext(NotiAndEvents value) {
-                showHideLoading(false);
+        }).subscribeWith(observer));
 
 
-                if (value != null && value.getNotificationApi() != null) {
-
-                    setNotificationContent(value.getNotificationApi());
-                } else {
-
-                    Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
-                }
+    }
 
 
-                if (value != null && value.getEventListResponseApi() != null) {
+    private DisposableObserver<NotiAndEvents> observer = new DisposableObserver<NotiAndEvents>() {
+        @Override
+        public void onNext(NotiAndEvents value) {
+            showHideLoading(false);
+            setNotiAndEventsData(value);
+        }
 
-                    setEventListContent(value.getEventListResponseApi());
-                } else {
+        @Override
+        public void onError(Throwable e) {
+            showHideLoading(false);
+        }
 
-                    showErrorMsg("There is no data");
-                }
-
-                if (value != null && value.getAnnouncementApi() != null) {
-
-                    setAnnouncementListContent(value.getAnnouncementApi());
-                } else {
-
-                    showErrorMsg("There is no data");
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                showHideLoading(false);
-                Log.e(TAG, "onError: " + e.getMessage());
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        }));
+        @Override
+        public void onComplete() {
+            showHideLoading(false);
+        }
+    };
 
 
-//        notiAndEventsObservable.subscribeWith(new DisposableObserver<NotiAndEvents>() {
-//
-//            @Override
-//            public void onNext(NotiAndEvents value) {
-//
-//                showHideLoading(false);
-//
-//
-//                if (value != null && value.getNotificationApi() != null) {
-//
-//                    setNotificationContent(value.getNotificationApi());
-//                } else {
-//
-//                    Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//                if (value != null && value.getEventListResponseApi() != null) {
-//
-//                    setEventListContent(value.getEventListResponseApi());
-//                } else {
-//
-//                    showErrorMsg("There is no data");
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                showHideLoading(false);
-//                Log.e(TAG, "onError: " + e.getMessage());
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+    private void setNotiAndEventsData(NotiAndEvents value) {
+
+
+        if (value != null && value.getNotificationApi() != null) {
+
+            setNotificationContent(value.getNotificationApi());
+        } else {
+
+            Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if (value != null && value.getEventListResponseApi() != null) {
+
+            setEventListContent(value.getEventListResponseApi());
+        } else {
+
+            showErrorMsg("There is no data");
+        }
+
+        if (value != null && value.getAnnouncementApi() != null) {
+
+            setAnnouncementListContent(value.getAnnouncementApi());
+        } else {
+
+            showErrorMsg("There is no data");
+        }
 
     }
 
@@ -410,17 +224,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
             Preferences.INSTANCE.putNotiCount(count);
 
-//            if (list != null && !list.isEmpty()) {
-//                mCardAdapter.updateList(getOnlyFiveInTheList(list));
-//
-//            } else {
-//                if (mViewPager != null)
-//                    mViewPager.setVisibility(View.GONE);
-//
-//                if (getActivity() != null)
-//                    Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
-//            }
-
 
             if (getActivity() != null) {
 
@@ -429,29 +232,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
                 if (fragment instanceof HomeFragment) {
 
                     ((HomeFragment) fragment).setNotificationCount();
-//                    Observable.just(list).map(new Function<List<NotificationApi.Data.Notification>, Integer>() {
-//                        @Override
-//                        public Integer apply(List<NotificationApi.Data.Notification> notifications) throws Exception {
-//
-//                            int count = 0;
-//
-//                            for (NotificationApi.Data.Notification notification : notifications) {
-//
-//                                if (notification.getSeen() == 0) {
-//                                    count++;
-//                                }
-//                            }
-//
-//                            return count;
-//                        }
-//                    }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(new Consumer<Integer>() {
-//                                @Override
-//                                public void accept(Integer integer) throws Exception {
-//                                    ((HomeFragment) fragment).setNotificationCount(integer);
-//
-//                                }
-//                            });
 
                 }
             }
@@ -466,15 +246,10 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     }
 
 
-    private <T> List<T> getOnlyFiveInTheList(List<T> list) {
+    public static <T> List<T> getOnlyFiveInTheList(List<T> list) {
         int s = list.size();
         if (s > 5) {
-
             list.subList(5, list.size()).clear();
-
-//            for (int n = s - 1; n > 4; n--) {
-//                list.remove(n);
-//            }
         }
         return list;
     }
@@ -482,34 +257,13 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
     private void setTodayEventData(List<UpcommingEvent> todayList) {
 
-        if (todayList != null && !todayList.isEmpty()) {
-
-            todayEventAdapter.updateList(getOnlyFiveInTheList(todayList));
-
-
-        } else {
-
-            todayEventsView.setVisibility(View.GONE);
-            msgTodayEvent.setVisibility(View.VISIBLE);
-
-            showToast("No today events ");
-        }
-
+        eventView.setEvent("Today Events", getOnlyFiveInTheList(todayList), getString(R.string.no_today_event));
 
     }
 
     private void setUpComingEventData(List<UpcommingEvent> upcommingEventList) {
 
-        if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
-
-            upComingEventAdapter.updateList(getOnlyFiveInTheList(upcommingEventList));
-
-        } else {
-
-            upcomingEventView.setVisibility(View.GONE);
-            msgUpcomingEvent.setVisibility(View.VISIBLE);
-            showToast("No upcoming events ");
-        }
+        upcomingEventView.setEvent("Upcoming Events", getOnlyFiveInTheList(upcommingEventList), getString(R.string.no_upcoming_event));
 
     }
 
@@ -522,10 +276,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
             }
 
-        } else {
-
-//            announcementEventsView.setVisibility(View.GONE);
-//            msgAnnouncementEvent.setVisibility(View.VISIBLE);
         }
 
     }
@@ -533,8 +283,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     private void setAnnouncementData(List<AnnouncementApi.Datum> upcommingEventList) {
 
         if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
-
-            announcementAdapter.updateList(getOnlyFiveInTheList(upcommingEventList));
 
             if (mViewPager != null)
                 mViewPager.setVisibility(View.VISIBLE);
@@ -545,21 +293,9 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
             } else {
                 if (mViewPager != null)
                     mViewPager.setVisibility(View.GONE);
-
-//                if (getActivity() != null)
-//                    Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
             }
 
-//            announcementEventsView.setVisibility(View.VISIBLE);
-//            msgAnnouncementEvent.setVisibility(View.GONE);
-//            Log.e(TAG, "setAnnouncementData: " + new Gson().toJson(upcommingEventList));
 
-
-        } else {
-
-//            announcementEventsView.setVisibility(View.GONE);
-//            msgAnnouncementEvent.setVisibility(View.VISIBLE);
-//            showToast("No announcements");
         }
 
     }
@@ -570,25 +306,16 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
             if (response.getData() != null) {
                 setTodayEventData(response.getData().getTodayEvents());
                 setUpComingEventData(response.getData().getUpcommingEvents());
-
-//                Log.e(TAG, "setEventListContent: event size " + response.getData().getTodayEvents().size() + "   " + response.getData().getUpcommingEvents().size());
-
             }
 
-        } else {
-//            showErrorMsg(getString(R.string.no_events));
-
-            todayEventsView.setVisibility(View.GONE);
-            msgTodayEvent.setVisibility(View.VISIBLE);
-            upcomingEventView.setVisibility(View.GONE);
-            msgUpcomingEvent.setVisibility(View.VISIBLE);
         }
 
     }
 
     @Override
-    public void OnAnnouncemnetClick(View view, AnnouncementApi.Datum datum, int position) {
-        AnnouncementDialogFragment.getInstance(datum, false).show(getChildFragmentManager(), "Announcement");
+    public void onClick(View v) {
+
+        moveToMoreEventActivity();
     }
 
 
@@ -603,27 +330,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
         public AnnouncementApi announcementApi;
 
-//        public NotiAndEvents(NotificationApi notificationApi, EventListResponseApi eventListResponseApi) {
-//            this.notificationApi = notificationApi;
-//            this.eventListResponseApi = eventListResponseApi;
-//        }
-//
-//        public NotificationApi getNotificationApi() {
-//
-//            return notificationApi;
-//        }
-//
-//        public void setNotificationApi(NotificationApi notificationApi) {
-//            this.notificationApi = notificationApi;
-//        }
-//
-//        public EventListResponseApi getEventListResponseApi() {
-//            return eventListResponseApi;
-//        }
-//
-//        public void setEventListResponseApi(EventListResponseApi eventListResponseApi) {
-//            this.eventListResponseApi = eventListResponseApi;
-//        }
     }
 
     private void showHideLoading(boolean isLoading) {
@@ -675,30 +381,17 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
     }
 
-    @OnClick({R.id.load_more_today_events, R.id.load_more_upcoming_events, R.id.load_more_events, R.id.load_more_announcement_events})
+    @OnClick({R.id.load_more_events})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.load_more_today_events:
-                moveToMoreEventActivity();
-                break;
-            case R.id.load_more_upcoming_events:
-                moveToMoreEventActivity();
-                break;
             case R.id.load_more_events:
                 moveToMoreEventActivity();
-                break;
-            case R.id.load_more_announcement_events:
-                moveToAnnouncementEventActivity();
                 break;
         }
     }
 
 
     private void moveToMoreEventActivity() {
-
-//        Intent intent = new Intent(getActivity(), MoreEventsActivity.class);
-//
-//        startActivity(intent);
 
         if (getActivity() instanceof DashBoardActivity) {
 
@@ -710,9 +403,6 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
     private void moveToAnnouncementEventActivity() {
 
-//        Intent intent = new Intent(getActivity(), MoreEventsActivity.class);
-//
-//        startActivity(intent);
 
         if (getActivity() instanceof DashBoardActivity) {
 

@@ -83,6 +83,9 @@
     <string name="more_anouncement">See more announcement</string>
     <string name="enter_otp">Enter otp</string>
     <string name="please_wait_you_will_receive_otp_shortly">Please wait, you will receive otp shortly</string>
+    <string name="kid_profile">Kid Profile</string>
+    <string name="camera_and_location_rationale">Please grant camera permission to update profile image</string>
+    <string name="title_activity_material_profile">MaterialProfileActivity</string>
 
 
 </resources>

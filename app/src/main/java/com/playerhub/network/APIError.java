@@ -7,14 +7,8 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class APIError implements Serializable {
+public class APIError extends BaseApiError {
 
-    @SerializedName("success")
-    @Expose
-    private Boolean success;
-    @SerializedName("message")
-    @Expose
-    private String message;
 
     @SerializedName("data")
     @Expose
@@ -27,24 +21,6 @@ public class APIError implements Serializable {
     public void setData(Object data) {
         this.data = data;
     }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-
 
     @SerializedName("errors")
     @Expose

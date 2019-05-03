@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
-                    android:maxLines="2"
+
                     android:text="@{data.message}"
                     android:textSize="@dimen/_12ssp"
                     tools:text="Disney trip" />

@@ -32,6 +32,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
         this.onItemClickListener = onItemClickListener;
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public void updateList(List<UpcommingEvent> list) {
         this.list = new ArrayList<>();
         this.list.addAll(list);

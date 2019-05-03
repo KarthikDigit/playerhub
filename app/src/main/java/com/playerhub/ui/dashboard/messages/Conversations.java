@@ -100,7 +100,7 @@ public class Conversations implements Serializable {
         this.unread = unread;
     }
 
-    public static class Last_Conversation implements Serializable{
+    public static class Last_Conversation implements Serializable {
 
         private String content;
         private String sender;
@@ -150,7 +150,7 @@ public class Conversations implements Serializable {
     }
 
 
-    public static class Is_Typing implements Serializable{
+    public static class Is_Typing implements Serializable {
 
         private String id;
         private String name;

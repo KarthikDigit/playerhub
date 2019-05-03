@@ -85,7 +85,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
 
-            Picasso.get().load(img_url).into(myChatViewHolder.imageView);
+            Picasso.get().load(img_url).placeholder(R.drawable.progress_animation).into(myChatViewHolder.imageView);
             myChatViewHolder.imageView.setVisibility(View.VISIBLE);
 
             myChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +136,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
 
-            Picasso.get().load(img_url).into(otherChatViewHolder.imageView);
+            Picasso.get().load(img_url).placeholder(R.drawable.progress_animation).into(otherChatViewHolder.imageView);
             otherChatViewHolder.imageView.setVisibility(View.VISIBLE);
 
             otherChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {

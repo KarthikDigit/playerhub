@@ -5,7 +5,16 @@ import android.support.design.widget.TextInputLayout;
 public class TextInputUtil {
 
 
-    public static String getText(TextInputLayout inputLayout){
+    public static void setText(TextInputLayout textInputLayout, String txt) {
+
+        if (textInputLayout != null && textInputLayout.getEditText() != null) {
+
+            textInputLayout.getEditText().setText(txt);
+        }
+
+    }
+
+    public static String getText(TextInputLayout inputLayout) {
         return inputLayout.getEditText().getText().toString();
     }
 
@@ -47,5 +56,20 @@ public class TextInputUtil {
         inputLayout.setError(null);
         inputLayout.setErrorEnabled(false);
 
+    }
+
+
+    public static void setEnable(TextInputLayout inputLayout, boolean isEnable) {
+
+        if (inputLayout != null && inputLayout.getEditText() != null)
+            inputLayout.getEditText().setEnabled(isEnable);
+    }
+
+    public static void setFocusable(TextInputLayout inputLayout, boolean isFocus) {
+
+        if (inputLayout != null && inputLayout.getEditText() != null) {
+            inputLayout.setFocusable(isFocus);
+            inputLayout.getEditText().setFocusable(isFocus);
+        }
     }
 }

@@ -247,10 +247,13 @@ public class CreateGroupChatActivity extends BaseActivity implements GroupChatCr
 
         if (!(tempList.size() > 1)) {
 
+
             showToast("Select atleast two members in contact list");
 
             return;
         }
+
+        tempUserList.add(Preferences.INSTANCE.getMsgUserId());
 
 //        loge("Group chat list items perfect " + tempList.size());
 

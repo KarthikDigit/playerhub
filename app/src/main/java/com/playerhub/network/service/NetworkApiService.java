@@ -2,10 +2,15 @@ package com.playerhub.network.service;
 
 
 import com.playerhub.network.request.Deviceinfo;
+import com.playerhub.network.request.UpdateKidDetail;
+import com.playerhub.network.request.UploadKidProfile;
 import com.playerhub.network.response.AnnouncementApi;
 import com.playerhub.network.response.ContactListApi;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.network.response.EventListApi.EventListResponseApi;
+import com.playerhub.network.response.KidDetailsUpdatedResponse;
+import com.playerhub.network.response.KidInfoResponse;
+import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.network.response.NotificationApi;
 import com.playerhub.network.response.OTPValidateApi;
 import com.playerhub.network.response.ProfileDetails;
@@ -15,6 +20,8 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
@@ -78,6 +85,30 @@ public interface NetworkApiService {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("verify-otp")
     Observable<OTPValidateApi> validateOtp(@Body String json);
+
+
+    @GET("kids-coaches")
+    Observable<KidsAndCoaches> fetchKids(@HeaderMap Map<String, String> headermap);
+
+
+    @GET("kid/{id}")
+    Observable<KidInfoResponse> fetchKidDetailsById(@HeaderMap Map<String, String> headermap, @Path("id") int id);
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("kid/{id}")
+    Observable<KidDetailsUpdatedResponse> updateKidDetails(@HeaderMap Map<String, String> headermap, @Body UpdateKidDetail json, @Path("id") int id);
+
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("kid/avatar/{id}")
+    Observable<String> updateKidProfileImage(@HeaderMap Map<String, String> headermap, @Body UploadKidProfile json, @Path("id") int id);
+
+
+//    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @FormUrlEncoded
+    @POST("kid/avatar/{id}")
+    Observable<String> updateKidProfileImage1(@HeaderMap Map<String, String> headermap, @Field("avatar") String avatar, @Path("id") int id);
+
 
 //    @Headers({"Content-Type: application/json;charset=UTF-8"})
 //    @POST("categories")

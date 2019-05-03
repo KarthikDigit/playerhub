@@ -70,7 +70,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
     private static final String TAG = "ChatActivity";
 
-    private static final String[] CAMERA_PERMISSION = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String[] CAMERA_PERMISSION = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private static final int REQUEST_CAMERA_PERMISSION_CODE = 234;
 
@@ -529,11 +529,46 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
             if (token_Id != null) {
 
-                sendPushMessage("New Message", comments.getText().toString(), token_Id);
-            } else {
+                String m = comments.getText().toString();
 
-                showToast("There is no token id");
+                if (TextUtils.isEmpty(m)) {
+
+                    m = "You have a message from " + datum.getName();
+                }
+
+                sendPushMessage("New Message", m, token_Id);
             }
+
+//            else {
+//
+//                showToast("There is no token id");
+//            }
+
+        } else if (user instanceof User) {
+
+            User user1 = (User) user;
+
+            String token_Id = user1.token_id;
+
+            if (token_Id != null && !TextUtils.isEmpty(token_Id)) {
+
+
+                String m = comments.getText().toString();
+
+                if (TextUtils.isEmpty(m)) {
+
+                    m = "You have a message from " + user1.name;
+                }
+
+                sendPushMessage("New Message", m, token_Id);
+
+            }
+
+//            else {
+//
+//                showToast("There is no token id");
+//
+//            }
 
         }
 

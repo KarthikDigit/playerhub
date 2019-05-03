@@ -281,6 +281,8 @@ public class ProgressFrameLayout extends FrameLayout implements ProgressLayout {
                 setContentVisibility(false, idsOfViewsNotToHide);
                 inflateErrorView();
 
+                if (icon == null) errorStateImageView.setVisibility(GONE);
+
                 errorStateImageView.setImageDrawable(icon);
                 errorStateTitleTextView.setText(title);
                 errorStateContentTextView.setText(description);
@@ -429,6 +431,17 @@ public class ProgressFrameLayout extends FrameLayout implements ProgressLayout {
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         super.addView(child, index, params);
+
+        if (child.getTag() == null || (!child.getTag().equals(LOADING) &&
+                !child.getTag().equals(EMPTY) && !child.getTag().equals(ERROR))) {
+
+            contentViews.add(child);
+        }
+    }
+
+    @Override
+    public void addView(View child, ViewGroup.LayoutParams params) {
+        super.addView(child, params);
 
         if (child.getTag() == null || (!child.getTag().equals(LOADING) &&
                 !child.getTag().equals(EMPTY) && !child.getTag().equals(ERROR))) {

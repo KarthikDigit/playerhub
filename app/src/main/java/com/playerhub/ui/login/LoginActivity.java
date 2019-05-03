@@ -509,7 +509,7 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
                         Preferences.INSTANCE.putMsgUserId(base64);
 
-//                        Preferences.INSTANCE.putUserLoggedInStatus(true);
+                        Preferences.INSTANCE.putUserLoggedInStatus(true);
                         Preferences.INSTANCE.putAccessToken(token);
                         Preferences.INSTANCE.putTokenType(token_type);
                         Preferences.INSTANCE.putUserType(user_type);
@@ -523,12 +523,12 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
                         Preferences.INSTANCE.putUserMobileNumber(data.getPhone());
                         Preferences.INSTANCE.putPhone(data.getPhone());
 
-//                        moveToDashBoardActivity();
+                        moveToDashBoardActivity();
 
 
-                        validateOtpFragment = ValidateOtpFragment.getInstance(data.getPhone());
-
-                        validateOtpFragment.show(getSupportFragmentManager(), "Validate_OTP");
+//                        validateOtpFragment = ValidateOtpFragment.getInstance(data.getPhone());
+//
+//                        validateOtpFragment.show(getSupportFragmentManager(), "Validate_OTP");
 
 
                     } else {

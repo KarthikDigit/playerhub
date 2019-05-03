@@ -18,6 +18,9 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.playerhub.ui.dashboard.profile.KidsProfile;
+import com.playerhub.utils.ImageUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -204,7 +207,8 @@ public class CameraAndGallary {
 //            e.printStackTrace();
 //        }
 
-        Bitmap thumbnail = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+//        Bitmap thumbnail = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        Bitmap thumbnail = ImageUtils.decodeImageFromFiles(imageFile.getAbsolutePath(), /* your desired width*/300, /*your desired height*/ 300);
         if (thumbnail != null) {
 
             ExifInterface exifInterface = null;

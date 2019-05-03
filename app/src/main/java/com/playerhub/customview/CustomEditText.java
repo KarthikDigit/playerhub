@@ -1,4 +1,4 @@
-package com.playerhub.common;
+package com.playerhub.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;

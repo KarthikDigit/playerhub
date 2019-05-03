@@ -8,7 +8,7 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'customfont
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.0.0'
     implementation 'io.github.inflationx:calligraphy3:3.0.0'
     implementation 'io.github.inflationx:viewpump:1.0.0'
-    implementation 'com.an.customfontview:customfont:0.1.0'
+//    implementation 'com.an.customfontview:customfont:0.1.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     //Fast Adapter
     implementation 'com.mikepenz:fastadapter:3.2.8'
@@ -115,5 +115,11 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.8'
+
+    //pageindicator
+//    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.2@aar'
+
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
 }

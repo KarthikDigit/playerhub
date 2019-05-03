@@ -22,6 +22,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.playerhub.R;
+import com.playerhub.common.Constant;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.request.Deviceinfo;
 import com.playerhub.notification.Constants;
@@ -319,6 +320,14 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
                                 }
                             });
 
+                    if (Preferences.INSTANCE.isUserLoggedIn()) {
+
+                        FirebaseDatabase.getInstance()
+                                .getReference(Constants.ARG_USERS)
+                                .child(Preferences.INSTANCE.getMsgUserId())
+                                .child(Constants.ARG_TOKEN_ID).setValue(instanceIdResult.getToken());
+
+                    }
 
 //
 //                    dataSource.postDeviceInfo(dataSource.getAuthendicate(), deviceinfo, new DataListener() {

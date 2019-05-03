@@ -31,6 +31,7 @@ public class User extends AbstractItem<User, User.ViewHolder> implements Seriali
     public long notification;
     public String team;
     public String type;
+    public String token_id;
     //    public String description;
 //    public String date_time;
 //    public String count;
@@ -76,6 +77,14 @@ public class User extends AbstractItem<User, User.ViewHolder> implements Seriali
 
         return type;
 
+    }
+
+    public String getToken_id() {
+        return token_id;
+    }
+
+    public void setToken_id(String token_id) {
+        this.token_id = token_id;
     }
 
     //The unique ID for this type of item

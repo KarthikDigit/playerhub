@@ -16,5 +16,6 @@ public class Constants {
     public static final String ARG_FIREBASE_TOKEN = "firebaseToken";
     public static final String ARG_FRIENDS = "friends";
     public static final String ARG_UID = "uid";
+    public static final String ARG_TOKEN_ID = "token_id";
 
 }

@@ -21,12 +21,6 @@ import okhttp3.ResponseBody;
 
 public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
 
-    enum APIMethod {
-
-        LOGIN, SIGNUP;
-
-    }
-
     //Reference link https://medium.com/mindorks/rxjava2-and-retrofit2-error-handling-on-a-single-place-8daf720d42d6
     //BaseView is just a reference of a View in MVP
     private WeakReference<Context> weakReference;
@@ -54,35 +48,10 @@ public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
         String msg;
 
         if (e instanceof HttpException) {
-//            ResponseBody responseBody = ((HttpException) e).response().errorBody();
-//            view.onUnknownError(getErrorMessage(responseBody));
 
             APIError apiError = APIErrorUtil.parseError(((HttpException) e).response());
 
             msg = apiError.getMessage();
-
-//            if (apiError.getData() != null && apiError.getData() instanceof String) {
-//
-////                List<String> m = apiError.getData().getEmail();
-////                List<String> m1 = apiError.getData().getPassword();
-////
-////                StringBuilder builder=new StringBuilder();
-//
-//
-////                msg = m.get(0) + "  " + m1.get(0);
-//                msg = apiError.getData().toString();
-//
-//
-//            } else if (apiError.getErrors() != null && apiError.getErrors() instanceof APIError.Errors) {
-//
-//
-//                msg = apiError.getErrors().getDesignNo().get(0);
-//
-//            } else {
-//
-//                msg = "Something went wrong";
-//
-//            }
 
 
         } else if (e instanceof SocketTimeoutException) {
@@ -94,7 +63,7 @@ public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
 //            view.onNetworkError();
 //        }
         else {
-            APIError apiError = APIErrorUtil.getDefaultError(null);
+            APIError apiError =  APIErrorUtil.getDefaultError(null);
 
             msg = apiError.getMessage();
 //            view.onUnknownError(e.getMessage());
