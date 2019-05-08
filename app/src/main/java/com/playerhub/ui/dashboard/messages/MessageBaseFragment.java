@@ -17,6 +17,8 @@ public abstract class MessageBaseFragment extends BaseFragment {
             if (Preferences.INSTANCE.getUserType().toLowerCase().equalsIgnoreCase("coach".toLowerCase())) {
 
                 view.setVisibility(View.VISIBLE);
+            } else {
+                view.setVisibility(View.GONE);
             }
 
         } catch (NullPointerException e) {

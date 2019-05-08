@@ -21,7 +21,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String s) {
         super.onNewToken(s);
 
-        Log.e(TAG, "onNewToken: " + s);
     }
 
     @Override
@@ -52,7 +51,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 mChannel.setLightColor(Color.RED);
                 mChannel.enableVibration(true);
                 mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                mNotificationManager.createNotificationChannel(mChannel);
+                if (mNotificationManager != null) {
+                    mNotificationManager.createNotificationChannel(mChannel);
+                }
             }
 
             /*

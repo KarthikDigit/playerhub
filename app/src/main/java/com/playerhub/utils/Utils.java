@@ -22,6 +22,12 @@ public class Utils {
 //        return dtReturn;
 //    }
 
+    public static boolean check(String first, String second) {
+
+        return first.toLowerCase().equalsIgnoreCase(second.toLowerCase());
+
+    }
+
     public static String convertDateToString(Date date, String format) {
         String dateStr = null;
         DateFormat df = new SimpleDateFormat(format);

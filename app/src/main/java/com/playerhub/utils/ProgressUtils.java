@@ -39,7 +39,7 @@ public class ProgressUtils {
         dialog.setContentView(R.layout.custom_loading_layout);
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        ImageView gifImageView = dialog.findViewById(R.id.custom_loading_imageView);
+//        ImageView gifImageView = dialog.findViewById(R.id.custom_loading_imageView);
 
 //        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(gifImageView);
 //        Glide.with(context)
@@ -50,12 +50,12 @@ public class ProgressUtils {
 //                .crossFade()
 //                .into(gifImageView);
 
-        Glide
-                .with(context)
-                .load(R.drawable.loading2)
-                .asGif()
-                .error(R.drawable.loading2)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gifImageView);
+//        Glide
+//                .with(context)
+//                .load(R.drawable.loading2)
+//                .asGif()
+//                .error(R.drawable.loading2)
+//                .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gifImageView);
 
         dialog.show();
 

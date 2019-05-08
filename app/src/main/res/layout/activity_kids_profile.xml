@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.dashboard.profile.ProfileActivity">
 
@@ -23,8 +24,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:alpha=".25"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/profile" />
+            android:scaleType="centerCrop" />
 
 
         <RelativeLayout
@@ -78,8 +78,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_4sdp"
                 app:civ_border_color="@color/white"
-                app:civ_border_width="@dimen/_4sdp"
-                tools:src="@drawable/profile" />
+                app:civ_border_width="@dimen/_4sdp" />
 
             <TextView
                 android:id="@+id/name"
@@ -114,18 +113,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:msv_animateViewChanges="true"
         app:msv_emptyView="@layout/empty_view"
         app:msv_errorView="@layout/error_view"
         app:msv_loadingView="@layout/loading_view"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:msv_viewState="content">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"

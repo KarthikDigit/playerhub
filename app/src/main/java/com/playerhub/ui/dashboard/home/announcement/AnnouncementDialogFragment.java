@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -36,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AnnouncementDialogFragment extends DialogFragment {
+public class AnnouncementDialogFragment extends BottomSheetDialogFragment {
 
     private static final String KEY_ANNOUNCEMENT_DATE = "announcement_data";
     private static final String KEY_IS_FROM_SERVER = "isfromserver";
@@ -61,24 +62,24 @@ public class AnnouncementDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(final Bundle savedInstanceState) {
-
-        // the content
-        final RelativeLayout root = new RelativeLayout(getActivity());
-        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
-        // creating the fullscreen dialog
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(root);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        return dialog;
-    }
+//    @NonNull
+//    @Override
+//    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+//
+//        // the content
+//        final RelativeLayout root = new RelativeLayout(getActivity());
+//        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//
+//        // creating the fullscreen dialog
+//        final Dialog dialog = new Dialog(getActivity());
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(root);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//        return dialog;
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

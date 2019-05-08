@@ -1,9 +1,12 @@
 package com.playerhub.ui.dashboard.profile;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
@@ -12,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +46,8 @@ import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Response;
+
+import static com.playerhub.ui.dashboard.profile.KidsProfile.setWindowFlag;
 
 public class MaterialProfileActivity extends MultiStateViewActivity implements CameraAndGallary.CameraAndGallaryCallBack {
 
@@ -103,8 +109,41 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 
     }
 
+    private static void setStatusBarTransparent(Activity activity, boolean isEdit) {
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+////            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//            if (isEdit)
+//                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
+
+//        else {
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+    }
+
     @Override
     public int getLayoutByID() {
+
+        setStatusBarTransparent(this, false);
+
+//        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+//            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+//        }
+//        if (Build.VERSION.SDK_INT >= 19) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//        }
+//        //make fully Android Transparent Status bar
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
+
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         return R.layout.activity_material_profile;
     }
 
@@ -235,6 +274,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
             KeyboardUtils.closeKeyboard(this);
             updateKidDetails();
         }
+
+        setStatusBarTransparent(this, !isSave);
 
     }
 

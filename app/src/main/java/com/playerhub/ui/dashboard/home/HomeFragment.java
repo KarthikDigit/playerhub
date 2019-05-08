@@ -33,6 +33,8 @@ import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
 import com.playerhub.ui.dashboard.profile.KidsProfile;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
+import com.playerhub.utils.ImageUtility;
+import com.playerhub.utils.ImageUtils;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
@@ -60,6 +62,8 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
     TextView notificationCount;
     Unbinder unbinder;
 
+    @BindView(R.id.fullImage)
+    ImageView mFullImage;
 
     @BindView(R.id.viewPager)
     ViewPager profileViewPager;
@@ -97,7 +101,16 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
 
         parentChildPagerAdapter.setOnItemClicklistener(this);
 
-        profileViewPager.addOnPageChangeListener(new OnPageChangelistener(indicatorView));
+        profileViewPager.addOnPageChangeListener(new OnPageChangelistener(indicatorView) {
+            @Override
+            public void onPageSelected(int i) {
+                super.onPageSelected(i);
+
+//                ParentChild parentChild = parentChildPagerAdapter.getItem(i);
+//                ImageUtility.loadImage(mFullImage, parentChild.getImgUrl());
+
+            }
+        });
 
 
         mCardAdapter = new CardPagerAdapter(this);
@@ -114,9 +127,9 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
         profileViewPager1.setClipChildren(false);
         profileViewPager1.setPageMargin(0);
 
-        profileViewPager.setPageTransformer(false, new DepthPageTransformer());
+        profileViewPager.setPageTransformer(true, new DepthPageTransformer());
 
-        addParentProfile();
+//        addParentProfile();
         getAnnouncement();
 
         RetrofitAdapter.getNetworkApiServiceClient().fetchKids(Preferences.INSTANCE.getAuthendicate())
@@ -253,6 +266,7 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
 //
 //        parentChildPagerAdapter.add(parentChild);
 
+
     }
 
 
@@ -383,6 +397,7 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
     }
 
     private static class OnPageChangelistener extends OnPageChangeListener {
+
 
         private WeakReference<PageIndicatorView> pageIndicator;
 

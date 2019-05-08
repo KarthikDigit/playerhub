@@ -114,6 +114,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clipToPadding="false"
+            android:fillViewport="true"
             android:paddingTop="@dimen/_8sdp">
 
             <LinearLayout
@@ -126,15 +127,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginRight="@dimen/_16sdp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
                         android:alpha=".5"
-                        app:srcCompat="@drawable/ic_team_icon_01" />
+                        app:srcCompat="@drawable/ic_group" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,9 +149,8 @@
                             fontPath="fonts/Barlow-Regular.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:alpha=".8"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
+                            android:textSize="@dimen/_14sdp"
                             tools:text="Barca NY 04 PRO" />
 
                     </LinearLayout>
@@ -203,11 +204,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5ssp"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
                         android:alpha=".5"
-                        app:srcCompat="@drawable/ic_date_nd_time_01_01_01" />
+                        app:srcCompat="@drawable/ic_small_calendar" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -220,17 +220,28 @@
                             fontPath="fonts/Barlow-Regular.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:alpha=".8"
+
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            tools:text="Sun,Aug 21,2018 09:15 AM - 10:15 AM" />
+                            android:textSize="@dimen/_14sdp"
+                            tools:text="Sun,Aug 21,2018" />
+
+                        <TextView
+                            android:id="@+id/event_time"
+                            fontPath="fonts/Roboto-Regular.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:lineSpacingExtra="2dp"
+                            android:textSize="@dimen/_10sdp"
+                            tools:text="09:15 AM - 10:15 AM" />
+
 
                         <TextView
                             android:id="@+id/event_repeat"
                             fontPath="fonts/Roboto-Regular.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:lineSpacingExtra="2dp"
                             android:textSize="@dimen/_10sdp"
                             tools:text="Repeat Every Monday,Wednesday,\nuntil Septemper 01,2018" />
@@ -249,10 +260,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
                         android:alpha=".5"
-                        app:srcCompat="@drawable/ic_description_01" />
+                        app:srcCompat="@drawable/ic_des" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -276,21 +287,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginLeft="@dimen/_14sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginRight="@dimen/_16sdp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
                         app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:orientation="vertical">
 
                         <TextView
@@ -308,9 +319,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_16sdp"
-                    android:background="@color/colorPrimary">
+                    android:background="@color/colorPrimary"
+                    android:minHeight="@dimen/_150sdp">
 
                     <fragment
                         android:id="@+id/map"

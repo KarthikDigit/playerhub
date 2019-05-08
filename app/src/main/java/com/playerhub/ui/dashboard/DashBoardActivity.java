@@ -135,30 +135,6 @@ public class DashBoardActivity extends BaseActivity {
 
     }
 
-//
-//    public void callFragmentFromOutSide(int id) {
-//
-//
-//        switch (id) {
-//
-//            case R.id.navigation_settings:
-//
-//                if (activeFragment != settingsFragment)
-//                    fm.beginTransaction().show(settingsFragment).commit();
-//                else
-//                    fm.beginTransaction().hide(activeFragment).show(settingsFragment).commit();
-//                activeFragment = homeFragment;
-//
-//                navigation.setSelectedItemId(R.id.navigation_settings);
-//
-//                break;
-//
-//        }
-//
-//
-//    }
-
-
     private void clearAllBackStack() {
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -264,51 +240,56 @@ public class DashBoardActivity extends BaseActivity {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
-        databaseReference.child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).getRef().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                try {
-                    long count = 0;
-
-                    for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
-                        Conversations value = dataSnapshotChild.getValue(Conversations.class);
-                        long v = value != null ? value.getUnread() : 0;
-                        count = v + count;
+        databaseReference
+                .child(Constants.ARG_CONVERSATION)
+                .child(Preferences.INSTANCE.getMsgUserId())
+                .getRef()
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        getNotificationCount(dataSnapshot);
                     }
 
-                    setNotificationCount(count);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-                    if (totalCount != count) {
-
-                        Fragment fragment = manger.getActive();
-
-                        if (fragment instanceof MessagesFragment) {
-
-                            ((MessagesFragment) fragment).updateAdapter();
-                        }
                     }
+                });
 
 
-                    totalCount = count;
-                } catch (DatabaseException e) {
+    }
 
-                    Log.e(TAG, "onDataChange: " + e.getMessage());
+
+    private void getNotificationCount(DataSnapshot dataSnapshot) {
+
+        try {
+            long count = 0;
+
+            for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+                Conversations value = dataSnapshotChild.getValue(Conversations.class);
+                long v = value != null ? value.getUnread() : 0;
+                count = v + count;
+            }
+
+            setNotificationCount(count);
+
+
+            if (totalCount != count) {
+
+                Fragment fragment = manger.getActive();
+
+                if (fragment instanceof MessagesFragment) {
+
+                    ((MessagesFragment) fragment).updateAdapter();
                 }
-
-
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            totalCount = count;
+        } catch (DatabaseException e) {
 
-                Log.e(TAG, "onCancelled: message count " + databaseError.getMessage());
-
-            }
-        });
-
+            Log.e(TAG, "onDataChange: " + e.getMessage());
+        }
 
     }
 

@@ -11,22 +11,22 @@
 
     <item
         android:id="@+id/navigation_store"
-        android:icon="@drawable/ic_shop_01_overlay"
+        android:icon="@drawable/ic_event"
         android:title="Events"
         app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/navigation_message"
-        android:icon="@drawable/ic_messages_01_overlay"
+        android:icon="@drawable/ic_chat"
         android:title="@string/messages"
         app:showAsAction="ifRoom|withText" />
 
 
     <!--<item-->
-        <!--android:id="@+id/navigation_videos"-->
-        <!--android:icon="@drawable/ic_videos_01_overlay_01"-->
-        <!--android:title="@string/videos"-->
-        <!--app:showAsAction="ifRoom|withText" />-->
+    <!--android:id="@+id/navigation_videos"-->
+    <!--android:icon="@drawable/ic_videos_01_overlay_01"-->
+    <!--android:title="@string/videos"-->
+    <!--app:showAsAction="ifRoom|withText" />-->
 
 
     <item

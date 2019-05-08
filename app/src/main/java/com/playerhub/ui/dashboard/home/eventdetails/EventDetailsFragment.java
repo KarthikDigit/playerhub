@@ -55,6 +55,8 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
     TextView eventType;
     @BindView(R.id.date_time)
     TextView dateTime;
+    @BindView(R.id.event_time)
+    TextView eventTime;
     @BindView(R.id.event_repeat)
     TextView eventRepeat;
     @BindView(R.id.description)
@@ -90,10 +92,6 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-
-
-
-
 
 
         callEventDetailsApi();
@@ -137,9 +135,6 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
         view.draw(canvas);
 
 
-
-
-
         return bitmap;
     }
 
@@ -168,7 +163,16 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 
                             teamName.setText(getString(data.getTeamName()));
 
-                            eventRepeat.setText(getString(data.getEventRepeat()));
+                            if (getString(data.getEventRepeat()).length() > 0) {
+
+                                eventRepeat.setText(getString(data.getEventRepeat()));
+                                eventRepeat.setVisibility(View.VISIBLE);
+
+                            } else {
+
+                                eventRepeat.setVisibility(View.GONE);
+
+                            }
 
                             description.setText(getString(data.getDescription()));
 
@@ -191,9 +195,11 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 //
 //                            String timinging = d + " " + st + " - " + et;
 
-                            String timinging = data.getStartDate() + " " + data.getStartTime() + " - " + data.getEndTime();
+                            String timinging = data.getStartDate();
 
                             dateTime.setText(timinging);
+
+                            eventTime.setText(String.format("%s - %s", data.getStartTime(), data.getEndTime()));
 
 //
 //                            String repeat = "Repeat every " + Utils.convertDateToString(date, "EEEE") + " untill " + Utils.convertDateToString(enddate, "MMMM dd, yyyy");

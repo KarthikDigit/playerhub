@@ -37,6 +37,7 @@ import com.playerhub.ui.dashboard.chat.GroupChatActivity;
 import com.playerhub.ui.dashboard.chat.creategroupchat.CreateGroupChatActivity;
 import com.playerhub.ui.dashboard.messages.recent.OnRecyclerItemClickListener;
 import com.playerhub.ui.dashboard.messages.recent.RecentAdapter;
+import com.playerhub.utils.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,8 +63,6 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
     @BindView(R.id.message_view)
     RecyclerView messageView;
 
-    @BindView(R.id.person_view)
-    RecyclerView personView;
 
     @BindView(R.id.create_group)
     FloatingActionButton floatingActionButton;
@@ -145,12 +144,10 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
         recentAdapter = new RecentAdapter(getContext(), new ArrayList<Object>(), this);
 
         messageView.setLayoutManager(new LinearLayoutManager(getContext()));
-        personView.setLayoutManager(new LinearLayoutManager(getContext()));
-        personView.setNestedScrollingEnabled(false);
+
         messageView.setNestedScrollingEnabled(false);
 //        productCategoryListView.addItemDecoration(new EqualSpacingItemDecoration(16, EqualSpacingItemDecoration.GRID));
         messageView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
-        personView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
 
         messageView.setAdapter(recentAdapter);
 
@@ -178,51 +175,36 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
         if (recentAdapter != null) {
             recentAdapter.clearAll();
 
-//
-//        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate());
-            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId());
-
-
-//            Log.e(TAG, "getAllUsersFromFirebase: " + Preferences.INSTANCE.getMsgUserId());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-//                Log.e(TAG, "onDataChange: " + dataSnapshot.getChildrenCount());
-
-                    List<ConversationsLayout> conversationsList = new ArrayList<>();
-
-                    for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
-
-                        try {
-//
-                            ConversationsLayout value = dataSnapshotChild.getValue(ConversationsLayout.class);
-
-//                            Log.e(TAG, "onDataChange:  recent " + new Gson().toJson(value));
-
-                            conversationsList.add(value);
-//
-                        } catch (DatabaseException e) {
-
-                            Log.e(TAG, "onDataChange: " + e.getMessage());
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child(Constants.ARG_CONVERSATION)
+                    .child(Preferences.INSTANCE.getMsgUserId())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            addGroupAndUsers(dataSnapshot);
                         }
-
-
-                    }
-
-
-                    getUserList(conversationsList);
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+                    });
 
         }
+    }
+
+
+    private void addGroupAndUsers(DataSnapshot dataSnapshot) {
+
+        List<ConversationsLayout> conversationsList = new ArrayList<>();
+
+        for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+            try {
+                ConversationsLayout value = dataSnapshotChild.getValue(ConversationsLayout.class);
+                conversationsList.add(value);
+            } catch (DatabaseException e) {
+                Log.e(TAG, "onDataChange: " + e.getMessage());
+            }
+        }
+
+        getUserList(conversationsList);
+
     }
 
 
@@ -237,8 +219,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
             if (conversations != null && !TextUtils.isEmpty(conversations.getTypeName())) {
 
-                if (!conversations.getTypeName().toLowerCase().equalsIgnoreCase("group")) {
-
+                if (!Utils.check(conversations.getTypeName(), "group")) {
 
                     List<String> users = conversations.getUsers();
 
@@ -246,7 +227,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
                         String userId = "";
 
-                        if (!users.get(0).equalsIgnoreCase(Preferences.INSTANCE.getMsgUserId())) {
+                        if (!Utils.check(users.get(0),Preferences.INSTANCE.getMsgUserId())) {
 
                             userId = users.get(0);
 
@@ -255,33 +236,23 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
                             userId = users.get(1);
                         }
 
-                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_USERS).child(userId);
-
-
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                try {
-                                    User value = dataSnapshot.getValue(User.class);
-                                    recentAdapter.add(value);
-//                                    Log.e(TAG, "onDataChange: user " + new Gson().toJson(value));
-                                } catch (DatabaseException e) {
-
-                                    Log.e(TAG, "onDataChange: " + e.getMessage());
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                        FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child(Constants.ARG_USERS)
+                                .child(userId)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        try {
+                                            User value = dataSnapshot.getValue(User.class);
+                                            recentAdapter.add(value);
+                                        } catch (DatabaseException e) {
+                                            Log.e(TAG, "onDataChange: " + e.getMessage());
+                                        }
+                                    }
+                                });
                     }
                 } else {
-
 
                     recentAdapter.add(conversations);
 
@@ -317,8 +288,6 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
     private void callUserChat(User user) {
 
-//        Log.e(TAG, "onClick: " + user.id + " " + user.name);
-
         Intent intent = new Intent(getContext(), ChatActivity.class);
 
         intent.putExtra("user", user);
@@ -341,7 +310,6 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
         conversations.setTimestamp(conversationsLayout.getTimestamp());
         conversations.setIs_typing(conversationsLayout.getIs_typing());
 
-        Log.e(TAG, "onClick: conversations " + new Gson().toJson(conversations));
         Intent intent = new Intent(getContext(), GroupChatActivity.class);
 
         intent.putExtra("user", (Serializable) conversations);

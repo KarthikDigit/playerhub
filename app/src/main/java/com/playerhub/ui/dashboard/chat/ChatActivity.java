@@ -155,31 +155,35 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         conversations.setMessage_id(id);
 
-        databaseReference.child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).getRef().addListenerForSingleValueEvent(new ValueListener() {
+        databaseReference
+                .child(Constants.ARG_CONVERSATION)
+                .child(Preferences.INSTANCE.getMsgUserId())
+                .getRef()
+                .addListenerForSingleValueEvent(new ValueListener() {
 
-            @Override
-            public void onSuccess(@NonNull DataSnapshot dataSnapshot) {
-
-
-                boolean isAlreadyCreated = checkAlreadyConversationMessageIdCreated(dataSnapshot, users);
-
-
-                if (!isAlreadyCreated) {
-
-                    createConversationMessageId(databaseReference, id);
-
-                }
+                    @Override
+                    public void onSuccess(@NonNull DataSnapshot dataSnapshot) {
 
 
-                Log.e(TAG, "onSuccess: isAlready " + isAlreadyCreated + "   " + new Gson().toJson(conversations));
+                        boolean isAlreadyCreated = checkAlreadyConversationMessageIdCreated(dataSnapshot, users);
 
 
-                getAllMessages(conversations.getMessage_id());
+                        if (!isAlreadyCreated) {
+
+                            createConversationMessageId(databaseReference, id);
+
+                        }
 
 
-            }
+                        Log.e(TAG, "onSuccess: isAlready " + isAlreadyCreated + "   " + new Gson().toJson(conversations));
 
-        });
+
+                        getAllMessages(conversations.getMessage_id());
+
+
+                    }
+
+                });
 
 
         comments.addTextChangedListener(new TextWatcherListener() {
@@ -403,20 +407,11 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         switch (view.getId()) {
             case R.id.send_comments:
 
-
-//                if (tempBitmap != null) {
-//
-//                    imageUploadToFirebase();
-//
-//                } else {
-
                 sendMessages(null);
-//                }
 
                 break;
 
             case R.id.attachment:
-
 
                 addAttachment();
 
@@ -564,12 +559,6 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
             }
 
-//            else {
-//
-//                showToast("There is no token id");
-//
-//            }
-
         }
 
     }
@@ -606,37 +595,6 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
     }
 
-//    private void sendPushMessage(String title, String body, String sender_id) {
-//
-//
-//        HashMap data = new HashMap<>();
-//        data.put("title", title);
-//        data.put("body", body);
-//
-//        Map rawParameters = new Hashtable();
-//        rawParameters.put("data", new JSONObject(data));
-//        rawParameters.put("to", sender_id);
-//
-//
-//        RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())
-//                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//
-//                        Log.e(TAG, "accept: " + s);
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//
-//                        Log.e(TAG, "accept: error " + throwable.getMessage() + "  " + ((HttpException) throwable).response().errorBody().string());
-//
-//                    }
-//                });
-//
-//
-//    }
 
     @Override
     public void onImageShow(String image_url) {
@@ -651,11 +609,6 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     @Override
     public void onSelectFromGalleryResult(Bitmap bitmap) {
 
-
-//        tempBitmap = bitmap;
-//
-//        tempImage.setImageBitmap(bitmap);
-//        tempImage.setVisibility(View.VISIBLE);
 
         imageUploadToFirebase(bitmap);
 

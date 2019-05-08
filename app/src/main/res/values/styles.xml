@@ -26,6 +26,24 @@
         <item name="android:windowFullscreen">false</item>
     </style>
 
+    <style name="AppTheme.NoActionBar_Status" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <!--<item name="android:statusBarColor">@color/colorPrimaryDark</item>-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
     <style name="AppTheme.NoActionBarSameStatusBarColor">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -82,6 +100,13 @@
 
     <style name="progressBar" parent="Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="textInputLayout" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#673AB7</item>
+        <item name="colorPrimaryDark">#512DA8</item>
+        <item name="colorAccent">@color/whitealpha</item>
+        <item name="android:textColorHint">@color/whitealpha</item>
     </style>
 
 </resources>

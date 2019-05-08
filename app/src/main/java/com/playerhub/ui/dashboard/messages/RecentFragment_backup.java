@@ -59,8 +59,6 @@ public class RecentFragment_backup extends MessageBaseFragment {
     @BindView(R.id.message_view)
     RecyclerView messageView;
 
-    @BindView(R.id.person_view)
-    RecyclerView personView;
 
     @BindView(R.id.create_group)
     FloatingActionButton floatingActionButton;
@@ -147,16 +145,13 @@ public class RecentFragment_backup extends MessageBaseFragment {
         unbinder = ButterKnife.bind(this, view);
 
         messageView.setLayoutManager(new LinearLayoutManager(getContext()));
-        personView.setLayoutManager(new LinearLayoutManager(getContext()));
-        personView.setNestedScrollingEnabled(false);
+
         messageView.setNestedScrollingEnabled(false);
 //        productCategoryListView.addItemDecoration(new EqualSpacingItemDecoration(16, EqualSpacingItemDecoration.GRID));
         messageView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
-        personView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
 
         messageView.setAdapter(fastAdapter);
 
-        personView.setAdapter(personfastAdapter);
 
         personfastAdapter.withOnClickListener(new OnClickListener() {
             @Override

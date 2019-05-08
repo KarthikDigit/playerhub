@@ -13,7 +13,7 @@ public class ImageUtility {
 
         if (url != null && !TextUtils.isEmpty(url))
 
-            Picasso.get().load(url).error(R.drawable.avatar_mini).into(imageView);
+            Picasso.get().load(url).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).into(imageView);
 
         else {
 

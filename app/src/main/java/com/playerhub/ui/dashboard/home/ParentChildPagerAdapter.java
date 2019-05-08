@@ -1,14 +1,17 @@
 package com.playerhub.ui.dashboard.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.playerhub.R;
 import com.playerhub.utils.ImageUtility;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,11 @@ public class ParentChildPagerAdapter extends PagerAdapter {
     }
 
 
+    public ParentChild getItem(int pos) {
+
+        return mList.get(pos);
+    }
+
 
     public void setOnItemClicklistener(OnItemClicklistener onItemClicklistener) {
         this.onItemClicklistener = onItemClicklistener;
@@ -53,6 +61,17 @@ public class ParentChildPagerAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == ((ConstraintLayout) object);
+    }
+
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.setPrimaryItem(container, position, object);
+    }
+
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull View container, int position) {
+        return super.instantiateItem(container, position);
     }
 
     @Override
@@ -76,7 +95,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
 
                 if (onItemClicklistener != null)
-                    onItemClicklistener.OnItemClick(parentChild, position);
+                    onItemClicklistener.OnItemClick(mList.get(position), position);
 
             }
         });

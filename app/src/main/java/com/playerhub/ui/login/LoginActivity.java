@@ -15,6 +15,8 @@ import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.TextUtils;
@@ -61,7 +63,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,Fingerprint {
+public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack, Fingerprint {
 
 
     private static final String TAG = "LoginActivity";
@@ -72,8 +74,8 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
     static final String DEFAULT_KEY_NAME = "default_key";
     @BindView(R.id.topLayout)
     ConstraintLayout topLayout;
-    @BindView(R.id.bottomLayout)
-    ConstraintLayout bottomLayout;
+    //    @BindView(R.id.bottomLayout)
+//    ConstraintLayout bottomLayout;
     @BindView(R.id.logo)
     ImageView logo;
 
@@ -81,15 +83,17 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
     private KeyGenerator mKeyGenerator;
 
     @BindView(R.id.editText)
-    EditText mEmail;
+    TextInputLayout mEmail;
     @BindView(R.id.editText2)
-    EditText mPassword;
+    TextInputLayout mPassword;
     Cipher defaultCipher;
     Cipher cipherNotInvalidated;
 
     private ValidateOtpFragment validateOtpFragment;
     private SMSRetriver smsRetriver;
     private AppSignatureHelper appSignatureHelper;
+
+    private static boolean isAsked = false;
 
 
     @Override
@@ -217,7 +221,7 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
         logo.setVisibility(v);
         topLayout.setVisibility(visiblity);
-        bottomLayout.setVisibility(visiblity);
+//        bottomLayout.setVisibility(visiblity);
 
     }
 
@@ -239,8 +243,8 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
     private void moveToDashBoardActivity() {
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isAsked) {
+            isAsked = true;
             FingerprintManager fingerprintManager = getSystemService(FingerprintManager.class);
 
             try {
@@ -430,29 +434,53 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
     private boolean validateFormInputFieldsAll() {
 
+//        mEmail.setErrorEnabled(false);
+//        mPassword.setErrorEnabled(false);
+
         boolean isValid = true;
 
-        if (TextUtils.isEmpty(mEmail.getText())) {
+        if (TextUtils.isEmpty(getText(mEmail))) {
 
-            showToast(getString(R.string.emailempty));
-
-            isValid = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(mEmail.getText()).matches()) {
-
-            showToast(getString(R.string.validemail));
-
+//            showToast(getString(R.string.emailempty));
+            setError(mEmail, getString(R.string.emailempty));
 
             isValid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(getText(mEmail)).matches()) {
 
-        } else if (TextUtils.isEmpty(mPassword.getText())) {
+//            showToast(getString(R.string.validemail));
 
-            showToast(getString(R.string.passwordempty));
+            setError(mEmail, getString(R.string.validemail));
 
+            isValid = false;
+
+        } else if (TextUtils.isEmpty(getText(mPassword))) {
+
+//            showToast(getString(R.string.passwordempty));
+
+            setError(mPassword, getString(R.string.passwordempty));
             isValid = false;
         }
 
         return isValid;
 
+    }
+
+
+    private void setError(TextInputLayout error, String e) {
+
+
+//        error.setErrorEnabled(true);
+//        error.setError(e);
+
+
+        error.requestFocus();
+        Snackbar.make(error, e, Snackbar.LENGTH_SHORT).show();
+
+    }
+
+    private String getText(TextInputLayout textInputLayout) {
+
+        return textInputLayout.getEditText().getText().toString();
     }
 
 
@@ -478,8 +506,8 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
             LoginRequest loginRequest = new LoginRequest();
 
-            loginRequest.setEmail(mEmail.getText().toString());
-            loginRequest.setPassword(mPassword.getText().toString());
+            loginRequest.setEmail(getText(mEmail));
+            loginRequest.setPassword(getText(mPassword));
             loginRequest.setSecret(appSignatureHelper.getAppSignatures().get(0));
 
 
@@ -548,7 +576,8 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
     @Override
     public void showOTPCode(String code) {
-        validateOtpFragment.showOTPCode(code);
+        if (validateOtpFragment != null)
+            validateOtpFragment.showOTPCode(code);
     }
 
     @Override
