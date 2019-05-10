@@ -4,11 +4,10 @@ package com.playerhub.ui.dashboard.home.announcement;
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,9 +80,24 @@ public class AnnouncementDialogFragment extends BottomSheetDialogFragment {
 //        return dialog;
 //    }
 
+//    @Override
+//    public void setupDialog(Dialog dialog, int style) {
+////        super.setupDialog(dialog,style);
+//        View contentView = View.inflate(getContext(), R.layout.fragment_announcement_dialog, null);
+//        dialog.setContentView(contentView);
+//
+//        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent())
+//                .getLayoutParams();
+//        CoordinatorLayout.Behavior behavior = params.getBehavior();
+//        ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_announcement_dialog, container, false);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_announcement_dialog, container, false);
@@ -121,6 +135,13 @@ public class AnnouncementDialogFragment extends BottomSheetDialogFragment {
 
         return binding.getRoot();
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ((View) getView().getParent()).setBackgroundColor(Color.TRANSPARENT);
     }
 
     private static final String TAG = "AnnouncementDialogFragm";

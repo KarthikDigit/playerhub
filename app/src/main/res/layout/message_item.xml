@@ -22,7 +22,7 @@
                 android:id="@+id/icon"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
-                android:src="@drawable/profile" />
+                tools:src="@drawable/profile" />
 
             <View
                 android:id="@+id/useris_online"

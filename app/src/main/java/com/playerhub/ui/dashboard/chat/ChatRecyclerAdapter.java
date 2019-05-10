@@ -7,6 +7,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 
 import com.playerhub.R;
+import com.playerhub.customview.ProgressImageView;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.dashboard.messages.Messages;
 import com.squareup.picasso.Picasso;
@@ -85,9 +88,9 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
 
+
             Picasso.get().load(img_url).placeholder(R.drawable.progress_animation).into(myChatViewHolder.imageView);
             myChatViewHolder.imageView.setVisibility(View.VISIBLE);
-
             myChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -236,34 +239,43 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static final String TAG = "ChatRecyclerAdapter";
 
-    private void shareImage(Context context, ImageView imageView) {
+    private void shareImage(final Context context, final ImageView imageView) {
 
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
 
-        Uri bmpUri = getLocalBitmapUri(imageView);
+//                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+//                StrictMode.setVmPolicy(builder.build());
 
-        if (bmpUri != null) {
+                Uri bmpUri = getLocalBitmapUri(imageView);
 
-            // Construct a ShareIntent with link to image
+                if (bmpUri != null) {
 
-            Intent shareIntent = new Intent();
+                    // Construct a ShareIntent with link to image
 
-            shareIntent.setAction(Intent.ACTION_SEND);
+                    Intent shareIntent = new Intent();
 
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
 
-            shareIntent.setType("image/*");
+                    shareIntent.setType("image/*");
 
-            // Launch sharing dialog for image
+                    // Launch sharing dialog for image
 
-            context.startActivity(Intent.createChooser(shareIntent, "Share Image"));
+                    context.startActivity(Intent.createChooser(shareIntent, "Share Image"));
 
-        } else {
+                } else {
 
-            Toast.makeText(context, "Sharing went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Sharing went wrong", Toast.LENGTH_SHORT).show();
 
-            // ...sharing failed, handle error
+                    // ...sharing failed, handle error
 
-        }
+                }
+
+            }
+        });
 
 
 //        Bitmap bitmap = imageView.getDrawingCache();
@@ -329,7 +341,10 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             // **Warning:** This will fail for API >= 24, use a FileProvider as shown below instead.
 
-            bmpUri = Uri.fromFile(file);
+//            bmpUri = Uri.fromFile(file);
+
+            bmpUri = FileProvider.getUriForFile(imageView.getContext(), "com.playerhub.fileProvider", file);
+
 
         } catch (IOException e) {
 

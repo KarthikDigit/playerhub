@@ -153,7 +153,6 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
                                             ) {
 
                                         ParentChild parentChild = new ParentChild();
-
                                         parentChild.setType(ParentChild.TYPE.CHILD);
                                         parentChild.setWhoIs("Kid");
                                         parentChild.setId(kid1.getId());

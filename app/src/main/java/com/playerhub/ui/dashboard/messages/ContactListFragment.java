@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +26,7 @@ import com.google.gson.Gson;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.commons.utils.FastAdapterDiffUtil;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.playerhub.R;
 import com.playerhub.network.RetrofitAdapter;
@@ -42,9 +45,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import durdinapps.rxfirebase2.RxFirebaseDatabase;
+import io.reactivex.Flowable;
+import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -141,6 +148,8 @@ public class ContactListFragment extends MessageBaseFragment {
             contactName = getArguments().getString(KEY_CONTACT_NAME);
 
         getAllUsersFromFirebase(contactName);
+
+
         return view;
     }
 
@@ -190,8 +199,33 @@ public class ContactListFragment extends MessageBaseFragment {
             public void onNext(ContactListApi value) {
 
                 List<ContactListApi.Datum> data = value.getData();
-
+                itemAdapter.clear();
                 itemAdapter.setNewList(data, false);
+//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new ContactDiffCallback(itemAdapter.getAdapterItems(), data), true);
+//
+//
+//                result.dispatchUpdatesTo(new ListUpdateCallback() {
+//                    @Override
+//                    public void onInserted(int position, int count) {
+//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeInserted(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count);
+//                    }
+//
+//                    @Override
+//                    public void onRemoved(int position, int count) {
+//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeRemoved(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count);
+//                    }
+//
+//                    @Override
+//                    public void onMoved(int fromPosition, int toPosition) {
+//                        itemAdapter.getFastAdapter().notifyAdapterItemMoved(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + fromPosition, toPosition);
+//                    }
+//
+//                    @Override
+//                    public void onChanged(int position, int count, Object payload) {
+//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeChanged(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count, payload);
+//                    }
+//
+//                });
 
             }
 
@@ -207,10 +241,53 @@ public class ContactListFragment extends MessageBaseFragment {
         });
 
 
+
     }
 
     @Override
     public void refreshData() {
         updateAdapter();
+    }
+
+
+    public static class ContactDiffCallback extends DiffUtil.Callback {
+
+        List<ContactListApi.Datum> mOldContacts;
+        List<ContactListApi.Datum> mNewContacts;
+
+        public ContactDiffCallback(List<ContactListApi.Datum> mOldContacts, List<ContactListApi.Datum> mNewContacts) {
+            this.mOldContacts = mOldContacts;
+            this.mNewContacts = mNewContacts;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return mOldContacts.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return mNewContacts.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return mOldContacts.get(oldItemPosition).getId() == mNewContacts.get(newItemPosition).getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+
+            ContactListApi.Datum oldData = mOldContacts.get(oldItemPosition);
+            ContactListApi.Datum newData = mNewContacts.get(newItemPosition);
+
+            return oldData.getName().equalsIgnoreCase(newData.getName()) && oldData.getNotification() == newData.getNotification();
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+            return super.getChangePayload(oldItemPosition, newItemPosition);
+        }
     }
 }

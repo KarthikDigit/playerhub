@@ -175,7 +175,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void run() {
                     if (item.icon != null && item.icon.length() > 0)
-                        Picasso.get().load(item.icon).placeholder(R.mipmap.ic_launcher).resize(120, 120).into(icon);
+                        Picasso.get().load(item.icon).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).resize(120, 120).into(icon);
 
                 }
             });
@@ -259,7 +259,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             countLay.setVisibility(View.INVISIBLE);
 
-            Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).resize(120, 120).into(icon);
+            Picasso.get().load(R.mipmap.ic_launcher).resize(120, 120).into(icon);
 
 
             CommonUtil.getGroupMessageCount(item.getMessage_id(), new CommonUtil.CallBackCount() {

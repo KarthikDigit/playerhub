@@ -109,7 +109,7 @@ public class ContactListApi implements Serializable {
         @Expose
         private String deviceId;
 
-        private boolean isChecked=false;
+        private boolean isChecked = false;
 
         private long notification = 0;
 
@@ -269,7 +269,7 @@ public class ContactListApi implements Serializable {
                     @Override
                     public void run() {
                         if (item.avatar != null && item.avatar.length() > 0)
-                            Picasso.get().load(item.avatar).placeholder(R.mipmap.ic_launcher).resize(120, 120).into(icon);
+                            Picasso.get().load(item.avatar).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).resize(120, 120).into(icon);
 
                     }
                 });

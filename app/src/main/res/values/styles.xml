@@ -102,6 +102,10 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="progressBar1" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">#673AB7</item>
+    </style>
+
     <style name="textInputLayout" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">#673AB7</item>
         <item name="colorPrimaryDark">#512DA8</item>
