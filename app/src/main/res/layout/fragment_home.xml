@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusable="true"
     android:orientation="vertical"
     tools:context=".ui.dashboard.home.HomeFragment">
 
@@ -202,5 +203,17 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
+    <com.github.ag.floatingactionmenu.OptionsFabLayout
+        android:id="@+id/fab_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:background_color="@android:color/transparent"
+        app:color="@color/colorPrimaryDark"
+        app:options_color="@color/colorPrimary"
+
+        app:options_menu="@menu/menu_floating"
+        app:src="@drawable/ic_add_black_24dp" />
 
 </RelativeLayout>

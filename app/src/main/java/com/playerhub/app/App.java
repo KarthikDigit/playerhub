@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.database.FirebaseDatabase;
 import com.playerhub.R;
 import com.playerhub.preference.Preferences;
@@ -21,6 +23,14 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), "AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY");
+
+// Create a new Places client instance.
+        PlacesClient placesClient = Places.createClient(this);
+
+
         Fabric.with(this, new Crashlytics());
 
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -42,9 +52,6 @@ public class App extends Application {
         Preferences.INSTANCE.createPreferences(this);
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-
-
 
 
     }

@@ -73,10 +73,11 @@ public class ProfileDetailsActivity extends BaseActivity {
 
             setText(phoneNumber, "(" + getString(data.getCountryCode()) + ") " + getString(data.getPhone()));
 
-            Picasso.get().load(data.getLogo()).error(R.drawable.profile).into(profileImage);
-            Picasso.get().load(data.getLogo()).error(R.drawable.profile).into(fullImage);
+            Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(profileImage);
+            Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(fullImage);
 
         } else {
+
 
             showToast("There is no details ");
         }

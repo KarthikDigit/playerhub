@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.playerhub">
 
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,11 +22,11 @@
         android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -80,9 +82,13 @@
             </intent-filter>
         </activity>
 
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="AIzaSyCLawbBFYa2dZDve2a7atmHGt6txlhHfyA" /> -->
+        <!--  -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCLawbBFYa2dZDve2a7atmHGt6txlhHfyA" />
+            android:value="AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY" />
 
         <activity
             android:name=".ui.dashboard.profile.ProfileActivity"
@@ -218,7 +224,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.playerhub.fileProvider"
@@ -272,6 +277,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.dashboard.home.addevent.AddEventActivity"></activity>
     </application>
 
 </manifest>

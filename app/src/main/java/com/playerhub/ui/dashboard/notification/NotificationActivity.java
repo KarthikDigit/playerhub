@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.base.OnItemClickListener;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
+import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.utils.AlertUtils;
 
 import java.util.ArrayList;
@@ -210,9 +212,14 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
         if (notification != null)
             if (notification.getNotificationType().toLowerCase().equalsIgnoreCase("event") && !notification.getDescription().toLowerCase().contains("event cancelled")) {
                 startActivity(EventDetailsActivity.getIntent(this, notification.getEventId()));
+
+
             }
 
     }
+
+
+
 
 
     private void loadData() {

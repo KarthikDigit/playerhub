@@ -126,7 +126,7 @@ public class DashBoardActivity extends BaseActivity {
 
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add(MoreEventsFragment.getInstance(true));
+        fragmentList.add(MoreEventsFragment.getInstance(true, true));
         fragmentList.add(new MessagesFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new MoreAnnouncementFragment());
@@ -174,6 +174,18 @@ public class DashBoardActivity extends BaseActivity {
 
     }
 
+    private void showMoreEventDetails(boolean isBackEnabled, boolean isToday) {
+
+        manger.showFragment(1);
+
+        if (manger.getActive() instanceof MoreEventsFragment) {
+            ((MoreEventsFragment) manger.getActive()).showHideBackButton(isBackEnabled);
+
+            ((MoreEventsFragment) manger.getActive()).enableToday(isToday);
+        }
+
+    }
+
 
     private void remove() {
 
@@ -188,7 +200,23 @@ public class DashBoardActivity extends BaseActivity {
 
         if (fragment instanceof MoreEventsFragment) {
 
-            showMoreEventDetails(false);
+            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
+
+            ((MoreEventsFragment) fragment).showHideBackButton(false);
+//            showMoreEventDetails(false);
+        } else if (fragment instanceof EventDetailsFragment) {
+            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
+        } else
+            manger.showFragment(4);
+//            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
+
+    }
+
+    public void callFragmentFromOutSide(Fragment fragment, boolean isToday) {
+
+        if (fragment instanceof MoreEventsFragment) {
+
+            showMoreEventDetails(false, isToday);
         } else if (fragment instanceof EventDetailsFragment) {
             getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
         } else

@@ -174,6 +174,7 @@ public class ContactListFragment extends MessageBaseFragment {
 //        if (messageView != null && messageView.getAdapter() != null)
 //            messageView.getAdapter().notifyDataSetChanged();
         getAllUsersFromFirebase(contactName);
+
     }
 
 
@@ -201,31 +202,6 @@ public class ContactListFragment extends MessageBaseFragment {
                 List<ContactListApi.Datum> data = value.getData();
                 itemAdapter.clear();
                 itemAdapter.setNewList(data, false);
-//                DiffUtil.DiffResult result = DiffUtil.calculateDiff(new ContactDiffCallback(itemAdapter.getAdapterItems(), data), true);
-//
-//
-//                result.dispatchUpdatesTo(new ListUpdateCallback() {
-//                    @Override
-//                    public void onInserted(int position, int count) {
-//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeInserted(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count);
-//                    }
-//
-//                    @Override
-//                    public void onRemoved(int position, int count) {
-//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeRemoved(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count);
-//                    }
-//
-//                    @Override
-//                    public void onMoved(int fromPosition, int toPosition) {
-//                        itemAdapter.getFastAdapter().notifyAdapterItemMoved(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + fromPosition, toPosition);
-//                    }
-//
-//                    @Override
-//                    public void onChanged(int position, int count, Object payload) {
-//                        itemAdapter.getFastAdapter().notifyAdapterItemRangeChanged(itemAdapter.getFastAdapter().getPreItemCountByOrder(itemAdapter.getOrder()) + position, count, payload);
-//                    }
-//
-//                });
 
             }
 
@@ -240,8 +216,6 @@ public class ContactListFragment extends MessageBaseFragment {
             }
         });
 
-
-
     }
 
     @Override
@@ -250,44 +224,4 @@ public class ContactListFragment extends MessageBaseFragment {
     }
 
 
-    public static class ContactDiffCallback extends DiffUtil.Callback {
-
-        List<ContactListApi.Datum> mOldContacts;
-        List<ContactListApi.Datum> mNewContacts;
-
-        public ContactDiffCallback(List<ContactListApi.Datum> mOldContacts, List<ContactListApi.Datum> mNewContacts) {
-            this.mOldContacts = mOldContacts;
-            this.mNewContacts = mNewContacts;
-        }
-
-        @Override
-        public int getOldListSize() {
-            return mOldContacts.size();
-        }
-
-        @Override
-        public int getNewListSize() {
-            return mNewContacts.size();
-        }
-
-        @Override
-        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            return mOldContacts.get(oldItemPosition).getId() == mNewContacts.get(newItemPosition).getId();
-        }
-
-        @Override
-        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-
-            ContactListApi.Datum oldData = mOldContacts.get(oldItemPosition);
-            ContactListApi.Datum newData = mNewContacts.get(newItemPosition);
-
-            return oldData.getName().equalsIgnoreCase(newData.getName()) && oldData.getNotification() == newData.getNotification();
-        }
-
-        @Nullable
-        @Override
-        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-            return super.getChangePayload(oldItemPosition, newItemPosition);
-        }
-    }
 }

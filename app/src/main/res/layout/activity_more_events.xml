@@ -56,6 +56,19 @@
     </RelativeLayout>
 
 
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorAnimationDuration="200"
+        app:tabIndicatorColor="@color/mintcream"
+        app:tabIndicatorHeight="@dimen/_4sdp"
+        app:tabInlineLabel="true"
+        app:tabSelectedTextColor="@color/tabTextSelectedColor"
+        app:tabTextColor="@color/tabTextColor" />
+
+
     <com.vlonjatg.progressactivity.ProgressRelativeLayout
         android:id="@+id/progressActivity"
         android:layout_width="match_parent"

@@ -58,7 +58,7 @@ public class DashBoardActivity_Old_Fragement_Attach_Way extends BaseActivity {
                     return true;
                 case R.id.navigation_store:
 
-                    callFragment(MoreEventsFragment.getInstance(true));
+                    callFragment(MoreEventsFragment.getInstance(true,true));
 
                     return true;
 //                case R.id.navigation_videos:
@@ -80,7 +80,7 @@ public class DashBoardActivity_Old_Fragement_Attach_Way extends BaseActivity {
 
     private final Fragment homeFragment = new HomeFragment();
     private final Fragment messagesFragment = new MessagesFragment();
-    private final Fragment moreEventsFragment = MoreEventsFragment.getInstance(true);
+    private final Fragment moreEventsFragment = MoreEventsFragment.getInstance(true,true);
     private final Fragment settingsFragment = new SettingsFragment();
 
 

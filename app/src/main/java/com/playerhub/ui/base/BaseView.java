@@ -11,4 +11,5 @@ public interface BaseView {
     void onNetworkError(boolean isToastMsg);
 
     void onUnknownError(String message, boolean isToastMsg);
+
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fab_add_event"
+        android:icon="@drawable/ic_small_calendar"
+        android:iconTint="@color/white"
+        android:title="Add event" />
+
+    <!--<item-->
+        <!--android:id="@+id/fab_add_paid_event"-->
+        <!--android:icon="@drawable/ic_small_calendar"-->
+        <!--android:iconTint="@color/white"-->
+        <!--android:title="Add paid event" />-->
+
+    <item
+        android:id="@+id/fab_add_announcement"
+        android:icon="@drawable/ic_iconfinder_announcement_2742787"
+        android:iconTint="@color/white"
+        android:title="Add Announcement" />
+</menu>

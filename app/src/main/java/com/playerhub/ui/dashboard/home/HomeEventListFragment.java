@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +91,19 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
         unbinder = ButterKnife.bind(this, view);
 
 
-        eventView.setOnClickListener(this);
-        upcomingEventView.setOnClickListener(this);
+        eventView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                moveToMoreEventActivity(true);
+            }
+        });
+        upcomingEventView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveToMoreEventActivity(false);
+            }
+        });
 
         eventView.setOnItemClickListener(this);
         upcomingEventView.setOnItemClickListener(this);
@@ -315,7 +327,24 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     @Override
     public void onClick(View v) {
 
-        moveToMoreEventActivity();
+
+        Log.e(TAG, "onClick: " + v.getId());
+
+
+        switch (v.getId()) {
+
+            case R.id.load_more_event:
+                moveToMoreEventActivity(true);
+                break;
+
+            case R.id.upcoming_event_view:
+
+                moveToMoreEventActivity(false);
+
+                break;
+        }
+
+
     }
 
 
@@ -385,17 +414,26 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.load_more_events:
-                moveToMoreEventActivity();
+                moveToMoreEventActivity(true);
                 break;
+
+//            case R.id.today_event_view:
+//                moveToMoreEventActivity(true);
+//                break;
+//
+//            case R.id.upcoming_event_view:
+//
+//                moveToMoreEventActivity(false);
+//                break;
         }
     }
 
 
-    private void moveToMoreEventActivity() {
+    private void moveToMoreEventActivity(boolean isToday) {
 
         if (getActivity() instanceof DashBoardActivity) {
 
-            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(new MoreEventsFragment());
+            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(MoreEventsFragment.getInstance(false, isToday), isToday);
 
         }
 

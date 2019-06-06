@@ -4,10 +4,12 @@ package com.playerhub.ui.dashboard.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.ag.floatingactionmenu.OptionsFabLayout;
 import com.playerhub.R;
 import com.playerhub.common.CallbackWrapper;
 import com.playerhub.common.OnPageChangeListener;
@@ -26,7 +29,10 @@ import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
+import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
+import com.playerhub.ui.dashboard.home.addevent.AddEventFragment;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
+import com.playerhub.ui.dashboard.home.announcement.PostAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
@@ -64,6 +70,9 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
 
     @BindView(R.id.fullImage)
     ImageView mFullImage;
+
+    @BindView(R.id.fab_l)
+    OptionsFabLayout mFloatingMenu;
 
     @BindView(R.id.viewPager)
     ViewPager profileViewPager;
@@ -187,8 +196,90 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
                     }
                 });
 
+        mFloatingMenu.setMainFabOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mFloatingMenu.isOptionsMenuOpened()) {
+                    mFloatingMenu.closeOptionsMenu();
+                }
+            }
+        });
+
+        mFloatingMenu.setMiniFabsColors(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
+
+        mFloatingMenu.setMiniFabSelectedListener(new OptionsFabLayout.OnMiniFabSelectedListener() {
+            @Override
+            public void onMiniFabSelected(MenuItem fabItem) {
+
+                switch (fabItem.getItemId()) {
+
+
+                    case R.id.fab_add_event:
+
+                        addEvent();
+                        break;
+
+//                    case R.id.fab_add_paid_event:
+//                        addEvent();
+//                        break;
+
+                    case R.id.fab_add_announcement:
+                        addAnnouncement();
+                        break;
+
+
+                }
+
+
+            }
+        });
+
+
+        try {
+
+            if (Preferences.INSTANCE.getUserType().toLowerCase().equalsIgnoreCase("coach".toLowerCase())) {
+
+                addParentProfile();
+
+                mFloatingMenu.setVisibility(View.VISIBLE);
+            } else {
+                mFloatingMenu.setVisibility(View.GONE);
+            }
+
+        } catch (NullPointerException e) {
+
+        }
 
         return view;
+    }
+
+
+    private void addEvent() {
+
+        if (mFloatingMenu.isOptionsMenuOpened()) {
+            mFloatingMenu.closeOptionsMenu();
+        }
+//        AddEventFragment addEventFragment = new AddEventFragment();
+////        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+//        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+//        addEventFragment.show(getChildFragmentManager(), "AddFragment");
+
+
+        startActivity(new Intent(getContext(), AddEventActivity.class));
+
+    }
+
+    private void addAnnouncement() {
+        if (mFloatingMenu.isOptionsMenuOpened()) {
+            mFloatingMenu.closeOptionsMenu();
+        }
+
+        PostAnnouncementFragment addEventFragment = new PostAnnouncementFragment();
+//        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+        addEventFragment.show(getChildFragmentManager(), "PostAnnouncement");
+
     }
 
 

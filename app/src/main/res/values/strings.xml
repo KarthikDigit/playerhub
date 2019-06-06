@@ -86,6 +86,9 @@
     <string name="kid_profile">Kid Profile</string>
     <string name="camera_and_location_rationale">Please grant camera permission to update profile image</string>
     <string name="title_activity_material_profile">MaterialProfileActivity</string>
+    <string name="close">Close</string>
+    <string name="create_event">Create Event</string>
+    <string name="send">Send</string>
 
 
 </resources>

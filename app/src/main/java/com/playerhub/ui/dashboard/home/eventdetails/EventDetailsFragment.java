@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,11 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
     TextView msg;
     @BindView(R.id.content)
     LinearLayout content;
+    @BindView(R.id.description_layout)
+    LinearLayout descriptionLayout;
+    @BindView(R.id.location_layout)
+    LinearLayout locationLayout;
+
     private GoogleMap map;
 
 
@@ -103,7 +109,7 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
     @OnClick(R.id.back)
     public void onBackClick(View view) {
 
-        if (getActivity() instanceof DashBoardActivity) {
+        if (getActivity() instanceof DashBoardActivity || getActivity() instanceof EventDetailsActivity) {
 
             getActivity().onBackPressed();
         }
@@ -174,26 +180,13 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 
                             }
 
-                            description.setText(getString(data.getDescription()));
+                            if (!TextUtils.isEmpty(data.getDescription())) {
+                                descriptionLayout.setVisibility(View.VISIBLE);
+                                description.setText(getString(data.getDescription()));
+                            } else {
+                                descriptionLayout.setVisibility(View.GONE);
+                            }
 
-
-//                            String des = "All the players to be assembled on time at the " + data.getLocation();
-//
-//                            mdes.setText(des);
-
-
-//                            Date date = Utils.convertStringToDate(data.getStartDate(), "dd-MM-yyyy");
-//                            Date enddate = Utils.convertStringToDate(data.getStartDate(), "dd-MM-yyyy");
-//
-//                            String d = Utils.convertDateToString(date, "EEE, MMM dd, yyyy");
-//
-//                            Date startTime = Utils.convertStringToDate(data.getStartTime(), "hh:mm:ss");
-//                            Date endTime = Utils.convertStringToDate(data.getEndTime(), "hh:mm:ss");
-////
-//                            String st = Utils.convertDateToString(startTime, "hh:mm a");
-//                            String et = Utils.convertDateToString(endTime, "hh:mm a");
-//
-//                            String timinging = d + " " + st + " - " + et;
 
                             String timinging = data.getStartDate();
 
@@ -201,20 +194,17 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 
                             eventTime.setText(String.format("%s - %s", data.getStartTime(), data.getEndTime()));
 
-//
-//                            String repeat = "Repeat every " + Utils.convertDateToString(date, "EEEE") + " untill " + Utils.convertDateToString(enddate, "MMMM dd, yyyy");
-//
-//                            mdescription.setText(repeat);
 
+                            if (!TextUtils.isEmpty(data.getLocation())) {
+                                locationLayout.setVisibility(View.VISIBLE);
+                                location.setText(getString(data.getLocation()));
+                            } else {
+                                locationLayout.setVisibility(View.GONE);
+                            }
 
-                            location.setText(getString(data.getLocation()));
 
                             GeocodingLocation.getAddressFromLocation(data.getLocation(),
                                     getContext(), new GeocoderHandler(data.getLocation()));
-
-//                            LatLng latLng = new LatLng(37.4233438, -122.0728817);
-////                            loadMap(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()), data.getName());
-//                            loadMap(latLng.latitude, latLng.longitude, data.getName());
 
 
                         } else {

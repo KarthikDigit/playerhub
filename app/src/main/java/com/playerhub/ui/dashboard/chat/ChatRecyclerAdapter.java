@@ -25,6 +25,10 @@ import com.playerhub.R;
 import com.playerhub.customview.ProgressImageView;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.dashboard.messages.Messages;
+import com.playerhub.utils.ImageUtility;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -88,8 +92,8 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
 
-
-            Picasso.get().load(img_url).placeholder(R.drawable.progress_animation).into(myChatViewHolder.imageView);
+            myChatViewHolder.imageView.layout(0, 0, 0, 0);
+            ImageUtility.firebaseLoadImage(myChatViewHolder.imageView, img_url);
             myChatViewHolder.imageView.setVisibility(View.VISIBLE);
             myChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,8 +142,10 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final String img_url = chat.getImg_url();
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
+            otherChatViewHolder.imageView.layout(0, 0, 0, 0);
+            ImageUtility.firebaseLoadImage(otherChatViewHolder.imageView, img_url);
 
-            Picasso.get().load(img_url).placeholder(R.drawable.progress_animation).into(otherChatViewHolder.imageView);
+
             otherChatViewHolder.imageView.setVisibility(View.VISIBLE);
 
             otherChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {

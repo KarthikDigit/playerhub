@@ -1,13 +1,17 @@
 package com.playerhub.network.service;
 
 
+import com.playerhub.network.request.BasePostEvents;
 import com.playerhub.network.request.Deviceinfo;
+import com.playerhub.network.request.PostEvents;
+import com.playerhub.network.request.RegistrationRequest;
 import com.playerhub.network.request.UpdateKidDetail;
 import com.playerhub.network.request.UploadKidProfile;
 import com.playerhub.network.response.AnnouncementApi;
 import com.playerhub.network.response.ContactListApi;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.network.response.EventListApi.EventListResponseApi;
+import com.playerhub.network.response.EventTypesResponse;
 import com.playerhub.network.response.KidDetailsUpdatedResponse;
 import com.playerhub.network.response.KidInfoResponse;
 import com.playerhub.network.response.KidsAndCoaches;
@@ -15,7 +19,9 @@ import com.playerhub.network.response.NotificationApi;
 import com.playerhub.network.response.OTPValidateApi;
 import com.playerhub.network.response.ProfileDetails;
 import com.playerhub.network.response.ReadNotification;
+import com.playerhub.network.response.TeamResponse;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -104,10 +110,29 @@ public interface NetworkApiService {
     Observable<String> updateKidProfileImage(@HeaderMap Map<String, String> headermap, @Body UploadKidProfile json, @Path("id") int id);
 
 
-//    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    //    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @FormUrlEncoded
     @POST("kid/avatar/{id}")
     Observable<String> updateKidProfileImage1(@HeaderMap Map<String, String> headermap, @Field("avatar") String avatar, @Path("id") int id);
+
+
+    @GET("teams")
+    Observable<TeamResponse> fetchAllTeams(@HeaderMap Map<String, String> headermap);
+
+    @GET("event-types")
+    Observable<EventTypesResponse> fetchAllEventTypes(@HeaderMap Map<String, String> headermap);
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("events")
+    Observable<String> postEvents(@HeaderMap Map<String, String> headermap, @Body BasePostEvents json);
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("events")
+    Observable<String> postEvents(@HeaderMap Map<String, String> headermap, @Body Map<String, Object> json);
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("announcements")
+    Observable<String> postAnnouncements(@HeaderMap Map<String, String> headermap, @Body Map<String, Object> json);
 
 
 //    @Headers({"Content-Type: application/json;charset=UTF-8"})
