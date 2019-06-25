@@ -82,6 +82,15 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
         View view = inflater.inflate(R.layout.activity_more_events, container, false);
 
+        Mytest(view);
+
+
+        callEventListApi();
+
+        return view;
+    }
+
+    private void Mytest(View view) {
         unbinder = ButterKnife.bind(this, view);
 
         tabs.addTab(tabs.newTab().setText("Today"), true);
@@ -152,11 +161,6 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 //
 //            }
 //        });
-
-
-        callEventListApi();
-
-        return view;
     }
 
 
@@ -249,13 +253,15 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
             if (isToday) {
 
-                if (!todayEventList.isEmpty())
+                if (!todayEventList.isEmpty()) {
+                    setProgressActivity(ActivityStats.CONTENT);
                     eventsAdapter.updateList(todayEventList);
-                else setProgressActivity(ActivityStats.EMPTY);
+                } else setProgressActivity(ActivityStats.EMPTY);
             } else {
-                if (!upcommingEventList.isEmpty())
+                if (!upcommingEventList.isEmpty()) {
+                    setProgressActivity(ActivityStats.CONTENT);
                     eventsAdapter.updateList(upcommingEventList);
-                else setProgressActivity(ActivityStats.EMPTY);
+                } else setProgressActivity(ActivityStats.EMPTY);
             }
 
 
@@ -280,16 +286,23 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
 
         switch (activityStats) {
+
             case LOADING:
+
                 showProgress(progressActivity);
-                break;
-            case EMPTY:
-                showEmpty(progressActivity,
-                        "No Data",
-                        "There is no event available");
 
                 break;
+
+            case EMPTY:
+
+                showEmpty(progressActivity,
+                        "No Data Found",
+                        "There is no event");
+
+                break;
+
             case ERROR:
+
                 showError(progressActivity,
                         "Error",
                         "",
@@ -301,8 +314,11 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
                         });
 
                 break;
+
             case CONTENT:
+
                 showContent(progressActivity);
+
                 break;
         }
 
@@ -320,6 +336,7 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
                         callEventListApi();
                     }
                 });
+
     }
 
 
@@ -334,22 +351,25 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
+        int position = tabs.getSelectedTabPosition();
+
+        if (position == 0) {
+            if (!todayEventList.isEmpty()) {
+                setProgressActivity(ActivityStats.CONTENT);
+                eventsAdapter.updateList(todayEventList);
+            } else setProgressActivity(ActivityStats.EMPTY);
+        } else {
+            if (!upcommingEventList.isEmpty()) {
+                setProgressActivity(ActivityStats.CONTENT);
+                eventsAdapter.updateList(upcommingEventList);
+            } else setProgressActivity(ActivityStats.EMPTY);
+        }
+
+
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
-        int position = tabs.getSelectedTabPosition();
-
-        if (position == 0) {
-            if (!todayEventList.isEmpty())
-                eventsAdapter.updateList(todayEventList);
-            else setProgressActivity(ActivityStats.EMPTY);
-        } else {
-            if (!upcommingEventList.isEmpty())
-                eventsAdapter.updateList(upcommingEventList);
-            else setProgressActivity(ActivityStats.EMPTY);
-        }
 
 
     }
@@ -358,4 +378,9 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+
+
+
+
 }

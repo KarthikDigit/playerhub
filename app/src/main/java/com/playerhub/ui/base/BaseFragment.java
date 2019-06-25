@@ -8,15 +8,11 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.playerhub.R;
 import com.playerhub.utils.NetworkHelper;
 import com.playerhub.utils.ProgressUtils;
 import com.vlonjatg.progressactivity.ProgressLayout;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

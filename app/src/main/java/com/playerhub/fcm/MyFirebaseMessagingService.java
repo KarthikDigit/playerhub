@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -38,8 +39,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             String title = remoteMessage.getData().get("title");
             String body = remoteMessage.getData().get("body");
-            String type = "";//remoteMessage.getData().get("type");
-            String id = "";//remoteMessage.getData().get("id");
+            String type = remoteMessage.getData().get("type");
+            String id = remoteMessage.getData().get("id");
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 NotificationManager mNotificationManager =
@@ -56,10 +57,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             }
 
-            /*
+            /*https://gadgets.ndtv.com/samsung-galaxy-on8-2018-5569
              * Displaying a notification locally
              */
-            MyNotificationManager.getInstance(this).displayNotification(title, body, type, id);
+            if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(id)) {
+                if (type.toLowerCase().equalsIgnoreCase("singlechat")) {
+
+                    MyNotificationManager.getInstance(this).displayNotificationInBoxStyle(title, body, type, id);
+
+                } else {
+//                    MyNotificationManager.getInstance(this).displayNotificationInBoxStyle(title, body, type, id);
+
+                    MyNotificationManager.getInstance(this).displayNotification(title, body, "", "");
+                }
+            } else {
+                MyNotificationManager.getInstance(this).displayNotification(title, body, "", "");
+            }
 
         }
 

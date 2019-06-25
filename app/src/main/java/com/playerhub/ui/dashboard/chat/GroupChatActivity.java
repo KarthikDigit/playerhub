@@ -457,7 +457,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
                         if (token_Id != null && !TextUtils.isEmpty(token_Id)) {
 
-                            sendPushMessage("New Message", msg, token_Id);
+                            sendPushMessage(value.name, msg, token_Id);
 
                         }
 //                        else {
@@ -492,10 +492,26 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("body", body);
+        data.put("type", "groupchat");
+        data.put("conversation", conversations);
+
+
+        Map<String, Object> notification = new HashMap<>();
+        notification.put("title", title);
+        notification.put("body", body);
+//        notification.put("type", "chat");
+//        notification.put("id", id);
 
         Map<String, Object> rawParameters = new Hashtable<String, Object>();
         rawParameters.put("data", new JSONObject(data));
+        rawParameters.put("notification", new JSONObject(notification));
         rawParameters.put("to", sender_id);
+
+
+        Log.e(TAG, "sendPushMessage: " + new JSONObject(rawParameters).toString());
+
+
+
 
 
         RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())

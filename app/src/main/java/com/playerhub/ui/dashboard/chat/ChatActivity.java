@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +27,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,6 +51,8 @@ import com.playerhub.utils.KeyboardUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,6 +142,10 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
             secondUser = user1.id;
 
         }
+
+        byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
+
+        Preferences.INSTANCE.saveNotification(new String(decodeValue), null);
 
 
         users.add(secondUser);
@@ -499,6 +508,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
                     FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).child(conversations.getMessage_id()).child("last_conversation").setValue(last_conversation);
 
+                    checkIsUserLive();
 
                     comments.setText("");
                     comments.clearFocus();
@@ -531,7 +541,12 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
                     m = "You have a message from " + datum.getName();
                 }
 
-                sendPushMessage("New Message", m, token_Id);
+//                sendPushMessage(datum.getName(), m, token_Id);
+
+                byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
+
+                sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
+
             }
 
 //            else {
@@ -555,7 +570,9 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
                     m = "You have a message from " + user1.name;
                 }
 
-                sendPushMessage("New Message", m, token_Id);
+                byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
+
+                sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
 
             }
 
@@ -563,16 +580,64 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
     }
 
-    private void sendPushMessage(String title, String body, String sender_id) {
+
+    private void checkIsUserLive() {
+
+
+//        //Update unRead messsages to 0
+//        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_USERS).child(conversations.getUsers().get(0)).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                try {
+//
+//                    User user = dataSnapshot.getValue(User.class);
+//
+//                    if (user.connection == 1) {
+//
+//                        showToast("He is live ");
+//                    }
+//
+//                } catch (DatabaseException e) {
+//
+//
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+    }
+
+
+    private void sendPushMessage(String title, String body, long id, String sender_id) {
 
 
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("body", body);
+        data.put("type", "singlechat");
+        data.put("id", id);
+
+        Map<String, Object> notification = new HashMap<>();
+        notification.put("title", title);
+        notification.put("body", body);
+//        notification.put("type", "chat");
+//        notification.put("id", id);
 
         Map<String, Object> rawParameters = new Hashtable<String, Object>();
         rawParameters.put("data", new JSONObject(data));
+        rawParameters.put("notification", new JSONObject(notification));
         rawParameters.put("to", sender_id);
+
+
+        Log.e(TAG, "sendPushMessage: "+new JSONObject(rawParameters).toString() );
 
 
         RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())

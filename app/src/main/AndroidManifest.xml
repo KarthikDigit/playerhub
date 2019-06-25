@@ -277,7 +277,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.home.addevent.AddEventActivity"></activity>
+        <activity android:name=".ui.dashboard.home.addevent.AddEventActivity" />
+        <activity android:name=".test.InboxStyleNotificationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.dashboard.messages.filteractivity.FilterActivity"></activity>
     </application>
 
 </manifest>

@@ -5,8 +5,11 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.playerhub.common.Constant;
 import com.playerhub.network.service.NetworkApiService;
 import com.playerhub.network.service.UserService;
+import com.playerhub.preference.Preferences;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,6 +52,51 @@ public class RetrofitAdapter {
         Retrofit apiClient = RetrofitAdapter.getRetrofit();
         return apiClient.create(NetworkApiService.class);
     }
+
+
+    public static NetworkApiService getNetworkApiServiceClient1() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(new AuthorizationInterceptor())
+                .addInterceptor(logging).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(Constant.API_BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(NetworkApiService.class);
+    }
+
+
+    private static class AuthorizationInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Response mainResponse = chain.proceed(chain.request());
+            Request mainRequest = chain.request();
+
+            if (Preferences.INSTANCE.isUserLoggedIn()) {
+
+                Request.Builder builder = mainRequest.newBuilder()
+                        .addHeader("Authorization", Preferences.INSTANCE.getTokenType() + " " + Preferences.INSTANCE.getAccessToken())
+                        .addHeader("Accept", "application/json")
+                        .method(mainRequest.method(), mainRequest.body());
+                mainResponse = chain.proceed(builder.build());
+
+            }
+
+            return mainResponse;
+        }
+    }
+
 
     public static UserService getUserApiServiceClient() {
         Retrofit apiClient = RetrofitAdapter.getRetrofit();

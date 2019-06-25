@@ -227,7 +227,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
                         String userId = "";
 
-                        if (!Utils.check(users.get(0),Preferences.INSTANCE.getMsgUserId())) {
+                        if (!Utils.check(users.get(0), Preferences.INSTANCE.getMsgUserId())) {
 
                             userId = users.get(0);
 
@@ -267,6 +267,12 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
     @Override
     public void refreshData() {
         updateAdapter();
+    }
+
+    @Override
+    public void searchData(String s) {
+
+        Log.e(TAG, "searchData: ");
     }
 
     @Override

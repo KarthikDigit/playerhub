@@ -205,7 +205,7 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
             setEventListContent(value.getEventListResponseApi());
         } else {
 
-            showErrorMsg("There is no data");
+            showErrorMsg("There is no event");
         }
 
         if (value != null && value.getAnnouncementApi() != null) {
@@ -213,7 +213,7 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
             setAnnouncementListContent(value.getAnnouncementApi());
         } else {
 
-            showErrorMsg("There is no data");
+            showErrorMsg("There is no event");
         }
 
     }

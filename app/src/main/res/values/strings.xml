@@ -64,9 +64,9 @@
     <string name="more">See More</string>
     <string name="upcomming_event">Upcomming Event</string>
     <string name="upcoming_event">Upcoming Event</string>
-    <string name="no_today_event">There is no today event</string>
+    <string name="no_today_event">There is no event</string>
     <string name="no_announcement">There is no announcement</string>
-    <string name="no_upcoming_event">There is no upcoming event</string>
+    <string name="no_upcoming_event">There is no event</string>
     <string name="more_events">More events</string>
     <string name="announcement_event">Announcement</string>
     <string name="announcement">ANNOUNCEMENT</string>

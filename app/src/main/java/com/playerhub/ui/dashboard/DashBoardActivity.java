@@ -118,6 +118,34 @@ public class DashBoardActivity extends BaseActivity {
 
         getMessageCountFromFirebaseDatabase();
 
+        clearNotification();
+    }
+
+
+    private void clearNotification() {
+
+        if (getIntent() != null) {
+
+            if (getIntent().hasExtra("id")) {
+
+                String id = getIntent().getStringExtra("id");
+
+                if (id != null) {
+                    Preferences.INSTANCE.saveNotification(id, null);
+
+                    if (getIntent().hasExtra("type")){
+
+                        String type = getIntent().getStringExtra("type");
+
+                        if (type.toLowerCase().equalsIgnoreCase("chat")){
+
+                            manger.showFragment(2);
+                        }
+                    }
+                }
+
+            }
+        }
 
     }
 
@@ -233,27 +261,26 @@ public class DashBoardActivity extends BaseActivity {
             String c = count >= 10 ? "9+" : count + "";
             notificationsBadge.setText(c);
 
+            notificationsBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 
-            notificationsBadge.startAnimation(blink);
-
-            blink.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    notificationsBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-
-
+//            blink.setAnimationListener(new Animation.AnimationListener() {
+//                @Override
+//                public void onAnimationStart(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animation animation) {
+//
+//                }
+//            });
+//
+//            notificationsBadge.startAnimation(blink);
         } else {
             Log.e(TAG, "setNotificationCount: notificationsBadge not init ");
         }
@@ -275,6 +302,8 @@ public class DashBoardActivity extends BaseActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
                         getNotificationCount(dataSnapshot);
                     }
 
@@ -290,34 +319,42 @@ public class DashBoardActivity extends BaseActivity {
 
     private void getNotificationCount(DataSnapshot dataSnapshot) {
 
-        try {
-            long count = 0;
+//        try {
+        long count = 0;
 
-            for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+        for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+            try {
+
                 Conversations value = dataSnapshotChild.getValue(Conversations.class);
                 long v = value != null ? value.getUnread() : 0;
                 count = v + count;
+
+            } catch (DatabaseException e) {
+
+                Log.e(TAG, "getNotificationCount: " + e.getMessage());
             }
 
-            setNotificationCount(count);
-
-
-            if (totalCount != count) {
-
-                Fragment fragment = manger.getActive();
-
-                if (fragment instanceof MessagesFragment) {
-
-                    ((MessagesFragment) fragment).updateAdapter();
-                }
-            }
-
-
-            totalCount = count;
-        } catch (DatabaseException e) {
-
-            Log.e(TAG, "onDataChange: " + e.getMessage());
         }
+
+        setNotificationCount(count);
+
+
+        if (totalCount != count) {
+
+            Fragment fragment = manger.getActive();
+
+            if (fragment instanceof MessagesFragment) {
+
+                ((MessagesFragment) fragment).updateAdapter();
+            }
+        }
+
+
+        totalCount = count;
+//        } catch (DatabaseException e) {
+//            setNotificationCount(0);
+//            Log.e(TAG, "onDataChange: " + e.getMessage());
+//        }
 
     }
 

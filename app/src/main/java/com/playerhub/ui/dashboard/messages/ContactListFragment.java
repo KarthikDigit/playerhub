@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.commons.utils.FastAdapterDiffUtil;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
@@ -221,6 +222,20 @@ public class ContactListFragment extends MessageBaseFragment {
     @Override
     public void refreshData() {
         updateAdapter();
+    }
+
+    @Override
+    public void searchData(String s) {
+
+        itemAdapter.filter(s);
+
+        itemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<ContactListApi.Datum>() {
+            @Override
+            public boolean filter(ContactListApi.Datum item, @Nullable CharSequence constraint) {
+                return item.getName().toLowerCase().startsWith(String.valueOf(constraint).toLowerCase());
+            }
+        });
+
     }
 
 

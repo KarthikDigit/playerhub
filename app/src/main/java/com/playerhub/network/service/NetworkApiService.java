@@ -97,6 +97,10 @@ public interface NetworkApiService {
     Observable<KidsAndCoaches> fetchKids(@HeaderMap Map<String, String> headermap);
 
 
+    @GET("kids-coaches")
+    Observable<KidsAndCoaches> fetchKidsN();
+
+
     @GET("kid/{id}")
     Observable<KidInfoResponse> fetchKidDetailsById(@HeaderMap Map<String, String> headermap, @Path("id") int id);
 

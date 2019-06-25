@@ -1,18 +1,26 @@
 package com.playerhub.ui.dashboard.messages;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.playerhub.R;
+import com.playerhub.network.response.ContactListApi;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.dashboard.chat.ChatActivity;
+import com.playerhub.ui.dashboard.messages.filteractivity.FilterActivity;
 import com.playerhub.viewpageadapter.ViewPagerAdapter;
 
 import butterknife.BindView;
@@ -23,7 +31,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessagesFragment extends BaseFragment {
+public class MessagesFragment extends BaseFragment implements SearchView.OnQueryTextListener {
 
 
     Unbinder unbinder;
@@ -33,6 +41,14 @@ public class MessagesFragment extends BaseFragment {
     TabLayout tabs;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    @BindView(R.id.filter)
+    ImageView mFilter;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
+
+    @BindView(R.id.filter_layout)
+    LinearLayout mFilterLayout;
 
     private ViewPagerAdapter pagerAdapter;
 
@@ -73,6 +89,9 @@ public class MessagesFragment extends BaseFragment {
             @Override
             public void onPageSelected(int i) {
                 updateAdapter();
+
+                if (i == 1) mFilterLayout.setVisibility(View.VISIBLE);
+                else mFilterLayout.setVisibility(View.GONE);
             }
 
             @Override
@@ -81,7 +100,53 @@ public class MessagesFragment extends BaseFragment {
             }
         });
 
+
+        mSearchView.setOnQueryTextListener(this);
+
+        loadChatActivity();
+
+
         return view;
+    }
+
+
+    @OnClick({R.id.filter})
+    public void onFilterClick(View view) {
+
+
+        startActivity(new Intent(view.getContext(), FilterActivity.class));
+
+    }
+
+
+    private void loadChatActivity() {
+
+
+        if (getActivity() != null) {
+
+            if (getActivity().getIntent() != null) {
+
+                String id = getActivity().getIntent().getStringExtra("id");
+                String name = getActivity().getIntent().getStringExtra("title");
+
+                if (id != null && name != null) {
+
+                    ContactListApi.Datum item = new ContactListApi.Datum();
+                    item.setId(Integer.valueOf(id));
+                    item.setName(name);
+
+                    Intent intent = new Intent(getContext(), ChatActivity.class);
+                    intent.putExtra("user", item);
+                    startActivity(intent);
+
+
+                }
+
+            }
+
+        }
+
+
     }
 
 
@@ -103,8 +168,6 @@ public class MessagesFragment extends BaseFragment {
     }
 
 
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -119,5 +182,27 @@ public class MessagesFragment extends BaseFragment {
             case R.id.viewPager:
                 break;
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+
+
+        if (viewPager != null) {
+//            pagerAdapter.notifyDataSetChanged();
+            int pos = viewPager.getCurrentItem();
+
+            MessageBaseFragment fragment = (MessageBaseFragment) pagerAdapter.getItem(pos);
+
+            fragment.searchData(s);
+        }
+
+
+        return true;
     }
 }

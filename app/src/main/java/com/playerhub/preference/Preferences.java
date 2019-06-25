@@ -304,4 +304,14 @@ public enum Preferences {
         return hashMap;
 
     }
+
+    public void saveNotification(String keyId, String msg) {
+
+        mPreferenceHandle.setString(keyId, msg);
+    }
+
+    public String getNotificationById(String keyId) {
+
+        return mPreferenceHandle.getString(keyId, null);
+    }
 }

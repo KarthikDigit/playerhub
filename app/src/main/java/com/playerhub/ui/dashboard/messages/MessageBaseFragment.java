@@ -11,6 +11,8 @@ public abstract class MessageBaseFragment extends BaseFragment {
     public abstract void refreshData();
 
 
+    public abstract void searchData(String s);
+
     public void showFabGroupCreateButton(View view) {
         try {
 

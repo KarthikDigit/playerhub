@@ -354,4 +354,9 @@ public class RecentFragment_backup extends MessageBaseFragment {
     public void refreshData() {
         updateAdapter();
     }
+
+    @Override
+    public void searchData(String s) {
+
+    }
 }
