@@ -212,7 +212,6 @@
         app:background_color="@android:color/transparent"
         app:color="@color/colorPrimaryDark"
         app:options_color="@color/colorPrimary"
-
         app:options_menu="@menu/menu_floating"
         app:src="@drawable/ic_add_black_24dp" />
 

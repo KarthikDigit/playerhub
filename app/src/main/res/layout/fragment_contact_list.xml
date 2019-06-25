@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.playerhub.customview.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/multiStateView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.messages.ContactListFragment">
+    android:background="@color/white"
+    android:visibility="visible"
+    app:msv_animateViewChanges="true"
+    app:msv_emptyView="@layout/empty_view"
+    app:msv_errorView="@layout/error_view"
+    app:msv_loadingView="@layout/loading_view"
+    app:msv_viewState="content">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/message_view"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="@dimen/offset" />
+        tools:context=".ui.dashboard.messages.ContactListFragment">
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/create_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:layout_margin="@dimen/_16sdp"
-        android:src="@drawable/ic_add_black_24dp"
-        android:tint="@color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="@dimen/offset" />
 
-</RelativeLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/create_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_16sdp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:tint="@color/white"
+            android:visibility="gone"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal" />
+
+    </RelativeLayout>
+</com.playerhub.customview.MultiStateView>

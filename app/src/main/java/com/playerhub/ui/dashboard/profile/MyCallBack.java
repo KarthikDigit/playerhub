@@ -42,7 +42,7 @@ public abstract class MyCallBack<T> extends DisposableObserver<T> {
         onSuccess(t);
     }
 
-    abstract void onSuccess(T t);
+    public abstract void onSuccess(T t);
 
     @Override
     public void onError(Throwable e) {

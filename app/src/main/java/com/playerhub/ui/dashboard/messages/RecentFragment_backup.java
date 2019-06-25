@@ -43,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -138,6 +139,11 @@ public class RecentFragment_backup extends MessageBaseFragment {
     }
 
     @Override
+    public int getLayoutByID() {
+        return 0;
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -215,6 +221,21 @@ public class RecentFragment_backup extends MessageBaseFragment {
 
 
         return view;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void onRetryOrCallApi() {
+
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
     }
 
     @Override

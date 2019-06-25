@@ -4,8 +4,9 @@ import android.view.View;
 
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.MultiStateViewFragment;
 
-public abstract class MessageBaseFragment extends BaseFragment {
+public abstract class MessageBaseFragment extends MultiStateViewFragment {
 
 
     public abstract void refreshData();

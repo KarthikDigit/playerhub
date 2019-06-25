@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.playerhub.R;
@@ -94,8 +95,14 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     NestedScrollView constraintLayout;
     @BindView(R.id.multiStateView)
     MultiStateView multiStateView;
+    @BindView(R.id.actionBar_layout)
+    RelativeLayout mActionBarLayout;
 
+//    @BindView(R.id.collapsing_toolbar)
+//    CollapsingToolbarLayout mCollapsingToolbarLayout;
+//
     private boolean isSave = false;
+    private boolean isShow = false;
 
     private CameraAndGallary cameraAndGallary;
 
@@ -187,7 +194,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
                 .compose(MaterialProfileActivity.<KidInfoResponse>apply())
                 .subscribe(new MyCallBack<KidInfoResponse>(this, this, false, false) {
                     @Override
-                    void onSuccess(KidInfoResponse kidInfoResponse) {
+                    public void onSuccess(KidInfoResponse kidInfoResponse) {
 
                         showViewContent();
 
@@ -230,6 +237,36 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 
     }
 
+
+    @Override
+    public void showViewContent() {
+        super.showViewContent();
+
+        showHideActionBarLayout(false);
+
+
+    }
+
+    @Override
+    public void showViewError(String errorMsg) {
+        super.showViewError(errorMsg);
+        showHideActionBarLayout(true);
+    }
+
+    @Override
+    public void showViewError() {
+        super.showViewError();
+
+        showHideActionBarLayout(true);
+    }
+
+    private void showHideActionBarLayout(boolean isHide) {
+        isShow = !isHide;
+//        mActionBarLayout.setVisibility(isHide ? View.GONE : View.VISIBLE);
+
+        appBarLayout.setExpanded(isShow, isShow);
+        invalidateOptionsMenu();
+    }
 
     private void setData(KidInfoResponse.Kidinfo data) {
 
@@ -331,7 +368,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyCallBack<String>(this, this, true, true) {
                     @Override
-                    void onSuccess(String response) {
+                    public void onSuccess(String response) {
 
                         showToast("Kid profile image is successfully updated...");
 
@@ -354,7 +391,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyCallBack<KidDetailsUpdatedResponse>(this, this, true, true) {
                     @Override
-                    void onSuccess(KidDetailsUpdatedResponse response) {
+                    public void onSuccess(KidDetailsUpdatedResponse response) {
 
                         if (response != null) {
                             showToast(response.getMessage());
@@ -378,6 +415,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         int drawabelId = isSave ? R.drawable.ic_check_black_24dp : R.drawable.ic_edit_black_24dp;
 
         menu.findItem(R.id.save_edit).setIcon(drawabelId);
+
+        menu.findItem(R.id.save_edit).setVisible(isShow);
 
         return super.onPrepareOptionsMenu(menu);
     }

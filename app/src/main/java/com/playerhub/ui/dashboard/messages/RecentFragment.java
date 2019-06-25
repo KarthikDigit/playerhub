@@ -47,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -133,6 +134,11 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
     }
 
+    @Override
+    public int getLayoutByID() {
+        return 0;
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -155,6 +161,21 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
 
         return view;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void onRetryOrCallApi() {
+
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
     }
 
     @Override

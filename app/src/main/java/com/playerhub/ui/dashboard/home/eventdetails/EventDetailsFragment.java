@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -30,15 +32,19 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
+import com.playerhub.ui.dashboard.home.announcement.MultiSelectFragment;
+import com.playerhub.ui.dashboard.profile.MyCallBack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
-public class EventDetailsFragment extends BaseFragment implements OnMapReadyCallback {
+public class EventDetailsFragment extends MultiStateViewFragment implements OnMapReadyCallback {
 
 
     private static final String KEY_EVENT_ID = "event_id";
@@ -64,14 +70,15 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
     TextView description;
     @BindView(R.id.location)
     TextView location;
-    @BindView(R.id.msg)
-    TextView msg;
     @BindView(R.id.content)
     LinearLayout content;
     @BindView(R.id.description_layout)
     LinearLayout descriptionLayout;
     @BindView(R.id.location_layout)
     LinearLayout locationLayout;
+
+    @BindView(R.id.actionBar)
+    RelativeLayout mActionBar;
 
     private GoogleMap map;
 
@@ -86,12 +93,14 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_event_details, container, false);
+    public int getLayoutByID() {
+        return R.layout.activity_event_details;
+    }
 
-        ButterKnife.bind(this, view);
+
+    @Override
+    protected void initViews() {
 
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -102,7 +111,44 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 
         callEventDetailsApi();
 
-        return view;
+    }
+
+    @Override
+    protected void onRetryOrCallApi() {
+
+        callEventDetailsApi();
+    }
+
+
+    @Override
+    public void showViewError() {
+        super.showViewError();
+        setActionBarColor();
+    }
+
+    @Override
+    public void showViewError(String errorMsg) {
+        super.showViewError(errorMsg);
+        setActionBarColor();
+    }
+
+    @Override
+    public void showViewContent() {
+        super.showViewContent();
+        mActionBar.setBackgroundColor(Color.TRANSPARENT);
+
+    }
+
+    private void setActionBarColor() {
+
+        mActionBar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
+        showToast("Something went wrong");
     }
 
 
@@ -155,9 +201,10 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
 
         RetrofitAdapter.getNetworkApiServiceClient().fetchEventDetailsById(Preferences.INSTANCE.getAuthendicate(), id)
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CallbackWrapper<EventDetailsApi>(getContext()) {
+                .subscribe(new MyCallBack<EventDetailsApi>(getContext(), this, true, false) {
                     @Override
-                    protected void onSuccess(EventDetailsApi res) {
+                    public void onSuccess(EventDetailsApi res) {
+
 
                         if (res.getSuccess()) {
 
@@ -206,24 +253,38 @@ public class EventDetailsFragment extends BaseFragment implements OnMapReadyCall
                             GeocodingLocation.getAddressFromLocation(data.getLocation(),
                                     getContext(), new GeocoderHandler(data.getLocation()));
 
+                            showViewContent();
 
                         } else {
 
-                            showToast("There is no event details");
+                            showViewEmpty("There is no event details");
                         }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-
-                        content.setVisibility(View.GONE);
-                        msg.setVisibility(View.VISIBLE);
 
 
                     }
                 });
+
+
+//        RetrofitAdapter.getNetworkApiServiceClient().fetchEventDetailsById(Preferences.INSTANCE.getAuthendicate(), id)
+//                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new CallbackWrapper<EventDetailsApi>(getContext()) {
+//                    @Override
+//                    protected void onSuccess(EventDetailsApi res) {
+//
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        super.onError(e);
+//
+//                        content.setVisibility(View.GONE);
+//                        msg.setVisibility(View.VISIBLE);
+//
+//
+//                    }
+//                });
 
 
     }

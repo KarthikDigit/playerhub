@@ -213,7 +213,7 @@ public class KidsProfile extends MultiStateViewActivity implements CameraAndGall
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyCallBack<KidInfoResponse>(this, this, false, false) {
                     @Override
-                    void onSuccess(KidInfoResponse kidInfoResponse) {
+                    public void onSuccess(KidInfoResponse kidInfoResponse) {
 
                         showViewContent();
 
@@ -361,7 +361,7 @@ public class KidsProfile extends MultiStateViewActivity implements CameraAndGall
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyCallBack<String>(this, this, true, true) {
                     @Override
-                    void onSuccess(String response) {
+                    public void onSuccess(String response) {
 
                         showToast("Kid profile image is successfully updated...");
 
@@ -384,7 +384,7 @@ public class KidsProfile extends MultiStateViewActivity implements CameraAndGall
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyCallBack<KidDetailsUpdatedResponse>(this, this, true, true) {
                     @Override
-                    void onSuccess(KidDetailsUpdatedResponse response) {
+                    public void onSuccess(KidDetailsUpdatedResponse response) {
 
                         if (response != null) {
                             showToast(response.getMessage());
