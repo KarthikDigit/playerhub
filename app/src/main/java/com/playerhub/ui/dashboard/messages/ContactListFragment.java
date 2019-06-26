@@ -225,7 +225,7 @@ public class ContactListFragment extends MessageBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 
 

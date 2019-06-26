@@ -194,6 +194,7 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
     private void callEventDetailsApi() {
 
         int id = 0;
+
         if (getArguments() != null) {
             id = getArguments().getInt(KEY_EVENT_ID, 0);
         }

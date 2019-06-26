@@ -3,7 +3,6 @@ package com.playerhub.ui.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,7 @@ public abstract class MultiStateViewFragment extends BaseFragment implements Bas
 
     private MultiStateView multiStateView;
 
-
     public abstract int getLayoutByID();
-
 
     @Nullable
     @Override
@@ -134,8 +131,11 @@ public abstract class MultiStateViewFragment extends BaseFragment implements Bas
         if (isToastMsg) {
 
             showToast("There is no internet connection");
+
         } else {
+
             showViewError("There is no internet connection");
+
         }
 
 
@@ -146,8 +146,11 @@ public abstract class MultiStateViewFragment extends BaseFragment implements Bas
         if (isToastMsg) {
 
             showToast(message);
+
         } else {
+
             showViewError(message);
+
         }
 
 

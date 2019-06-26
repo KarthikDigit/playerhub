@@ -2,6 +2,7 @@ package com.playerhub.ui.dashboard.home;
 
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.github.ag.floatingactionmenu.OptionsFabLayout;
 import com.playerhub.R;
 import com.playerhub.common.CallbackWrapper;
+import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.AnnouncementApi;
@@ -139,62 +141,18 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
         profileViewPager.setPageTransformer(true, new DepthPageTransformer());
 
 //        addParentProfile();
-        getAnnouncement();
 
-        RetrofitAdapter.getNetworkApiServiceClient().fetchKids(Preferences.INSTANCE.getAuthendicate())
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<KidsAndCoaches>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
 
-                    }
+            getAnnouncement();
 
-                    @Override
-                    public void onNext(KidsAndCoaches value) {
+            getKids();
 
-                        try {
-                            if (value != null && value.getData() != null) {
+        } else {
 
-                                List<Kid> kid = value.getData().getKids();
+            showToast("No internet connection ");
+        }
 
-                                if (kid != null && !kid.isEmpty()) {
-                                    for (Kid kid1 : kid
-                                            ) {
-
-                                        ParentChild parentChild = new ParentChild();
-                                        parentChild.setType(ParentChild.TYPE.CHILD);
-                                        parentChild.setWhoIs("Kid");
-                                        parentChild.setId(kid1.getId());
-                                        parentChild.setImgUrl(kid1.getAvatarImage());
-                                        parentChild.setName(kid1.getFirstname() + " " + kid1.getLastname());
-
-                                        parentChildPagerAdapter.add(parentChild);
-
-                                    }
-                                }
-
-                            }
-
-                        } catch (Exception e) {
-
-                            Log.e(TAG, "Exception: " + e.getMessage());
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                        Log.e(TAG, "onNextkids: " + e.getMessage());
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
 
         mFloatingMenu.setMainFabOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +210,64 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
         }
 
         return view;
+    }
+
+    private void getKids() {
+
+        RetrofitAdapter.getNetworkApiServiceClient().fetchKids(Preferences.INSTANCE.getAuthendicate())
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<KidsAndCoaches>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(KidsAndCoaches value) {
+
+                        try {
+                            if (value != null && value.getData() != null) {
+
+                                List<Kid> kid = value.getData().getKids();
+
+                                if (kid != null && !kid.isEmpty()) {
+                                    for (Kid kid1 : kid
+                                            ) {
+
+                                        ParentChild parentChild = new ParentChild();
+                                        parentChild.setType(ParentChild.TYPE.CHILD);
+                                        parentChild.setWhoIs("Kid");
+                                        parentChild.setId(kid1.getId());
+                                        parentChild.setImgUrl(kid1.getAvatarImage());
+                                        parentChild.setName(kid1.getFirstname() + " " + kid1.getLastname());
+
+                                        parentChildPagerAdapter.add(parentChild);
+
+                                    }
+                                }
+
+                            }
+
+                        } catch (Exception e) {
+
+                            Log.e(TAG, "Exception: " + e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onNextkids: " + e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 
