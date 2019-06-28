@@ -2,7 +2,6 @@ package com.playerhub.ui.dashboard.home;
 
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 
 import com.github.ag.floatingactionmenu.OptionsFabLayout;
 import com.playerhub.R;
-import com.playerhub.common.CallbackWrapper;
 import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
 import com.playerhub.network.RetrofitAdapter;
@@ -30,19 +28,16 @@ import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
-import com.playerhub.ui.dashboard.home.addevent.AddEventFragment;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.announcement.PostAnnouncementFragment;
-import com.playerhub.ui.dashboard.home.moreevent.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
-import com.playerhub.ui.dashboard.profile.KidsProfile;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
-import com.playerhub.utils.ImageUtility;
-import com.playerhub.utils.ImageUtils;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
@@ -56,13 +51,13 @@ import butterknife.Unbinder;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment implements ParentChildPagerAdapter.OnItemClicklistener, CardPagerAdapter.OnItemClickListener {
+public class HomeFragment extends MultiStateViewFragment implements ParentChildPagerAdapter.OnItemClicklistener, CardPagerAdapter.OnItemClickListener {
 
     @BindView(R.id.noti_img)
     ConstraintLayout notiImg;
@@ -97,11 +92,12 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    public int getLayoutByID() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initViews() {
 
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
 
@@ -141,17 +137,6 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
         profileViewPager.setPageTransformer(true, new DepthPageTransformer());
 
 //        addParentProfile();
-
-        if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
-
-            getAnnouncement();
-
-            getKids();
-
-        } else {
-
-            showToast("No internet connection ");
-        }
 
 
         mFloatingMenu.setMainFabOnClickListener(new View.OnClickListener() {
@@ -209,7 +194,52 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
 
         }
 
-        return view;
+        loadData();
+    }
+
+    private void loadData() {
+
+
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
+
+            getAnnouncement();
+
+            getKids();
+
+
+            showViewContent();
+
+        } else {
+
+            onNetworkError(false);
+        }
+
+    }
+
+    @Override
+    protected void onRetryOrCallApi() {
+
+
+        if (getActivity() instanceof DashBoardActivity) {
+
+            ((DashBoardActivity) getActivity()).addFragment();
+        }
+
+//        loadData();
+//
+//
+//        if (getFragmentManager() != null) {
+//            HomeEventListFragment fragment = (HomeEventListFragment) getChildFragmentManager().findFragmentById(R.id.fragment);
+//
+//            if (fragment != null) {
+//                fragment.callEventListApi();
+//            }
+//        }
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
     }
 
     private void getKids() {
@@ -419,7 +449,6 @@ public class HomeFragment extends BaseFragment implements ParentChildPagerAdapte
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
 

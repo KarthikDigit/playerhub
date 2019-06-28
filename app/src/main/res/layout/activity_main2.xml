@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".test.Main2Activity">
 
-    <com.playerhub.common.CustomViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp">
 
-    </com.playerhub.common.CustomViewPager>
 
 </RelativeLayout>

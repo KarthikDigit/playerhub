@@ -1,30 +1,25 @@
 package com.playerhub.ui.dashboard.home.moreevent;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.playerhub.R;
-import com.playerhub.common.ActivityStats;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventListApi.EventListResponseApi;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.preference.Preferences;
 import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
-import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.EventsAdapter;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
-import com.vlonjatg.progressactivity.ProgressRelativeLayout;
+import com.playerhub.ui.dashboard.profile.MyCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +29,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
-public class MoreEventsFragment extends BaseFragment implements EventsAdapter.OnItemClickListener<UpcommingEvent>, TabLayout.BaseOnTabSelectedListener {
+public class MoreEventsFragment extends MultiStateViewFragment implements EventsAdapter.OnItemClickListener<UpcommingEvent>, TabLayout.BaseOnTabSelectedListener {
 
     private static final String TAG = "MoreEventsActivity";
 
     @BindView(R.id.eventsView)
     RecyclerView eventsView;
-    @BindView(R.id.progressActivity)
-    ProgressRelativeLayout progressActivity;
     Unbinder unbinder;
     @BindView(R.id.back)
     ImageView back;
@@ -76,22 +72,33 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public int getLayoutByID() {
+        return R.layout.activity_more_events;
+    }
 
-        View view = inflater.inflate(R.layout.activity_more_events, container, false);
 
-        Mytest(view);
-
+    @Override
+    protected void initViews() {
+        initView();
 
         callEventListApi();
 
-        return view;
     }
 
-    private void Mytest(View view) {
-        unbinder = ButterKnife.bind(this, view);
+    @Override
+    protected void onRetryOrCallApi() {
+        callEventListApi();
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
+        showViewError("Something went wrong");
+    }
+
+    private void initView() {
+
 
         tabs.addTab(tabs.newTab().setText("Today"), true);
         tabs.addTab(tabs.newTab().setText("Upcoming"), false);
@@ -143,24 +150,6 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
             }
         });
 
-//
-//        eventsView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int topRowVerticalPosition = (recyclerView == null || recyclerView.getChildCount() == 0) ?
-//                        0 : recyclerView.getChildAt(0).getTop();
-//                LinearLayoutManager linearLayoutManager1 = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                int firstVisibleItem = linearLayoutManager1.findFirstVisibleItemPosition();
-//                testImage.setVisibility(firstVisibleItem == 0 && topRowVerticalPosition >= 0 ? View.GONE : View.VISIBLE);
-//
-//            }
-//        });
     }
 
 
@@ -197,41 +186,32 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
-    @OnClick({R.id.eventsView, R.id.progressActivity})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.eventsView:
-                break;
-            case R.id.progressActivity:
-                break;
-        }
-    }
 
     private void callEventListApi() {
 
         swipetoReferesh.setRefreshing(true);
-        setProgressActivity(ActivityStats.LOADING);
 
-        Observable observable = RetrofitAdapter.getNetworkApiServiceClient().fetchAllEvents(Preferences.INSTANCE.getAuthendicate());
 
-        setObservableAndObserver(observable, new Observers<EventListResponseApi>(getContext(), false) {
+        RetrofitAdapter.getNetworkApiServiceClient().fetchAllEvents(Preferences.INSTANCE.getAuthendicate())
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
 
-            @Override
-            protected void onSuccess(EventListResponseApi response) {
-                setProgressActivity(ActivityStats.CONTENT);
-                setData(response);
-                swipetoReferesh.setRefreshing(false);
-            }
+                .subscribe(new MyCallBack<EventListResponseApi>(getContext(), this, true, false) {
+                    @Override
+                    public void onSuccess(EventListResponseApi response) {
+                        setData(response);
+                        swipetoReferesh.setRefreshing(false);
+                    }
 
-            @Override
-            protected void onFail(Throwable e) {
-                showErrors(e.getMessage());
-                swipetoReferesh.setRefreshing(false);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        swipetoReferesh.setRefreshing(false);
+                    }
+                });
+
 
     }
 
@@ -241,9 +221,6 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
             todayEventList = response.getData().getTodayEvents();
             upcommingEventList = response.getData().getUpcommingEvents();
-//            List<UpcommingEvent> eventList = new ArrayList<>();
-//            eventList.addAll(todayEvent);
-//            eventList.addAll(upcommingEvents);
 
             boolean isToday = false;
             if (getArguments() != null) {
@@ -254,88 +231,28 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
             if (isToday) {
 
                 if (!todayEventList.isEmpty()) {
-                    setProgressActivity(ActivityStats.CONTENT);
+                    showViewContent();
                     eventsAdapter.updateList(todayEventList);
-                } else setProgressActivity(ActivityStats.EMPTY);
+                } else showViewEmpty();
             } else {
                 if (!upcommingEventList.isEmpty()) {
-                    setProgressActivity(ActivityStats.CONTENT);
+                    showViewContent();
                     eventsAdapter.updateList(upcommingEventList);
-                } else setProgressActivity(ActivityStats.EMPTY);
+                } else showViewEmpty();
             }
 
 
         } else {
-            setProgressActivity(ActivityStats.EMPTY);
+            showViewEmpty();
         }
     }
 
     @Override
     public void OnItemClick(View view, UpcommingEvent datum, int position) {
-//        startActivity(EventDetailsActivity.getIntent(getContext(), datum.getId()));
 
         if (getActivity() instanceof DashBoardActivity) {
-
             ((DashBoardActivity) getActivity()).callFragmentFromOutSide(EventDetailsFragment.getInstance(datum.getId()));
         }
-
-    }
-
-
-    private void setProgressActivity(ActivityStats activityStats) {
-
-
-        switch (activityStats) {
-
-            case LOADING:
-
-                showProgress(progressActivity);
-
-                break;
-
-            case EMPTY:
-
-                showEmpty(progressActivity,
-                        "No Data Found",
-                        "There is no event");
-
-                break;
-
-            case ERROR:
-
-                showError(progressActivity,
-                        "Error",
-                        "",
-                        "Try Again", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                callEventListApi();
-                            }
-                        });
-
-                break;
-
-            case CONTENT:
-
-                showContent(progressActivity);
-
-                break;
-        }
-
-    }
-
-
-    public void showErrors(String msg) {
-
-        showError(progressActivity,
-                msg,
-                "",
-                "Try Again", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        callEventListApi();
-                    }
-                });
 
     }
 
@@ -355,14 +272,14 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
 
         if (position == 0) {
             if (!todayEventList.isEmpty()) {
-                setProgressActivity(ActivityStats.CONTENT);
+                showViewContent();
                 eventsAdapter.updateList(todayEventList);
-            } else setProgressActivity(ActivityStats.EMPTY);
+            } else showViewEmpty();
         } else {
             if (!upcommingEventList.isEmpty()) {
-                setProgressActivity(ActivityStats.CONTENT);
+                showViewContent();
                 eventsAdapter.updateList(upcommingEventList);
-            } else setProgressActivity(ActivityStats.EMPTY);
+            } else showViewEmpty();
         }
 
 
@@ -378,9 +295,6 @@ public class MoreEventsFragment extends BaseFragment implements EventsAdapter.On
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
-
-
-
 
 
 }

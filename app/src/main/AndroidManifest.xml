@@ -110,24 +110,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".mytest.LoadMoreActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.dashboard.home.moreevent.MoreEventsActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -180,22 +163,7 @@
             android:name="io.fabric.ApiKey"
             android:value="c08c2a19f1cd232efd6715c827b0eb4fa3404f5d" />
 
-        <activity
-            android:name=".databindingtest.DataBindingTestActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".animation.AnimationTestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.dashboard.messages.RecentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -204,16 +172,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.dashboard.chat.GroupChatActivity" />
-        <activity
-            android:name=".mytest.TabTriangelTestActivity"
-            android:label="@string/title_activity_tab_triangel_test"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <provider
             android:name=".GenericFileProvider"
@@ -270,21 +229,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".myslidingtest.MySlidingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.dashboard.home.addevent.AddEventActivity" />
-        <activity android:name=".test.InboxStyleNotificationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.dashboard.messages.filteractivity.FilterActivity"></activity>
     </application>
 

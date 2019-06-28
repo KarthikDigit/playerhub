@@ -46,19 +46,21 @@ public abstract class MyCallBack<T> extends DisposableObserver<T> {
 
     @Override
     public void onError(Throwable e) {
+
+
         if (isLoading) ProgressUtils.hideProgress();
         if (e instanceof HttpException) {
 
 
-            baseView.get().serverError(((HttpException) e).response(),this.isToastMsg);
+            baseView.get().serverError(((HttpException) e).response(), this.isToastMsg);
 //            ResponseBody responseBody = ((HttpException) e).response().errorBody();
 //            reference.get().serverError(getErrorMessage(responseBody));
         } else if (e instanceof SocketTimeoutException) {
             baseView.get().onTimeout(this.isToastMsg);
         } else if (e instanceof IOException) {
-            baseView.get().onNetworkError(this.isToastMsg);
+            baseView.get().onNetworkError( this.isToastMsg);
         } else {
-            baseView.get().onUnknownError(e.getMessage(),this.isToastMsg);
+            baseView.get().onUnknownError(e.getMessage(), this.isToastMsg);
         }
     }
 

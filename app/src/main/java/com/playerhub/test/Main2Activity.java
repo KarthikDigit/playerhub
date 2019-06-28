@@ -28,12 +28,6 @@ import butterknife.ButterKnife;
 public class Main2Activity extends AppCompatActivity implements FingerPrintImpl.FingerprintCallback, Fingerprint {
 
     private static final String TAG = "Main2Activity";
-
-    @BindView(R.id.pager)
-    CustomViewPager pager;
-
-    private MyPagerAdapter myPagerAdapter;
-
     private Fingerprint fingerPrintApi;
 
     @Override
@@ -43,10 +37,6 @@ public class Main2Activity extends AppCompatActivity implements FingerPrintImpl.
         ButterKnife.bind(this);
 
         fingerPrintApi = new FingerPrintImpl(this, getFragmentManager(), this);
-        myPagerAdapter = new MyPagerAdapter(this, getList());
-
-        pager.setAdapter(myPagerAdapter);
-
 
         callFingerprint();
 
@@ -78,24 +68,6 @@ public class Main2Activity extends AppCompatActivity implements FingerPrintImpl.
 
     }
 
-
-    private List<PageTest> getList() {
-
-        List<PageTest> list = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-
-            PageTest test = new PageTest();
-
-            test.setName("Test " + i);
-
-            list.add(test);
-        }
-
-
-        return list;
-
-    }
 
     @Override
     public void onFingerPrintSuccess() {

@@ -2,13 +2,11 @@ package com.playerhub.ui.dashboard;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,30 +20,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.home.HomeFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
-import com.playerhub.ui.dashboard.home.moreevent.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
 import com.playerhub.ui.dashboard.settings.SettingsFragment;
-import com.playerhub.ui.dashboard.store.StoreFragment;
-import com.playerhub.ui.dashboard.videos.VideosFragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 public class DashBoardActivity extends BaseActivity {
 
@@ -133,11 +124,11 @@ public class DashBoardActivity extends BaseActivity {
                 if (id != null) {
                     Preferences.INSTANCE.saveNotification(id, null);
 
-                    if (getIntent().hasExtra("type")){
+                    if (getIntent().hasExtra("type")) {
 
                         String type = getIntent().getStringExtra("type");
 
-                        if (type.toLowerCase().equalsIgnoreCase("chat")){
+                        if (type.toLowerCase().equalsIgnoreCase("chat")) {
 
                             manger.showFragment(2);
                         }
@@ -150,7 +141,14 @@ public class DashBoardActivity extends BaseActivity {
     }
 
 
-    private void addFragment() {
+    public void addFragment() {
+
+
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+
+            getSupportFragmentManager().popBackStack();
+        }
+
 
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());

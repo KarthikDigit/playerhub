@@ -1,6 +1,7 @@
 package com.playerhub.ui.dashboard.notification;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -97,12 +98,6 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
 
             }
         });
-
-        //set the items to your ItemAdapter
-
-
-//        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-//        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mNotificationView);
 
 
         loadData();
@@ -219,71 +214,8 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
     }
 
 
-
-
-
     private void loadData() {
 
-//        final List<NotificationModel> list = new ArrayList<>();
-//
-//
-//        NotificationModel model = new NotificationModel();
-//        model.description = "New Event Added for:Barca NY 04 PRO vs Hauppauge Soccer Hurricances";
-//
-//        list.add(model);
-//
-//        model = new NotificationModel();
-//        model.description = "Event Updated ::Barca NY 04 PRO vs Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        model = new NotificationModel();
-//        model.description = "New Event Added for:Barca NY 04 PRO va Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        model = new NotificationModel();
-//        model.description = "Event Updated ::Barca NY 04 PRO vs Long Island Premier FC";
-//
-//        list.add(model);
-//
-//        model = new NotificationModel();
-//        model.description = "New Event Added for:Barca NY 04 PRO va Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        model = new NotificationModel();
-//        model.description = "Event Updated ::Barca NY 04 PRO vs Long Island Premier FC";
-//
-//        list.add(model);
-//
-//        model = new NotificationModel();
-//        model.description = "New Event Added for:Barca NY 04 PRO va Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        model = new NotificationModel();
-//        model.description = "Event Updated ::Barca NY 04 PRO vs Long Island Premier FC";
-//
-//        list.add(model);
-//
-//        model = new NotificationModel();
-//        model.description = "New Event Added for:Barca NY 04 PRO va Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        model = new NotificationModel();
-//        model.description = "Event Updated ::Barca NY 04 PRO vs Long Island Premier FC";
-//
-//        list.add(model);
-//
-//
-//        itemAdapter.add(list);
 
         RetrofitAdapter.getNetworkApiServiceClient().getAllNotification(Preferences.INSTANCE.getAuthendicate())
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
@@ -346,15 +278,23 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
         else if (item.getItemId() == R.id.clear_all) {
             if (getItemCount()) {
 
-                AlertUtils.showDialog(this, new OnDialogListener() {
+//                AlertUtils.showDialog(this, new OnDialogListener() {
+//                    @Override
+//                    public void onOkClick() {
+//                        deleteAllNofication();
+//                    }
+//
+//                    @Override
+//                    public void onCancelClick() {
+//
+//                    }
+//                });
+
+                AlertUtils.showDialog(this, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onOkClick() {
+                    public void onClick(DialogInterface dialog, int which) {
                         deleteAllNofication();
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-
+                        dialog.dismiss();
                     }
                 });
 
@@ -402,9 +342,12 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
             // remove the item from recycler view
 
 
-            AlertUtils.showDialog(this, new OnDialogListener() {
+            AlertUtils.showDialog(this, new DialogInterface.OnClickListener() {
                 @Override
-                public void onOkClick() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    dialog.dismiss();
+
                     RetrofitAdapter.getNetworkApiServiceClient().deleteNotificationById(Preferences.INSTANCE.getAuthendicate(), deletedItem.getId())
                             .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new CallbackWrapper<Object>(getApplicationContext()) {
@@ -414,10 +357,6 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
                                     updateUI();
                                 }
                             });
-                }
-
-                @Override
-                public void onCancelClick() {
 
                 }
             });

@@ -74,6 +74,7 @@ public interface NetworkApiService {
     @GET("contactlist")
     Observable<String> fetchContactList1(@HeaderMap Map<String, String> headermap);
 
+    @Headers({"Accept: application/json;charset=UTF-8"})
     @GET("announcements")
     Observable<AnnouncementApi> fetchAnnouncements(@HeaderMap Map<String, String> headermap);
 

@@ -9,34 +9,16 @@ import com.playerhub.listener.OnDialogListener;
 public final class AlertUtils {
 
 
-    public static void showDialog(Context context, final OnDialogListener listener) {
+    public static void showDialog(Context context, final DialogInterface.OnClickListener okListener) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setTitle("Confirm");
         builder.setMessage("Are you sure want to clear all notification?");
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("YES", okListener);
 
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing but close the dialog
-                if (listener != null)
-                    listener.onOkClick();
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (listener != null)
-                    listener.onCancelClick();
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("NO", null);
 
         AlertDialog alert = builder.create();
         alert.show();

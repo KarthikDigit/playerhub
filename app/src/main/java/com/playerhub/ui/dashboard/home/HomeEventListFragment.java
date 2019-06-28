@@ -28,7 +28,7 @@ import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
-import com.playerhub.ui.dashboard.home.moreevent.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 
 import java.util.ArrayList;
@@ -142,7 +142,7 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
     }
 
 
-    private void callEventListApi() {
+    public void callEventListApi() {
 
 
         showHideLoading(true);
@@ -163,29 +163,45 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
             public NotiAndEvents apply(NotificationApi notificationApi, EventListResponseApi responseApi, AnnouncementApi announcementApi) throws Exception {
                 return new NotiAndEvents(notificationApi, responseApi, announcementApi);
             }
-        }).subscribeWith(observer));
+        }).subscribeWith(new DisposableObserver<NotiAndEvents>() {
+            @Override
+            public void onNext(NotiAndEvents value) {
+                showHideLoading(false);
+                setNotiAndEventsData(value);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                showHideLoading(false);
+            }
+
+            @Override
+            public void onComplete() {
+                showHideLoading(false);
+            }
+        }));
 
 
     }
 
 
-    private DisposableObserver<NotiAndEvents> observer = new DisposableObserver<NotiAndEvents>() {
-        @Override
-        public void onNext(NotiAndEvents value) {
-            showHideLoading(false);
-            setNotiAndEventsData(value);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            showHideLoading(false);
-        }
-
-        @Override
-        public void onComplete() {
-            showHideLoading(false);
-        }
-    };
+//    private DisposableObserver<NotiAndEvents> observer = new DisposableObserver<NotiAndEvents>() {
+//        @Override
+//        public void onNext(NotiAndEvents value) {
+//            showHideLoading(false);
+//            setNotiAndEventsData(value);
+//        }
+//
+//        @Override
+//        public void onError(Throwable e) {
+//            showHideLoading(false);
+//        }
+//
+//        @Override
+//        public void onComplete() {
+//            showHideLoading(false);
+//        }
+//    };
 
 
     private void setNotiAndEventsData(NotiAndEvents value) {

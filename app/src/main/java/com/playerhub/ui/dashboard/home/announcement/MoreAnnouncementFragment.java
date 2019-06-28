@@ -1,4 +1,4 @@
-package com.playerhub.ui.dashboard.home.moreevent;
+package com.playerhub.ui.dashboard.home.announcement;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,43 +17,37 @@ import com.playerhub.R;
 import com.playerhub.common.ActivityStats;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.AnnouncementApi;
-import com.playerhub.network.response.EventListApi.EventListResponseApi;
-import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.preference.Preferences;
 import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
 import com.playerhub.ui.base.BaseFragment;
-import com.playerhub.ui.dashboard.DashBoardActivity;
+import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.home.AnnouncementAdapter;
-import com.playerhub.ui.dashboard.home.EventsAdapter;
-import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
-import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
+import com.playerhub.ui.dashboard.profile.MyCallBack;
 import com.vlonjatg.progressactivity.ProgressRelativeLayout;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
-public class MoreAnnouncementFragment extends BaseFragment implements AnnouncementAdapter.OnItemClickListener<AnnouncementApi.Datum> {
+public class MoreAnnouncementFragment extends MultiStateViewFragment implements AnnouncementAdapter.OnItemClickListener<AnnouncementApi.Datum> {
+
     private static final String TAG = "MoreEventsActivity";
 
     @BindView(R.id.announcementView)
     RecyclerView announcementView;
-    @BindView(R.id.progressActivity)
-    ProgressRelativeLayout progressActivity;
     Unbinder unbinder;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.swipetoReferesh)
     SwipeRefreshLayout swipetoReferesh;
-    @BindView(R.id.msg_announcement_event)
-    TextView msgAnnouncementEvent;
     private AnnouncementAdapter announcementAdapter;
 
 
@@ -73,14 +67,14 @@ public class MoreAnnouncementFragment extends BaseFragment implements Announceme
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public int getLayoutByID() {
+        return R.layout.activity_more_announcement;
+    }
 
-        View view = inflater.inflate(R.layout.activity_more_announcement, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
-
+    @Override
+    protected void initViews() {
 
         announcementAdapter = new AnnouncementAdapter(getContext(), new ArrayList<AnnouncementApi.Datum>(), this);
 
@@ -106,8 +100,17 @@ public class MoreAnnouncementFragment extends BaseFragment implements Announceme
         });
 
         callEventListApi();
+    }
 
-        return view;
+    @Override
+    protected void onRetryOrCallApi() {
+        callEventListApi();
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
+        showViewEmpty(response.message());
     }
 
 
@@ -118,39 +121,32 @@ public class MoreAnnouncementFragment extends BaseFragment implements Announceme
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
-    @OnClick({R.id.progressActivity})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.progressActivity:
-                break;
-        }
-    }
 
     private void callEventListApi() {
 
         swipetoReferesh.setRefreshing(true);
-        setProgressActivity(ActivityStats.LOADING);
 
-        Observable<AnnouncementApi> observable = RetrofitAdapter.getNetworkApiServiceClient().fetchAnnouncements(Preferences.INSTANCE.getAuthendicate());
 
-        setObservableAndObserver(observable, new Observers<AnnouncementApi>(getContext(), false) {
+        showViewLoading();
 
-            @Override
-            protected void onSuccess(AnnouncementApi response) {
-                setProgressActivity(ActivityStats.CONTENT);
-                setAnnouncementListContent(response);
-                swipetoReferesh.setRefreshing(false);
-            }
+        RetrofitAdapter.getNetworkApiServiceClient().fetchAnnouncements(Preferences.INSTANCE.getAuthendicate())
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MyCallBack<AnnouncementApi>(getContext(), this, false, false) {
+                    @Override
+                    public void onSuccess(AnnouncementApi response) {
+                        swipetoReferesh.setRefreshing(false);
+                        setAnnouncementListContent(response);
+                    }
 
-            @Override
-            protected void onFail(Throwable e) {
-                setProgressActivity(ActivityStats.ERROR);
-                swipetoReferesh.setRefreshing(false);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        swipetoReferesh.setRefreshing(false);
+                    }
+                });
+
 
     }
 
@@ -164,7 +160,7 @@ public class MoreAnnouncementFragment extends BaseFragment implements Announceme
     private void setAnnouncementListContent(AnnouncementApi response) {
 
         if (response != null && response.getSuccess()) {
-            if (response.getData() != null) {
+            if (response.getData() != null && !response.getData().isEmpty()) {
                 showHideError(false);
                 announcementAdapter.updateList(response.getData());
 
@@ -181,42 +177,11 @@ public class MoreAnnouncementFragment extends BaseFragment implements Announceme
 
     private void showHideError(boolean isError) {
 
-        announcementView.setVisibility(isError ? View.GONE : View.VISIBLE);
-        msgAnnouncementEvent.setVisibility(isError ? View.VISIBLE : View.GONE);
+        if (isError) showViewError();
+        else showViewContent();
 
     }
 
-    private void setProgressActivity(ActivityStats activityStats) {
-
-
-        switch (activityStats) {
-            case LOADING:
-                showProgress(progressActivity);
-                break;
-            case EMPTY:
-                showEmpty(progressActivity,
-                        "No Data",
-                        "There is no event available");
-
-                break;
-            case ERROR:
-                showError(progressActivity,
-                        "Error",
-                        "",
-                        "Try Again", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                callEventListApi();
-                            }
-                        });
-
-                break;
-            case CONTENT:
-                showContent(progressActivity);
-                break;
-        }
-
-    }
 
     @OnClick(R.id.back)
     public void onViewClicked() {

@@ -3,6 +3,7 @@ package com.playerhub.ui.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public abstract class MultiStateViewFragment extends BaseFragment implements Bas
 
     public void showViewEmpty(String emptyMsg) {
 
-        multiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
+        multiStateView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
         View view = multiStateView.getView(MultiStateView.VIEW_STATE_EMPTY);
 
         TextView empty = view.findViewById(R.id.emptyMsg);
@@ -133,11 +134,8 @@ public abstract class MultiStateViewFragment extends BaseFragment implements Bas
             showToast("There is no internet connection");
 
         } else {
-
             showViewError("There is no internet connection");
-
         }
-
 
     }
 
