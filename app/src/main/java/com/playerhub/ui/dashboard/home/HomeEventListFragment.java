@@ -25,6 +25,7 @@ import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.network.response.NotificationApi;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
@@ -46,11 +47,12 @@ import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeEventListFragment extends BaseFragment implements EventsAdapter.OnItemClickListener<UpcommingEvent>, CardPagerAdapter.OnItemClickListener, View.OnClickListener {
+public class HomeEventListFragment extends BaseNetworkCheck implements EventsAdapter.OnItemClickListener<UpcommingEvent>, CardPagerAdapter.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = "HomeEventListFragment";
 
@@ -84,6 +86,11 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
 
     @Override
+    public int getLayoutByID() {
+        return 0;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -110,6 +117,21 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
 
 
         return view;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void onRetryOrCallApi() {
+
+    }
+
+    @Override
+    public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
+
     }
 
     @Override
@@ -361,6 +383,12 @@ public class HomeEventListFragment extends BaseFragment implements EventsAdapter
         }
 
 
+    }
+
+    @Override
+    public void networkConnected() {
+
+        callEventListApi();
     }
 
 

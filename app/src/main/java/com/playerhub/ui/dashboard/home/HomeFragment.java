@@ -1,6 +1,7 @@
 package com.playerhub.ui.dashboard.home;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -28,6 +29,7 @@ import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
@@ -57,7 +59,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends MultiStateViewFragment implements ParentChildPagerAdapter.OnItemClicklistener, CardPagerAdapter.OnItemClickListener {
+public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAdapter.OnItemClicklistener, CardPagerAdapter.OnItemClickListener {
 
     @BindView(R.id.noti_img)
     ConstraintLayout notiImg;
@@ -95,6 +97,9 @@ public class HomeFragment extends MultiStateViewFragment implements ParentChildP
     public int getLayoutByID() {
         return R.layout.fragment_home;
     }
+
+
+
 
     @Override
     protected void initViews() {
@@ -220,10 +225,12 @@ public class HomeFragment extends MultiStateViewFragment implements ParentChildP
     protected void onRetryOrCallApi() {
 
 
-        if (getActivity() instanceof DashBoardActivity) {
+        loadData();
 
-            ((DashBoardActivity) getActivity()).addFragment();
-        }
+//        if (getActivity() instanceof DashBoardActivity) {
+//
+//            ((DashBoardActivity) getActivity()).addFragment();
+//        }
 
 //        loadData();
 //
@@ -530,6 +537,13 @@ public class HomeFragment extends MultiStateViewFragment implements ParentChildP
         }
 
     }
+
+    @Override
+    public void networkConnected() {
+
+        loadData();
+    }
+
 
     private static class OnPageChangelistener extends OnPageChangeListener {
 

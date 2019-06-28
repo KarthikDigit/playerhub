@@ -1,18 +1,25 @@
 package com.playerhub.ui.base;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseError;
 import com.playerhub.R;
 import com.playerhub.utils.NetworkHelper;
 import com.playerhub.utils.ProgressUtils;
 import com.vlonjatg.progressactivity.ProgressLayout;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,12 +31,18 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class BaseFragment extends Fragment {
 
     public static final String TAG = "BaseFragment";
+
     protected CompositeDisposable disposable = new CompositeDisposable();
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+
+
 
     public void showToast(String msg) {
 
@@ -38,6 +51,7 @@ public abstract class BaseFragment extends Fragment {
 
 
     }
+
 
     @Override
     public void onDestroy() {
@@ -166,4 +180,8 @@ public abstract class BaseFragment extends Fragment {
             Log.e(TAG, "onCancelled: " + databaseError.getMessage());
         }
     }
+
+
+
+
 }

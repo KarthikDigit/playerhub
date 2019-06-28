@@ -1,5 +1,10 @@
 package com.playerhub.ui.dashboard;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -22,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.playerhub.R;
+import com.playerhub.listener.Observer;
+import com.playerhub.listener.Subject;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
@@ -32,15 +39,17 @@ import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
 import com.playerhub.ui.dashboard.settings.SettingsFragment;
+import com.playerhub.utils.NetworkHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class DashBoardActivity extends BaseActivity {
+public class DashBoardActivity extends BaseActivity implements Subject {
 
     private static final String TAG = "DashBoardActivity";
+    private IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
 
     private Animation blink;
     private BottomNavigationView navigation;
@@ -83,6 +92,10 @@ public class DashBoardActivity extends BaseActivity {
 
         setContentView(R.layout.activity_dash_board);
         ButterKnife.bind(this);
+
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        intentFilter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        intentFilter.addAction("android.net.wifi.STATE_CHANGE");
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -357,4 +370,64 @@ public class DashBoardActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        registerReceiver(broadcastReceiver, intentFilter);
+
+//        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+
+        unregisterReceiver(broadcastReceiver);
+
+//        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+
+                if (NetworkHelper.isNetworkAvailable(context)) {
+                    networkConnected();
+                }
+            }
+        }
+    };
+
+    private void networkConnected() {
+
+        notifyObservers();
+
+    }
+
+    private List<Observer> observers = new ArrayList<>();
+
+    @Override
+    public void register(Observer observer) {
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (final Observer observer : observers) {
+            observer.networkConnected();
+        }
+    }
 }
