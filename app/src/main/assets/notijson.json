@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "data": {
+    "notifications_count": 35
+
+  },
+  "message": "Notifications retrieved successfully!!!"
+}

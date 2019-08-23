@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.common.CallbackWrapper;
 import com.playerhub.listener.OnDialogListener;
@@ -31,7 +32,10 @@ import com.playerhub.ui.base.OnItemClickListener;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
+import com.playerhub.ui.dashboard.notification.testmodel.NotificatinOr;
 import com.playerhub.utils.AlertUtils;
+import com.playerhub.utils.Utility;
+import com.playerhub.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +43,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 public class NotificationActivity extends BaseActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
@@ -214,10 +222,13 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
     }
 
 
+    private static final String TAG = "NotificationActivity";
+
     private void loadData() {
 
 
-        RetrofitAdapter.getNetworkApiServiceClient().getAllNotification(Preferences.INSTANCE.getAuthendicate())
+        RetrofitAdapter.getNetworkApiServiceClient()
+                .getAllNotification(Preferences.INSTANCE.getAuthendicate())
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CallbackWrapper<NotificationApi>(this) {
                     @Override
@@ -225,25 +236,34 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
 
                         if (notificationApi.getSuccess()) {
 
-                            msg.setVisibility(View.GONE);
-
-                            List<NotificationApi.Data.Notification> list = notificationApi.getData().getNotifications();
-
-                            if (list != null && list.size() > 0)
-                                fastAdapter.updateList(list);
-                            else {
-                                mNotificationView.setVisibility(View.GONE);
-                                msg.setVisibility(View.VISIBLE);
-                            }
-
-
+                            showNotification(notificationApi);
                         } else {
 
-                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                            showToast(notificationApi.getMessage());
                         }
-
                     }
                 });
+    }
+
+
+    private void showNotification(NotificationApi notificationApi) {
+
+
+        if (notificationApi.getSuccess() && !Utils.IsNull(notificationApi.getData()) && !Utils.IsNullOrEmpty(notificationApi.getData().getNotifications())) {
+
+            List<NotificationApi.Data.Notification> list = notificationApi.getData().getNotifications();
+            msg.setVisibility(View.GONE);
+            fastAdapter.updateList(list);
+
+
+        } else {
+
+            mNotificationView.setVisibility(View.GONE);
+            msg.setVisibility(View.VISIBLE);
+
+
+        }
+
     }
 
 

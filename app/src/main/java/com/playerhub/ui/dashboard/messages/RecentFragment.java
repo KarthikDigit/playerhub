@@ -294,6 +294,9 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
     public void searchData(String s) {
 
         Log.e(TAG, "searchData: ");
+
+        if (recentAdapter != null && recentAdapter.getFilter() != null)
+            recentAdapter.getFilter().filter(s);
     }
 
     @Override

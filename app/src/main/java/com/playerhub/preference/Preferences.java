@@ -45,6 +45,7 @@ public enum Preferences {
     private static final String KEY_DEVICE_ID = "deviceid";
     private static final String WHISHLIST_PRODUCT = "whish_list_products";
     private static final String KEY_NOTI_COUNT = "noti_count";
+    private static final String KEY_IS_FIRSTTIME_LAUNCH = "is_first_time_launch";
 
     private UserPreferences mPreferenceHandle;
 
@@ -63,6 +64,16 @@ public enum Preferences {
         mPreferenceHandle.setInt(KEY_NOTI_COUNT, count);
     }
 
+
+    public void putIsFirstTimeLaunch(boolean isFirstTime) {
+
+        mPreferenceHandle.setBoolean(KEY_IS_FIRSTTIME_LAUNCH, isFirstTime);
+    }
+
+
+    public boolean getIsFirstTimeLaunch() {
+        return mPreferenceHandle.getBoolean(KEY_IS_FIRSTTIME_LAUNCH, true);
+    }
 
     public void putUserType(String user_type) {
 

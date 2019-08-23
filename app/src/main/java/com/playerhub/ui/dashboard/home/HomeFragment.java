@@ -1,7 +1,6 @@
 package com.playerhub.ui.dashboard.home;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -15,27 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.ag.floatingactionmenu.OptionsFabLayout;
+import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.AnnouncementApi;
+import com.playerhub.network.response.Coach;
 import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
-import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.base.BaseNetworkCheck;
-import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
-import com.playerhub.ui.dashboard.home.announcement.PostAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.announcement.PostAnnouncementFragment;
 import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
@@ -80,8 +80,11 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     @BindView(R.id.pageIndicatorView)
     PageIndicatorView indicatorView;
 
+
     @BindView(R.id.announcement_layout)
     RelativeLayout announcement_layout;
+
+    Unbinder unbinder1;
 
     private ParentChildPagerAdapter parentChildPagerAdapter;
     private CardPagerAdapter mCardAdapter;
@@ -99,18 +102,19 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     }
 
 
-
-
     @Override
     protected void initViews() {
 
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
 
+        profileViewPager.setClipToPadding(false);
+        profileViewPager.setPadding(150, 10, 150, 20);
+        profileViewPager.setPageMargin(0);
         parentChildPagerAdapter = new ParentChildPagerAdapter(getContext());
 
         profileViewPager.setAdapter(parentChildPagerAdapter);
 
-
+        profileViewPager.setOffscreenPageLimit(parentChildPagerAdapter.getCount());
         parentChildPagerAdapter.setOnItemClicklistener(this);
 
         profileViewPager.addOnPageChangeListener(new OnPageChangelistener(indicatorView) {
@@ -123,6 +127,13 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
             }
         });
+//
+//        new TapTargetSequence(getActivity())
+//                .targets(
+//                        TapTarget.forView(notiImg, "Notifications", "You can see notification alerts here")
+//
+//
+//                ).start();
 
 
         mCardAdapter = new CardPagerAdapter(this);
@@ -131,15 +142,16 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         mCardShadowTransformer = new ShadowTransformer(profileViewPager1, mCardAdapter);
 
         profileViewPager1.setAdapter(mCardAdapter);
-        profileViewPager1.setPageTransformer(false, mCardShadowTransformer);
-        profileViewPager1.setOffscreenPageLimit(3);
+//        profileViewPager1.setPageTransformer(false, mCardShadowTransformer);
+//        profileViewPager1.setOffscreenPageLimit(3);
 
         announcement_layout.setVisibility(View.GONE);
 
         profileViewPager1.setClipChildren(false);
+        profileViewPager1.setPadding(100, 10, 100, 20);
         profileViewPager1.setPageMargin(0);
 
-        profileViewPager.setPageTransformer(true, new DepthPageTransformer());
+//        profileViewPager.setPageTransformer(true, new DepthPageTransformer());
 
 //        addParentProfile();
 
@@ -225,12 +237,12 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     protected void onRetryOrCallApi() {
 
 
-        loadData();
+//        loadData();
 
-//        if (getActivity() instanceof DashBoardActivity) {
-//
-//            ((DashBoardActivity) getActivity()).addFragment();
-//        }
+        if (getActivity() instanceof DashBoardActivity) {
+
+            ((DashBoardActivity) getActivity()).addFragment();
+        }
 
 //        loadData();
 //
@@ -271,16 +283,27 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
                                     for (Kid kid1 : kid
                                             ) {
 
+
+//                                        Log.e(TAG, "onNext kids: " + new Gson().toJson(kid1));
+
+                                        Coach coach = kid1.getCoach();
+
                                         ParentChild parentChild = new ParentChild();
                                         parentChild.setType(ParentChild.TYPE.CHILD);
                                         parentChild.setWhoIs("Kid");
                                         parentChild.setId(kid1.getId());
                                         parentChild.setImgUrl(kid1.getAvatarImage());
                                         parentChild.setName(kid1.getFirstname() + " " + kid1.getLastname());
+                                        parentChild.setCoachName(coach.getFirstname() + " " + coach.getLastname());
+                                        parentChild.setCoachImage(coach.getAvatarImage());
+                                        parentChild.setTeamName(kid1.getTeamName());
 
                                         parentChildPagerAdapter.add(parentChild);
 
                                     }
+
+
+                                    profileViewPager.setOffscreenPageLimit(parentChildPagerAdapter.getCount());
                                 }
 
                             }
@@ -366,6 +389,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
     private void setAnnouncementData(List<AnnouncementApi.Datum> upcommingEventList) {
 
+
         if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
 
             if (profileViewPager1 != null)
@@ -375,8 +399,11 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
                 mCardAdapter.updateList(HomeEventListFragment.getOnlyFiveInTheList(upcommingEventList));
 
             } else {
-                if (profileViewPager1 != null)
+                if (profileViewPager1 != null) {
                     announcement_layout.setVisibility(View.GONE);
+
+
+                }
             }
 
 
@@ -456,6 +483,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder1.unbind();
     }
 
 
@@ -476,6 +504,10 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
     @Override
     public void OnItemClick(ParentChild parentChild, int position) {
+
+
+//        MyNotificationManager.getInstance(getContext())
+//                .displayNotification("Hello ", "Test", "event", "487");
 
 
         if (parentChild.getType() == ParentChild.TYPE.PARENT) {
@@ -542,6 +574,14 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     public void networkConnected() {
 
         loadData();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
 

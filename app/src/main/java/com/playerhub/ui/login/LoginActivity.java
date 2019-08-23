@@ -100,6 +100,12 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        if (Preferences.INSTANCE.isUserLoggedIn()) {
+//            showHideLayout(false);
+            moveToDashBoardActivity();
+        }
+
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -201,12 +207,6 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 //        Preferences.INSTANCE.putUserLoggedInStatus(true);
 
 
-        if (Preferences.INSTANCE.isUserLoggedIn()) {
-            showHideLayout(false);
-            moveToDashBoardActivity();
-        }
-
-
 //        Log.e(TAG, "onCreate: user type " + Preferences.INSTANCE.getUserType());
 
     }
@@ -219,8 +219,8 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
         int v = isVisible ? View.GONE : View.VISIBLE;
 
-        logo.setVisibility(v);
-        topLayout.setVisibility(visiblity);
+        if (logo != null) logo.setVisibility(v);
+        if (topLayout != null) topLayout.setVisibility(visiblity);
 //        bottomLayout.setVisibility(visiblity);
 
     }

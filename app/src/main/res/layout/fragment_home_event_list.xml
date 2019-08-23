@@ -91,6 +91,7 @@
                     android:layout_marginRight="@dimen/_16ssp"
                     android:layout_marginBottom="@dimen/_16sdp"
                     app:cardBackgroundColor="@color/bubbles"
+                    app:cardElevation="@dimen/_12sdp"
                     app:cardCornerRadius="@dimen/_4sdp">
 
 

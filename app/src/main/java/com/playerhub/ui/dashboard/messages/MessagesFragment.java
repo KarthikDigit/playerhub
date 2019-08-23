@@ -90,8 +90,8 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
             public void onPageSelected(int i) {
                 updateAdapter();
 
-                if (i == 1) mFilterLayout.setVisibility(View.VISIBLE);
-                else mFilterLayout.setVisibility(View.GONE);
+//                if (i == 1) mFilterLayout.setVisibility(View.VISIBLE);
+//                else mFilterLayout.setVisibility(View.GONE);
             }
 
             @Override

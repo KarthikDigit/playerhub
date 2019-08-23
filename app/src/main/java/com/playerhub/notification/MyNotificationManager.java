@@ -1,5 +1,6 @@
 package com.playerhub.notification;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -107,6 +108,8 @@ public class MyNotificationManager {
          * */
 
         Intent resultIntent = new Intent(mCtx, DashBoardActivity.class);
+//        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         resultIntent.putExtra("type", type);
         resultIntent.putExtra("title", title);
         resultIntent.putExtra("body", body);
@@ -119,7 +122,7 @@ public class MyNotificationManager {
          *  We can detect this code in the activity that will open by this we can get
          *  Which notification opened the activity
          * */
-        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         /*
          *  Setting the pending intent to notification builder
@@ -137,9 +140,9 @@ public class MyNotificationManager {
          * */
         if (mNotifyMgr != null) {
 
-            Random random = new Random();
-
-            int n = random.nextInt(999);
+//            Random random = new Random();
+//
+//            int n = random.nextInt(999);
 
             mNotifyMgr.notify(Integer.parseInt(id), mBuilder.build());
         }
@@ -162,6 +165,8 @@ public class MyNotificationManager {
          * */
 
         Intent resultIntent = new Intent(mCtx, DashBoardActivity.class);
+//        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         resultIntent.putExtra("type", type);
         resultIntent.putExtra("id", id);
         /*
@@ -172,13 +177,20 @@ public class MyNotificationManager {
          *  We can detect this code in the activity that will open by this we can get
          *  Which notification opened the activity
          * */
-        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_ONE_SHOT);
 
         /*
          *  Setting the pending intent to notification builder
          * */
 
         mBuilder.setContentIntent(pendingIntent);
+
+
+//        mBuilder.setAutoCancel(true);
+//        mBuilder.setOnlyAlertOnce(true);
+//        mBuilder.setDeleteIntent(pendingIntent);
+
+//        mBuilder.build().flags |= Notification.FLAG_ONLY_ALERT_ONCE | Notification.FLAG_AUTO_CANCEL;
 
         NotificationManager mNotifyMgr =
                 (NotificationManager) mCtx.getSystemService(NOTIFICATION_SERVICE);

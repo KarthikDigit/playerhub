@@ -132,7 +132,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
             mBaseElevation = cardView.getCardElevation();
         }
 
-        cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
+//        cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
 
 
         ImageView delete = (ImageView) view.findViewById(R.id.delete);

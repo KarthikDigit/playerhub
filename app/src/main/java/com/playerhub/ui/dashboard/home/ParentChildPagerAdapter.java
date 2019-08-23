@@ -4,9 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.playerhub.R;
@@ -60,7 +64,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((ConstraintLayout) object);
+        return view == ((RelativeLayout) object);
     }
 
     @Override
@@ -78,14 +82,42 @@ public class ParentChildPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = mLayoutInflater.inflate(R.layout.row_parent_child_coach_view, container, false);
 
+
+//        ViewGroup.LayoutParams params=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//        ((FrameLayout.LayoutParams) params).leftMargin=16;
+//        ((FrameLayout.LayoutParams) params).rightMargin=16;
+//
+//        itemView.setLayoutParams(params);
+
         final ParentChild parentChild = mList.get(position);
 
         CircleImageView profileImage = itemView.findViewById(R.id.profile_image);
+        CircleImageView coachProfileImage = itemView.findViewById(R.id.profile_coach_image);
         TextView name = itemView.findViewById(R.id.name);
+        TextView coach_name = itemView.findViewById(R.id.coach_name);
+        TextView teeam_name = itemView.findViewById(R.id.team_name);
         TextView whois = itemView.findViewById(R.id.whois);
 
         ImageUtility.loadImage(profileImage, parentChild.getImgUrl());
+
+        if (!TextUtils.isEmpty(parentChild.getCoachImage())) {
+            coachProfileImage.setVisibility(View.VISIBLE);
+            ImageUtility.loadImage(coachProfileImage, parentChild.getCoachImage());
+        } else coachProfileImage.setVisibility(View.GONE);
         name.setText(parentChild.getName());
+
+        if (!TextUtils.isEmpty(parentChild.getCoachName())) {
+            coach_name.setVisibility(View.VISIBLE);
+            coach_name.setText(parentChild.getCoachName());
+        } else coach_name.setVisibility(View.GONE);
+
+        if (!TextUtils.isEmpty(parentChild.getTeamName())) {
+            teeam_name.setVisibility(View.VISIBLE);
+            teeam_name.setText(parentChild.getTeamName());
+        } else teeam_name.setVisibility(View.GONE);
+
+
         whois.setText(parentChild.getWhoIs());
 
         container.addView(itemView);
@@ -105,7 +137,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((ConstraintLayout) object);
+        container.removeView((RelativeLayout) object);
     }
 
 

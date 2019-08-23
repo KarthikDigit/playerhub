@@ -64,6 +64,7 @@ public abstract class BaseFragment extends Fragment {
         if (NetworkHelper.isNetworkAvailable(getContext())) {
 
             return true;
+
         } else {
 
             showToast(getString(R.string.no_internet));

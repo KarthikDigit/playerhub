@@ -28,6 +28,7 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
+import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 
 import butterknife.BindView;
@@ -315,4 +316,17 @@ public class EventDetailsActivity extends BaseActivity {
         onBackPressed();
 
     }
+//
+//
+//    @Override
+//    public void onBackPressed() {
+////        super.onBackPressed();
+//
+//
+//
+//        Intent intent = new Intent(EventDetailsActivity.this, DashBoardActivity.class);
+//        startActivity(intent);
+//
+//        finish();
+//    }
 }

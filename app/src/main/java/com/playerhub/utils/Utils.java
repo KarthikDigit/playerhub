@@ -5,6 +5,7 @@ import com.playerhub.ui.dashboard.home.Events;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,16 @@ public class Utils {
 //        }
 //        return dtReturn;
 //    }
+
+
+    public static <T> boolean IsNull(Object o) {
+        return o == null;
+    }
+
+    public static <T> boolean IsNullOrEmpty(Collection<T> list) {
+        return list == null || list.isEmpty();
+    }
+
 
     public static boolean check(String first, String second) {
 

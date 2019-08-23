@@ -133,6 +133,7 @@
             android:layout_marginRight="8dp"
             android:text="@string/forgot_password"
             android:textColor="@color/white"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"

@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.common.CallbackWrapper;
 import com.playerhub.network.RetrofitAdapter;
@@ -210,6 +212,9 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
                         if (res.getSuccess()) {
 
                             EventDetailsApi.Data data = res.getData();
+
+
+                            Log.e(TAG, "Event Details onSuccess: " + new Gson().toJson(data));
 
 //                            title.setText(getString(data.getEventType()));
 

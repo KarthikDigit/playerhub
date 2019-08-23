@@ -2,9 +2,13 @@ package com.playerhub.ui.dashboard;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -12,6 +16,8 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,6 +26,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -33,14 +41,23 @@ import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.home.HomeFragment;
+import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
 import com.playerhub.ui.dashboard.settings.SettingsFragment;
+import com.playerhub.ui.welcome.WelcomeActivity;
 import com.playerhub.utils.NetworkHelper;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +71,10 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     private Animation blink;
     private BottomNavigationView navigation;
     TextView notificationsBadge;
-
+    private String currentVersion = "";
     private FragmentManger manger;
+
+    private static boolean isFirstTimeUpdateCall = true;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -93,6 +112,27 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         setContentView(R.layout.activity_dash_board);
         ButterKnife.bind(this);
 
+
+        try {
+
+            currentVersion = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+
+            Log.e("Current Version", "::" + currentVersion);
+
+            if (isFirstTimeUpdateCall) {
+
+                new GetVersionCode(currentVersion, this).execute();
+
+                isFirstTimeUpdateCall = false;
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+
+            Log.e(TAG, "onCreate: " + e.getMessage());
+        }
+
+
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         intentFilter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
         intentFilter.addAction("android.net.wifi.STATE_CHANGE");
@@ -122,34 +162,89 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
         getMessageCountFromFirebaseDatabase();
 
+
+//        setTargetView();
+
+
+//        if (getIntent() != null) {
+//
+//            String type = getIntent().getStringExtra("type");
+//
+//
+//            showToast("Notification type  " + type);
+//
+//            Log.e(TAG, "onCreate:Notification "+type );
+//
+//        }
+
         clearNotification();
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        clearNotification();
+    }
+
+    private void setTargetView() {
+
+        new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(navigation.findViewById(R.id.navigation_store), "Events", "You can see all your schedules and upcoming events"),
+                        TapTarget.forView(navigation.findViewById(R.id.navigation_message), "Messages", "You can send msgs to coaches and parents from here").cancelable(false)
+
+                ).start();
+
+
     }
 
 
     private void clearNotification() {
 
-        if (getIntent() != null) {
 
-            if (getIntent().hasExtra("id")) {
+//        boolean b = (getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0;
+//
+//        if (b) {
 
-                String id = getIntent().getStringExtra("id");
+        Intent intent = getIntent();
 
-                if (id != null) {
-                    Preferences.INSTANCE.saveNotification(id, null);
+//        setIntent(new Intent());
 
-                    if (getIntent().hasExtra("type")) {
+        if (intent != null && intent.hasExtra("id") && intent.hasExtra("type")) {
 
-                        String type = getIntent().getStringExtra("type");
+            String id = intent.getStringExtra("id");
+            String type = intent.getStringExtra("type");
 
-                        if (type.toLowerCase().equalsIgnoreCase("chat")) {
 
-                            manger.showFragment(2);
-                        }
-                    }
+            if (id != null && !TextUtils.isEmpty(id) && !TextUtils.isEmpty(type)) {
+
+                Preferences.INSTANCE.saveNotification(id, null);
+
+
+                if (type.toLowerCase().equalsIgnoreCase("chat")) {
+
+                    manger.showFragment(2);
+
+                } else if (type.toLowerCase().equalsIgnoreCase("event")) {
+//                                getIntent().removeExtra("type");
+//                                getIntent().removeExtra("id");
+//                                setIntent(new Intent());
+
+//
+//                                getIntent().putExtra("type", "");
+//                                getIntent().putExtra("id", "");
+                    startActivity(EventDetailsActivity.getIntent(this, Integer.parseInt(id)));
+
                 }
 
+
             }
+
         }
+//        }
+
 
     }
 
@@ -160,6 +255,7 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
 
             getSupportFragmentManager().popBackStack();
+
         }
 
 
@@ -370,39 +466,39 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-        registerReceiver(broadcastReceiver, intentFilter);
-
-//        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-
-        unregisterReceiver(broadcastReceiver);
-
-//        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
-    }
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-
-                if (NetworkHelper.isNetworkAvailable(context)) {
-                    networkConnected();
-                }
-            }
-        }
-    };
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//
+//        registerReceiver(broadcastReceiver, intentFilter);
+//
+////        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, intentFilter);
+//    }
+//
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//
+//        unregisterReceiver(broadcastReceiver);
+//
+////        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+//    }
+//
+//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            final String action = intent.getAction();
+//            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+//
+//                if (NetworkHelper.isNetworkAvailable(context)) {
+//                    networkConnected();
+//                }
+//            }
+//        }
+//    };
 
     private void networkConnected() {
 
@@ -428,6 +524,92 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     public void notifyObservers() {
         for (final Observer observer : observers) {
             observer.networkConnected();
+        }
+    }
+
+
+    private static class GetVersionCode extends AsyncTask<Void, String, String> {
+
+        private String currentVersion;
+        private WeakReference<Context> mContext;
+
+        private GetVersionCode(String currentVersion, Context mContext) {
+            this.currentVersion = currentVersion;
+            this.mContext = new WeakReference<>(mContext);
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            String newVersion = null;
+
+            try {
+                Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=com.playerhub&hl=en")
+//                Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + context.getPackageName() + "&hl=en")
+                        .timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get();
+                if (document != null) {
+                    Elements element = document.getElementsContainingOwnText("Current Version");
+                    for (Element ele : element) {
+                        if (ele.siblingElements() != null) {
+                            Elements sibElemets = ele.siblingElements();
+                            for (Element sibElemet : sibElemets) {
+                                newVersion = sibElemet.text();
+                            }
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "doInBackground: " + e.getMessage());
+            }
+            return newVersion;
+
+        }
+
+
+        @Override
+
+        protected void onPostExecute(String onlineVersion) {
+
+            super.onPostExecute(onlineVersion);
+
+            if (onlineVersion != null && !onlineVersion.isEmpty()) {
+
+                if (onlineVersion.equals(currentVersion)) {
+
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(mContext.get()).create();
+                    alertDialog.setTitle("Update");
+                    alertDialog.setIcon(R.mipmap.ic_launcher);
+                    alertDialog.setMessage("New Update is available");
+
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Update", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                mContext.get().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.playerhub")));
+//                                mContext.get().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mContext.get().getPackageName())));
+                            } catch (android.content.ActivityNotFoundException anfe) {
+                                mContext.get().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.playerhub")));
+//                                mContext.get().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + context.getPackageName())));
+                            }
+                        }
+                    });
+
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    alertDialog.show();
+                }
+
+            }
+
+            Log.e(TAG, "Current version " + currentVersion + "playstore version " + onlineVersion);
+
         }
     }
 }

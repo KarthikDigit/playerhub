@@ -13,7 +13,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="coming_soon">Coming soon</string>
 
-
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!
+    </string>
     <string name="content">Content</string>
     <string name="show">Show</string>
 
@@ -26,6 +31,12 @@
     <string name="stony_brook_santos">STONY BROOK SANTOS</string>
     <string name="profile">Profile</string>
     <string name="_4_5">4\'5\'\'</string>
+
+
+    <string name="login_email_hint">Email</string>
+
+    <string name="login_password_hint">Password</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="no_internet">There is no internet</string>
@@ -89,6 +100,7 @@
     <string name="close">Close</string>
     <string name="create_event">Create Event</string>
     <string name="send">Send</string>
+    <string name="place_apikey">AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY</string>
 
 
 </resources>

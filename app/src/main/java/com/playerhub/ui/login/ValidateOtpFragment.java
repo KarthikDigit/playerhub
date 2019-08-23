@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,7 +129,7 @@ public class ValidateOtpFragment extends DialogFragment implements SMSRetriver.C
     public void onViewClicked(View view) {
 
 
-        if (getArguments() != null && otp.getEditText() != null) {
+        if (getArguments() != null && otp.getEditText() != null && !TextUtils.isEmpty(otp.getEditText().getText().toString())) {
             String mobile_number = getArguments().getString(EXTRA_MOBILE);
 
 
@@ -174,6 +175,8 @@ public class ValidateOtpFragment extends DialogFragment implements SMSRetriver.C
                             Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+        } else if (otp.getEditText() != null && TextUtils.isEmpty(otp.getEditText().getText().toString())) {
+            Toast.makeText(getContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "There is no mobile number", Toast.LENGTH_SHORT).show();
         }

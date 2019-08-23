@@ -15,6 +15,12 @@ public class ParentChild {
 
     private String whoIs;
 
+    private String teamName;
+
+    private String coachName;
+
+    private String coachImage;
+
     public Integer getId() {
         return id;
     }
@@ -53,5 +59,29 @@ public class ParentChild {
 
     public void setWhoIs(String whoIs) {
         this.whoIs = whoIs;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getCoachName() {
+        return coachName;
+    }
+
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
+    }
+
+    public String getCoachImage() {
+        return coachImage;
+    }
+
+    public void setCoachImage(String coachImage) {
+        this.coachImage = coachImage;
     }
 }

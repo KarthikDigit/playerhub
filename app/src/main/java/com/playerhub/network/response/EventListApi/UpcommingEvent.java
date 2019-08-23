@@ -71,6 +71,36 @@ public class UpcommingEvent implements Serializable
     @SerializedName("team")
     @Expose
     private Team team;
+
+    @Override
+    public String toString() {
+        return "UpcommingEvent{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", teamId=" + teamId +
+                ", eventTypeId=" + eventTypeId +
+                ", oppTeamId=" + oppTeamId +
+                ", oppTeamName='" + oppTeamName + '\'' +
+                ", name='" + name + '\'' +
+                ", description=" + description +
+                ", location='" + location + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", allDay=" + allDay +
+                ", isRepeat=" + isRepeat +
+                ", repeatDays='" + repeatDays + '\'' +
+                ", status=" + status +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", deletedAt=" + deletedAt +
+                ", team=" + team +
+                ", oppteam=" + oppteam +
+                ", type=" + type +
+                '}';
+    }
+
     @SerializedName("oppteam")
     @Expose
     private Object oppteam;

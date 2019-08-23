@@ -25,7 +25,12 @@ public class Coach implements Serializable
     private String lastname;
     @SerializedName("avatar_image")
     @Expose
-    private Object avatarImage;
+    private String avatarImage;
+
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -80,11 +85,19 @@ public class Coach implements Serializable
         this.lastname = lastname;
     }
 
-    public Object getAvatarImage() {
+    public String getAvatarImage() {
         return avatarImage;
     }
 
-    public void setAvatarImage(Object avatarImage) {
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setAvatarImage(String avatarImage) {
         this.avatarImage = avatarImage;
     }
 

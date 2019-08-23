@@ -25,7 +25,7 @@ public class App extends Application {
         super.onCreate();
 
         // Initialize Places.
-        Places.initialize(getApplicationContext(), "AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY");
+        Places.initialize(getApplicationContext(), getString(R.string.place_apikey));
 
 // Create a new Places client instance.
         PlacesClient placesClient = Places.createClient(this);

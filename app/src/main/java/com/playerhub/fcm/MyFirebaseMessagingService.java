@@ -24,6 +24,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -68,10 +70,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else {
 //                    MyNotificationManager.getInstance(this).displayNotificationInBoxStyle(title, body, type, id);
 
-                    MyNotificationManager.getInstance(this).displayNotification(title, body, "", "");
+                    MyNotificationManager.getInstance(this).displayNotification(title, body, type, id);
                 }
             } else {
-                MyNotificationManager.getInstance(this).displayNotification(title, body, "", "");
+                MyNotificationManager.getInstance(this).displayNotification(title, body, type, id);
             }
 
         }

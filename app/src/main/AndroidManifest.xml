@@ -61,9 +61,20 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.slidelayout.SlideLayoutActivity"
             android:screenOrientation="portrait">
@@ -88,9 +99,12 @@
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyCLawbBFYa2dZDve2a7atmHGt6txlhHfyA" /> -->
         <!--  -->
+        <!--<meta-data-->
+            <!--android:name="com.google.android.geo.API_KEY"-->
+            <!--android:value="AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY" />-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY" />
+            android:value="AIzaSyBsO-BxkaaJd97jjCBi-Ol9RypMbLjKPRY" />
 
         <activity
             android:name=".ui.dashboard.profile.ProfileActivity"

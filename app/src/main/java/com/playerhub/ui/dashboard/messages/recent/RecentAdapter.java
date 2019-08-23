@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,46 +28,54 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private Context mContext;
-    private List<Object> mList;
+    private List<Object> contactList;
+    private List<Object> contactListFiltered;
     private OnRecyclerItemClickListener onRecyclerItemClickListener;
 
     public RecentAdapter(Context mContext, List<Object> mList, OnRecyclerItemClickListener onRecyclerItemClickListener) {
         this.mContext = mContext;
-        this.mList = mList;
+        this.contactList = mList;
+        this.contactListFiltered = mList;
         this.onRecyclerItemClickListener = onRecyclerItemClickListener;
     }
 
 
     public void addAll(List<Object> list) {
 
-        this.mList = new ArrayList<>();
-        this.mList.addAll(list);
+        this.contactList = new ArrayList<>();
+        this.contactList.addAll(list);
+
+        this.contactListFiltered = new ArrayList<>();
+        this.contactListFiltered.addAll(list);
 
         notifyDataSetChanged();
     }
 
     public void add(Object o) {
 
-        this.mList.add(o);
-        notifyItemInserted(mList.size() - 1);
+        this.contactList.add(o);
+        this.contactListFiltered.add(o);
+        notifyItemInserted(contactListFiltered.size() - 1);
     }
 
     Object getItem(int position) {
 
-        return mList.get(position);
+        return contactListFiltered.get(position);
     }
 
     List<Object> getList() {
-        return mList;
+        return contactListFiltered;
     }
 
     public void clearAll() {
 
-        mList.clear();
-        mList = new ArrayList<>();
+        contactList.clear();
+        contactList = new ArrayList<>();
+        contactListFiltered.clear();
+        contactListFiltered = new ArrayList<>();
         notifyDataSetChanged();
 
     }
@@ -117,17 +127,70 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        return contactListFiltered != null ? contactListFiltered.size() : 0;
     }
 
 
     @Override
     public int getItemViewType(int position) {
 
-        if (mList.get(position) instanceof ConversationsLayout) {
+        if (contactListFiltered.get(position) instanceof ConversationsLayout) {
 
             return 1;
         } else return 0;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    contactListFiltered = contactList;
+                } else {
+                    List<Object> filteredList = new ArrayList<>();
+                    for (Object row : contactList) {
+
+
+                        if (row instanceof User) {
+
+                            User user= (User) row;
+
+                            if (user.name.toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(row);
+                            }
+
+                        } else if (row instanceof ConversationsLayout) {
+
+                            ConversationsLayout user= (ConversationsLayout) row;
+
+                            if (user.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(row);
+                            }
+                        }
+
+                        // name match condition. this might differ depending on your requirement
+//                        // here we are looking for name or phone number match
+//                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getPhone().contains(charSequence)) {
+//                            filteredList.add(row);
+//                        }
+                    }
+
+                    contactListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = contactListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                contactListFiltered = (ArrayList<Object>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 

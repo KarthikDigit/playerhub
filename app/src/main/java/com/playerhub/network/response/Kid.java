@@ -58,6 +58,11 @@ public class Kid implements Serializable {
     @SerializedName("coach")
     @Expose
     private Coach coach;
+
+    @SerializedName("team_name")
+    @Expose
+    private String teamName;
+
     private final static long serialVersionUID = 5315421889206246356L;
 
     public Integer getId() {
@@ -196,4 +201,11 @@ public class Kid implements Serializable {
         this.coach = coach;
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 }

@@ -40,7 +40,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -201,29 +205,11 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
             public void onComplete() {
                 showHideLoading(false);
             }
+
         }));
 
 
     }
-
-
-//    private DisposableObserver<NotiAndEvents> observer = new DisposableObserver<NotiAndEvents>() {
-//        @Override
-//        public void onNext(NotiAndEvents value) {
-//            showHideLoading(false);
-//            setNotiAndEventsData(value);
-//        }
-//
-//        @Override
-//        public void onError(Throwable e) {
-//            showHideLoading(false);
-//        }
-//
-//        @Override
-//        public void onComplete() {
-//            showHideLoading(false);
-//        }
-//    };
 
 
     private void setNotiAndEventsData(NotiAndEvents value) {
@@ -232,6 +218,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
         if (value != null && value.getNotificationApi() != null) {
 
             setNotificationContent(value.getNotificationApi());
+
         } else {
 
             Toast.makeText(getContext(), "There is no notification ", Toast.LENGTH_SHORT).show();
@@ -249,6 +236,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
         if (value != null && value.getAnnouncementApi() != null) {
 
             setAnnouncementListContent(value.getAnnouncementApi());
+
         } else {
 
             showErrorMsg("There is no event");
@@ -312,6 +300,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     }
 
     private void setUpComingEventData(List<UpcommingEvent> upcommingEventList) {
+
 
         upcomingEventView.setEvent("Upcoming Events", getOnlyFiveInTheList(upcommingEventList), getString(R.string.no_upcoming_event));
 
