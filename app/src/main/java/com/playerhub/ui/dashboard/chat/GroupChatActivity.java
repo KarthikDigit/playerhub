@@ -492,7 +492,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("body", body);
-        data.put("type", "groupchat");
+        data.put("type", "chat");
         data.put("conversation", conversations);
 
 
@@ -509,9 +509,6 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
 
         Log.e(TAG, "sendPushMessage: " + new JSONObject(rawParameters).toString());
-
-
-
 
 
         RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())

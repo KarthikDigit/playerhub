@@ -9,10 +9,12 @@
     <color name="light_gray">#80000000</color>
     <color name="light_gray3">#60000000</color>
     <color name="line">#25000000</color>
+    <color name="line1">#10000000</color>
     <color name="colorPrimaryAlpha">#90614ccb</color>
     <color name="colorPrimaryAlpha1">#20614ccb</color>
     <color name="bubbles">#614ccb</color>
     <color name="mintcream">#49516f</color>
+    <color name="translucent_black">#99000000</color>
     <!--<color name="mintcream">#533a7b</color>-->
     <!--<color name="mintcream">#717ec3</color>-->
     <color name="background_tab_pressed">#6633B5E5</color>
@@ -331,6 +333,8 @@
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
     <color name="light_gray1">#f2f2f2</color>
+    <color name="price_color">#E6BC22</color>
+    <color name="color_ee">#EEEEEE</color>
 
 
 </resources>

@@ -93,7 +93,9 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
 
             myChatViewHolder.imageView.layout(0, 0, 0, 0);
-            ImageUtility.firebaseLoadImage(myChatViewHolder.imageView, img_url);
+            ImageUtility.firebaseLoadImage(myChatViewHolder.imageView, img_url, Preferences.INSTANCE.getAutoImageDownload());
+//            ImageUtility.downloadImageFromFirebase(myChatViewHolder.imageView.getContext(), img_url);
+
             myChatViewHolder.imageView.setVisibility(View.VISIBLE);
             myChatViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,8 +145,9 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (img_url != null && !TextUtils.isEmpty(img_url)) {
             otherChatViewHolder.imageView.layout(0, 0, 0, 0);
-            ImageUtility.firebaseLoadImage(otherChatViewHolder.imageView, img_url);
+            ImageUtility.firebaseLoadImage(otherChatViewHolder.imageView, img_url, Preferences.INSTANCE.getAutoImageDownload());
 
+//            ImageUtility.downloadImageFromFirebase(otherChatViewHolder.imageView.getContext(), img_url);
 
             otherChatViewHolder.imageView.setVisibility(View.VISIBLE);
 

@@ -64,7 +64,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
@@ -74,7 +73,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.slidelayout.SlideLayoutActivity"
             android:screenOrientation="portrait">
@@ -99,9 +97,9 @@
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyCLawbBFYa2dZDve2a7atmHGt6txlhHfyA" /> -->
         <!--  -->
-        <!--<meta-data-->
-            <!--android:name="com.google.android.geo.API_KEY"-->
-            <!--android:value="AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY" /> -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBsO-BxkaaJd97jjCBi-Ol9RypMbLjKPRY" />
@@ -126,7 +124,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -179,7 +176,6 @@
             android:name="io.fabric.ApiKey"
             android:value="c08c2a19f1cd232efd6715c827b0eb4fa3404f5d" />
 
-
         <activity android:name=".ui.dashboard.messages.RecentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -188,7 +184,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.dashboard.chat.GroupChatActivity" />
-
 
         <provider
             android:name=".GenericFileProvider"
@@ -245,9 +240,30 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.dashboard.home.addevent.AddEventActivity" />
-        <activity android:name=".ui.dashboard.messages.filteractivity.FilterActivity"></activity>
+        <activity android:name=".ui.dashboard.messages.filteractivity.FilterActivity" />
+        <activity android:name=".test.FunTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.dashboard.home.addevent.EventSharingActivity"
+            android:theme="@style/AppTheme.Sharing" />
+        <activity android:name=".ui.dashboard.home.announcement.PostAnnouncementActivity" />
+        <activity
+            android:name=".ui.dashboard.home.paidevent.PaidEventDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

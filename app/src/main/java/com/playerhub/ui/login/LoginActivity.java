@@ -284,19 +284,43 @@ public class LoginActivity extends BaseActivity implements SMSRetriver.CallBack,
 
                     }
                 } else {
-                    startActivity(new Intent(this, DashBoardActivity.class));
+                    Intent intent = new Intent(this, DashBoardActivity.class);
+
+                    if (getIntent().getExtras() != null) {
+                        intent.putExtras(getIntent().getExtras());
+                    }
+
+                    startActivity(intent);
+
+
                     finish();
                 }
 
             } catch (NullPointerException e) {
-                startActivity(new Intent(this, DashBoardActivity.class));
+                Intent intent = new Intent(this, DashBoardActivity.class);
+
+                if (getIntent().getExtras() != null) {
+                    intent.putExtras(getIntent().getExtras());
+                }
+
+                startActivity(intent);
+
+
                 finish();
 
             }
 
         } else {
 
-            startActivity(new Intent(this, DashBoardActivity.class));
+            Intent intent = new Intent(this, DashBoardActivity.class);
+
+            if (getIntent().getExtras() != null) {
+                intent.putExtras(getIntent().getExtras());
+            }
+
+            startActivity(intent);
+
+
             finish();
 
         }

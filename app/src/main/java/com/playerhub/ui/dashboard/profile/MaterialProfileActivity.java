@@ -12,6 +12,10 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +39,7 @@ import com.playerhub.utils.ImageUtility;
 import com.playerhub.utils.ImageUtils;
 import com.playerhub.utils.KeyboardUtils;
 import com.playerhub.utils.TextInputUtil;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,12 +53,14 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Response;
 
+import static android.transition.Visibility.MODE_IN;
 import static com.playerhub.ui.dashboard.profile.KidsProfile.setWindowFlag;
 
 public class MaterialProfileActivity extends MultiStateViewActivity implements CameraAndGallary.CameraAndGallaryCallBack {
 
 
     private static final String EXTRA_ID = "id";
+    public static final String EXTRA_LOGO = "logo";
 
     private static final String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int REQUEST_PER_CAMERA = 145;
@@ -98,7 +105,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     @BindView(R.id.actionBar_layout)
     RelativeLayout mActionBarLayout;
 
-//    @BindView(R.id.collapsing_toolbar)
+    //    @BindView(R.id.collapsing_toolbar)
 //    CollapsingToolbarLayout mCollapsingToolbarLayout;
 //
     private boolean isSave = false;
@@ -155,6 +162,27 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     }
 
 
+    private void setupWindowAnimation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide fade = new Slide();
+//            fade.setMode(Visibility.MODE_IN);
+            fade.setDuration(500);
+            getWindow().setEnterTransition(fade);
+
+            Fade fadeOut = new Fade();
+            fadeOut.setMode(Visibility.MODE_OUT);
+            fadeOut.setDuration(100);
+            getWindow().setReturnTransition(fadeOut);
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+        }
+
+    }
+
     @Override
     protected void initViews() {
 
@@ -171,6 +199,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         appBarLayout.addOnOffsetChangedListener(onOffsetChangedListener);
 
 
+        setupWindowAnimation();
+
         onRetryOrCallApi();
     }
 
@@ -186,9 +216,27 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     @Override
     protected void onRetryOrCallApi() {
 
+
+        String logo = null;
+
+        Intent intent = getIntent();
+
+        if (intent != null && intent.hasExtra(EXTRA_LOGO)) {
+
+            logo = intent.getStringExtra(EXTRA_LOGO);
+        }
+
+        if (logo != null) {
+
+            Picasso.get().load(logo).error(R.drawable.avatar_mini).into(profileImage);
+            Picasso.get().load(logo).error(R.drawable.avatar_mini).into(fullImage);
+        }
+
+
         int id = getKidId();
 
         showViewLoading();
+        final String finalLogo = logo;
         RetrofitAdapter.getNetworkApiServiceClient().fetchKidDetailsById(Preferences.INSTANCE.getAuthendicate(), id)
 
                 .compose(MaterialProfileActivity.<KidInfoResponse>apply())
@@ -200,7 +248,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 
                         if (kidInfoResponse != null && kidInfoResponse.getData() != null) {
 
-                            setData(kidInfoResponse.getData().getKidinfo());
+                            setData(kidInfoResponse.getData().getKidinfo(), finalLogo);
 
                         } else {
 
@@ -268,7 +316,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         invalidateOptionsMenu();
     }
 
-    private void setData(KidInfoResponse.Kidinfo data) {
+    private void setData(KidInfoResponse.Kidinfo data, String finalLogo) {
 
 
         name.setText(String.format("%s %s", data.getFirstname(), data.getLastname()));
@@ -284,8 +332,11 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         TextInputUtil.setText(parentName, data.getParentName());
         TextInputUtil.setText(joinDate, data.getJoinedOn());
 
-        ImageUtility.loadImage(profileImage, data.getAvatar_image());
-        ImageUtility.loadImage(fullImage, data.getAvatar_image());
+        if (finalLogo == null) {
+            ImageUtility.loadImage(profileImage, data.getAvatar_image());
+            ImageUtility.loadImage(fullImage, data.getAvatar_image());
+        }
+
         camera.setVisibility(View.VISIBLE);
 
 

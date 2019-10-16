@@ -2,6 +2,8 @@ package com.playerhub.network.response;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
@@ -82,7 +84,7 @@ public class ContactListApi implements Serializable {
     }
 
 
-    public static class Datum extends AbstractItem<Datum, Datum.ViewHolder> implements Serializable {
+    public static class Datum extends AbstractItem<Datum, Datum.ViewHolder> implements Serializable, Parcelable {
 
         @SerializedName("id")
         @Expose
@@ -112,6 +114,37 @@ public class ContactListApi implements Serializable {
         private boolean isChecked = false;
 
         private long notification = 0;
+
+        public Datum(){}
+
+        public Datum(Parcel in) {
+            if (in.readByte() == 0) {
+                id = null;
+            } else {
+                id = in.readInt();
+            }
+            name = in.readString();
+            avatar = in.readString();
+            type1 = in.readString();
+            team = in.readString();
+            deviceModel = in.readString();
+            tokenId = in.readString();
+            deviceId = in.readString();
+            isChecked = in.readByte() != 0;
+            notification = in.readLong();
+        }
+
+        public static final Creator<Datum> CREATOR = new Creator<Datum>() {
+            @Override
+            public Datum createFromParcel(Parcel in) {
+                return new Datum(in);
+            }
+
+            @Override
+            public Datum[] newArray(int size) {
+                return new Datum[size];
+            }
+        };
 
         public boolean isChecked() {
             return isChecked;
@@ -218,6 +251,30 @@ public class ContactListApi implements Serializable {
         @Override
         public ViewHolder getViewHolder(@NonNull View v) {
             return new ViewHolder(v);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(id);
+            }
+            dest.writeString(name);
+            dest.writeString(avatar);
+            dest.writeString(type1);
+            dest.writeString(team);
+            dest.writeString(deviceModel);
+            dest.writeString(tokenId);
+            dest.writeString(deviceId);
+            dest.writeByte((byte) (isChecked ? 1 : 0));
+            dest.writeLong(notification);
         }
 
 

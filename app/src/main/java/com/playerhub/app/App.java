@@ -1,8 +1,10 @@
 package com.playerhub.app;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.libraries.places.api.Places;
@@ -11,6 +13,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.playerhub.R;
 import com.playerhub.preference.Preferences;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Request;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
@@ -53,7 +58,38 @@ public class App extends Application {
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
+        Picasso.setSingletonInstance(getCustomPicasso());
+    }
 
+    private Picasso getCustomPicasso() {
+        Picasso.Builder builder = new Picasso.Builder(this);
+        //set 12% of available app memory for image cache
+        builder.memoryCache(new LruCache(getBytesForMemCache(12)));
+        //set request transformer
+        Picasso.RequestTransformer requestTransformer = new Picasso.RequestTransformer() {
+            @Override
+            public Request transformRequest(Request request) {
+                Log.d("image request", request.toString());
+                return request;
+            }
+        };
+        builder.requestTransformer(requestTransformer);
+
+        return builder.build();
+    }
+
+    //returns the given percentage of available memory in bytes
+    private int getBytesForMemCache(int percent) {
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager)
+                getSystemService(ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            activityManager.getMemoryInfo(mi);
+        }
+
+        double availableMemory = mi.availMem;
+
+        return (int) (percent * availableMemory / 100);
     }
 
     @Override

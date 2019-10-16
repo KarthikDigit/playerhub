@@ -1,6 +1,10 @@
 package com.playerhub.ui.dashboard.home;
 
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +32,7 @@ import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
+import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
@@ -295,15 +300,28 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
     private void setTodayEventData(List<UpcommingEvent> todayList) {
 
-        eventView.setEvent("Today Events", getOnlyFiveInTheList(todayList), getString(R.string.no_today_event));
+        if (todayList != null && !todayList.isEmpty()) {
+            eventView.setVisibility(View.VISIBLE);
+            eventView.setEvent("Today Events", getOnlyFiveInTheList(todayList), getString(R.string.no_today_event));
+        } else {
+
+            eventView.setVisibility(View.GONE);
+        }
 
     }
 
     private void setUpComingEventData(List<UpcommingEvent> upcommingEventList) {
 
+        if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
 
-        upcomingEventView.setEvent("Upcoming Events", getOnlyFiveInTheList(upcommingEventList), getString(R.string.no_upcoming_event));
+            upcomingEventView.setVisibility(View.VISIBLE);
+            upcomingEventView.setEvent("Upcoming Events", getOnlyFiveInTheList(upcommingEventList), getString(R.string.no_upcoming_event));
 
+        } else {
+
+            upcomingEventView.setVisibility(View.GONE);
+
+        }
     }
 
 
@@ -366,7 +384,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
             case R.id.upcoming_event_view:
 
-                moveToMoreEventActivity(false);
+                moveToMoreEventActivity(true);
 
                 break;
         }
@@ -428,18 +446,24 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void OnItemClick(View view, UpcommingEvent datum, int position) {
+    public void OnItemClick(View view, UpcommingEvent upcommingEvent, int position) {
 
 //        startActivity(EventDetailsActivity.getIntent(getContext(), datum.getId()));
 
 
-        if (getActivity() instanceof DashBoardActivity) {
+//        if (getActivity() instanceof DashBoardActivity) {
+//
+//            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(EventDetailsFragment.getInstance(datum.getId()));
+//
+//        }
 
-            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(EventDetailsFragment.getInstance(datum.getId()));
+        Intent i = EventDetailsActivity.getIntent(getContext(), upcommingEvent.getId());
 
-        }
+        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());
 
+        startActivity(i, transitionActivityOptions.toBundle());
 
     }
 
@@ -466,7 +490,8 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
         if (getActivity() instanceof DashBoardActivity) {
 
-            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(MoreEventsFragment.getInstance(false, isToday), isToday);
+            ((DashBoardActivity) getActivity()).showMoreEventDetails(isToday);
+//            ((DashBoardActivity) getActivity()).callFragmentFromOutSide(MoreEventsFragment.getInstance(true, isToday), isToday);
 
         }
 

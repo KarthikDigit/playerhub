@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+
+    <FrameLayout
+        android:id="@+id/addeventlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/createpostlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:transitionName="@string/share_transition_name"
+            app:fabSize="normal" />
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:elevation="@dimen/design_fab_elevation"
+            android:scaleType="centerInside"
+            android:src="@drawable/sharing_bg" />
+
+        <TextView
+            android:id="@+id/fab_add_event"
+            style="@style/ShareItemView"
+            android:layout_above="@id/share_button"
+            android:layout_centerHorizontal="true"
+            android:drawableTop="@drawable/ic_small_calendar"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/white"
+            android:elevation="@dimen/design_fab_elevation"
+            android:gravity="center"
+            android:text="@string/add_event" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/twitter"-->
+        <!--style="@style/ShareItemView"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toStartOf="@id/share_button"-->
+        <!--android:drawableTop="@drawable/ic_twitter"-->
+        <!--android:elevation="@dimen/design_fab_elevation"-->
+        <!--android:text="@string/share_twitter"/>-->
+
+        <TextView
+            android:id="@+id/fab_add_announcement"
+            style="@style/ShareItemView"
+            android:layout_below="@id/share_button"
+            android:layout_centerHorizontal="true"
+            android:drawableTop="@drawable/ic_iconfinder_announcement_2742787"
+            android:drawableTint="@color/white"
+            android:elevation="@dimen/design_fab_elevation"
+            android:gravity="center"
+            android:text="@string/add_announcement" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/instagram"-->
+        <!--style="@style/ShareItemView"-->
+        <!--android:layout_below="@id/share_button"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:drawableTop="@drawable/ic_instagram"-->
+        <!--android:elevation="@dimen/design_fab_elevation"-->
+        <!--android:text="@string/share_instagram"/>-->
+
+    </RelativeLayout>
+
+</RelativeLayout>

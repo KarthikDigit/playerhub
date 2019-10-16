@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,14 +13,14 @@ import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.network.response.NotificationApi;
 import com.playerhub.ui.base.OnItemClickListener;
-import com.playerhub.ui.dashboard.home.CardPagerAdapter;
+import com.playerhub.utils.AnimUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static android.support.constraint.Constraints.TAG;
+import static io.fabric.sdk.android.Fabric.TAG;
 
 public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.MyViewHolder> {
     private Context context;
@@ -91,6 +90,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final NotificationApi.Data.Notification item = cartList.get(position);
         holder.description.setText(item.getDescription());
+
+
+//        Log.e(TAG, "onBindViewHolder: " + new Gson().toJson(item));
+
 //        holder.description.setText(item.getDescription());
 //        holder.price.setText("₹" + item.getPrice());
 
@@ -122,7 +125,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         });
 
 
+        AnimUtils.setFadeAnimation(holder.itemView);
+
     }
+
 
     @Override
     public int getItemCount() {

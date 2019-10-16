@@ -1,143 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_150sdp"
-    app:cardCornerRadius="@dimen/_4sdp"
-    app:cardElevation="@dimen/_4sdp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_weight="3"
-            app:cardCornerRadius="@dimen/_8sdp"
-            app:cardElevation="@dimen/_4sdp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/name"
-                        fontPath="fonts/Barlow-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/_24sdp"
-                        android:text="DAVID ANSAH"
-                        android:textSize="@dimen/_16ssp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/team_name"
-                        fontPath="fonts/Barlow-Regular.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/name"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/_12ssp"
-                        android:typeface="serif"
-                        android:visibility="visible"
-                        tools:text="William Floyd Colonials" />
-
-                    <TextView
-                        android:id="@+id/whois"
-                        fontPath="fonts/Barlow-Regular.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/name"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/_10ssp"
-                        android:typeface="serif"
-                        android:visibility="visible"
-                        tools:text="William Floyd Colonials" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_coach_image"
-                        android:layout_width="@dimen/_32sdp"
-                        android:layout_height="@dimen/_32sdp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        app:civ_border_color="@color/colorPrimary"
-                        app:civ_border_width="@dimen/_2sdp"
-                        tools:src="@drawable/profile" />
-
-                    <TextView
-                        android:id="@+id/coach_name"
-                        fontPath="fonts/Barlow-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="DAVID ANSAH"
-                        android:textSize="@dimen/_10ssp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:elevation="@dimen/_12sdp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="@dimen/_54sdp"
-        android:layout_height="@dimen/_54sdp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:elevation="@dimen/_8sdp"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="@dimen/_4sdp"
+        android:transitionName="@string/transition_image"
         tools:src="@drawable/profile" />
 
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/name"
+        fontPath="fonts/Barlow-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="DAVID ANSAH"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/team_name"
+        fontPath="fonts/Barlow-Regular.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_12ssp"
+        android:typeface="serif"
+        android:visibility="visible"
+        tools:text="William Floyd Colonials" />
+
+    <TextView
+        android:id="@+id/whois"
+        fontPath="fonts/Barlow-Regular.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_10ssp"
+        android:typeface="serif"
+        android:visibility="gone"
+        tools:text="William Floyd Colonials" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_coach_image"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="@dimen/_2sdp"
+            tools:src="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/coach_name"
+            fontPath="fonts/Barlow-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="DAVID ANSAH"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -39,8 +39,9 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:alpha=".25"
+                    android:transitionName="@string/transition_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/avatar" />
+                    tools:src="@drawable/avatar" />
 
                 <android.support.constraint.ConstraintLayout
 
@@ -52,7 +53,7 @@
                         android:layout_width="@dimen/_78sdp"
                         android:layout_height="@dimen/_78sdp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/avatar"
+                        tools:src="@drawable/avatar"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="@dimen/_4sdp"
                         app:layout_constraintBottom_toBottomOf="parent"

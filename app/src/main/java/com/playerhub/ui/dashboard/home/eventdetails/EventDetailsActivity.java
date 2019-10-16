@@ -5,10 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,6 +34,7 @@ import com.playerhub.common.CallbackWrapper;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.preference.Preferences;
+import com.playerhub.trans.EventDetailsTransition;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
@@ -88,19 +96,28 @@ public class EventDetailsActivity extends BaseActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_event_details_activity);
         ButterKnife.bind(this);
 
         int id = getIntent().getIntExtra(KEY_EVENT_ID, 0);
 
+
+        Fragment fragment = EventDetailsFragment.getInstance(id);
+
+        fragment.setSharedElementEnterTransition(new EventDetailsTransition());
+        fragment.setEnterTransition(new Explode());
+        fragment.setExitTransition(new Explode());
+        fragment.setSharedElementReturnTransition(new EventDetailsTransition());
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, EventDetailsFragment.getInstance(id))
+                .replace(R.id.content, fragment)
                 .commit();
 
 
@@ -110,7 +127,43 @@ public class EventDetailsActivity extends BaseActivity {
 //
 //
 //        callEventDetailsApi();
+
+        setupWindowAnimation();
     }
+
+    private void setupWindowAnimation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+
+//            Fade fade = new Explode();
+//            fade.setMode(Visibility.MODE_IN);
+//            fade.setDuration(1000);
+            getWindow().setEnterTransition(new Slide());
+
+//            Fade fadeOut = new Fade();
+//            fadeOut.setMode(Visibility.MODE_OUT);
+//            fadeOut.setDuration(1000);
+            getWindow().setReturnTransition(new Slide());
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+
+
+//            Explode fade = new Explode();
+//            fade.setDuration(1000);
+//            getWindow().setEnterTransition(fade);
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+        }
+
+    }
+
 
 //    @Override
 //    public void onMapReady(GoogleMap googleMap) {

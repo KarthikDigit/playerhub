@@ -1,22 +1,28 @@
 package com.playerhub.ui.dashboard.home.addevent;
 
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -141,6 +147,8 @@ public class AddEventFragment extends BaseFragment {
     TextView selectedTeam;
     @BindView(R.id.create_event_card)
     CardView createEventCard;
+    @BindView(R.id.rootview)
+    RelativeLayout rootview;
 
     private FetchTeamsAndEventTypes fetchTeamsAndEventTypes;
 
@@ -210,6 +218,7 @@ public class AddEventFragment extends BaseFragment {
         }
     };
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -421,8 +430,73 @@ public class AddEventFragment extends BaseFragment {
             }
         });
 
+//
+//        Transition transition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.changebounds_with_arcmotion);
+//        getActivity().getWindow().setSharedElementEnterTransition(transition);
+//        transition.addListener(new Transition.TransitionListener() {
+//            @Override
+//            public void onTransitionStart(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionEnd(Transition transition) {
+//                animateRevealShow(rootview);
+////                animateButtonsIn();
+//
+////                int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+////                int cy = viewRoot.getTop();
+////                int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+////
+////                Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+////                viewRoot.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+////
+////                anim.setDuration(1000);
+////                anim.setInterpolator(new AccelerateInterpolator());
+////                anim.start();
+//
+//            }
+//
+//            @Override
+//            public void onTransitionCancel(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionPause(Transition transition) {
+//
+//            }
+//
+//            @Override
+//            public void onTransitionResume(Transition transition) {
+//
+//            }
+//
+//
+//        });
+////
+//        TransitionManager.beginDelayedTransition(rootview, transition);
+
+
         return view;
     }
+//
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    private void animateRevealShow(View viewRoot) {
+//
+//        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+//        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+//        int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+//
+//        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+//        viewRoot.setVisibility(View.VISIBLE);
+//        viewRoot.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+//
+//        anim.setDuration(getResources().getInteger(R.integer.anim_duration_long));
+//        anim.setInterpolator(new AccelerateInterpolator());
+//        anim.start();
+//
+//    }
 
     @Override
     public void onDestroyView() {

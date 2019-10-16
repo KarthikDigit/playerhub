@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="query_suggestions" >
+
+        <item>Test</item>
+        <item>Test2</item>
+        <item>Test3</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test5</item>
+        <item>Test6</item>
+        <item>Test6</item>
+
+
+    </string-array>
+</resources>

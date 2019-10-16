@@ -40,13 +40,20 @@ import com.playerhub.ui.dashboard.messages.recent.RecentAdapter;
 import com.playerhub.utils.Utils;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
@@ -92,6 +99,22 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
         return fragment;
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getView() != null) {
+
+            if (getParentFragment() instanceof MessagesFragment) {
+
+                ((MessagesFragment) getParentFragment()).mFilter.setVisibility(View.GONE);
+
+
+            }
+        }
     }
 
 
@@ -224,25 +247,67 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
             }
         }
 
+
+//        for (int i = 0; i < conversationsList.size(); i++) {
+//
+//
+//            Conversations.Last_Conversation lastConversation = conversationsList.get(i).getLast_conversation();
+//
+//            Log.e(TAG, "addGroupAndUsers: " + new Gson().toJson(lastConversation));
+//
+//        }
+
+
+//
+        Collections.sort(conversationsList, new Comparator<ConversationsLayout>() {
+            @Override
+            public int compare(ConversationsLayout o1, ConversationsLayout o2) {
+
+
+                if (o2.getLast_conversation() != null && o1.getLast_conversation() != null) {
+                    return getTime(o2.getLast_conversation().getTimestamp()).compareTo(getTime(o1.getLast_conversation().getTimestamp()));
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+
         getUserList(conversationsList);
 
     }
 
 
+    public static Date getTime(long timestamp) {
+        return new Date(timestamp);
+    }
+
     private void getUserList(final List<ConversationsLayout> list) {
 
 
+//        Log.e(TAG, "getUserList: id " + Preferences.INSTANCE.getMsgUserId());
+
         recentAdapter.clearAll();
+
+//        final List<Object> objectList = new ArrayList<>();
+
+//
+//        Observable.fromIterable(list).map(new Function<ConversationsLayout, Object>() {
+//        })
+
 
         for (int i = 0; i < list.size(); i++) {
 
-            ConversationsLayout conversations = list.get(i);
+            final ConversationsLayout conversations = list.get(i);
 
             if (conversations != null && !TextUtils.isEmpty(conversations.getTypeName())) {
 
                 if (!Utils.check(conversations.getTypeName(), "group")) {
 
                     List<String> users = conversations.getUsers();
+
+
+                    recentAdapter.add(new User());
 
                     if (users != null && !users.isEmpty()) {
 
@@ -257,6 +322,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
                             userId = users.get(1);
                         }
 
+                        final int finalI = i;
                         FirebaseDatabase.getInstance()
                                 .getReference()
                                 .child(Constants.ARG_USERS)
@@ -266,7 +332,14 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         try {
                                             User value = dataSnapshot.getValue(User.class);
-                                            recentAdapter.add(value);
+//                                            recentAdapter.add(value);
+//                                            if (value == null) {
+//
+//                                                recentAdapter.remove(finalI);
+//                                            } else {
+////                                            value.setTimestamp(conversations.getTimestamp());
+                                            recentAdapter.update(finalI, value);
+//                                            }
                                         } catch (DatabaseException e) {
                                             Log.e(TAG, "onDataChange: " + e.getMessage());
                                         }
@@ -275,6 +348,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
                     }
                 } else {
 
+//                    objectList.add(conversations);
                     recentAdapter.add(conversations);
 
                 }
@@ -283,11 +357,36 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
         }
 
+
+//        Collections.sort(objectList, new Comparator<Object>() {
+//            @Override
+//            public int compare(Object o1, Object o2) {
+//
+//
+//                if (o1 instanceof ConversationsLayout && o2 instanceof ConversationsLayout) {
+//
+//                    return getTime(((ConversationsLayout) o2).getTimestamp()).compareTo(getTime(((ConversationsLayout) o1).getTimestamp()));
+//                } else {
+//                    return getTime(((User) o2).getTimestamp()).compareTo(getTime(((User) o1).getTimestamp()));
+//                }
+//            }
+//
+//
+//        });
+//
+//
+//        recentAdapter.add(objectList);
+
     }
 
     @Override
     public void refreshData() {
         updateAdapter();
+    }
+
+    @Override
+    public void showFilteredList(String teamName) {
+
     }
 
     @Override

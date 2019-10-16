@@ -72,7 +72,7 @@
     <string name="use_password">Use Password</string>
     <string name="ok">Ok</string>
     <string name="today_event">Today Event</string>
-    <string name="more">See More</string>
+    <string name="more">More</string>
     <string name="upcomming_event">Upcomming Event</string>
     <string name="upcoming_event">Upcoming Event</string>
     <string name="no_today_event">There is no event</string>
@@ -101,6 +101,11 @@
     <string name="create_event">Create Event</string>
     <string name="send">Send</string>
     <string name="place_apikey">AIzaSyDwAJUDnylr3p7h3aFpW2tiNfqC0j3smdY</string>
+    <string name="transition_image">transition_image</string>
+    <string name="transition_name">transition_name</string>
+    <string name="share_transition_name">add_event</string>
+    <string name="add_event">Add event</string>
+    <string name="add_announcement">Add Announcement</string>
 
 
 </resources>

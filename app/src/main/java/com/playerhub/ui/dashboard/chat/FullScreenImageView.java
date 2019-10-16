@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.playerhub.R;
+import com.playerhub.preference.Preferences;
 import com.playerhub.utils.ImageUtility;
 import com.squareup.picasso.Picasso;
 
@@ -58,7 +59,7 @@ public class FullScreenImageView extends DialogFragment {
 
 //            Picasso.get().load(img).into(imageView);
 
-            ImageUtility.firebaseLoadImage(imageView, img);
+            ImageUtility.firebaseLoadImage(imageView, img, Preferences.INSTANCE.getAutoImageDownload());
 
         }
 

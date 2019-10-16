@@ -38,6 +38,7 @@ public class User extends AbstractItem<User, User.ViewHolder> implements Seriali
     public String id;
     public String icon;
     public long connection;
+    public long timestamp;
 
     public void setType(String type) {
         this.type = type;
@@ -77,6 +78,14 @@ public class User extends AbstractItem<User, User.ViewHolder> implements Seriali
 
         return type;
 
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getToken_id() {

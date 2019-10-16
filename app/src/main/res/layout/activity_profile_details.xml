@@ -48,6 +48,7 @@
                     android:adjustViewBounds="true"
                     android:alpha=".25"
                     android:scaleType="centerCrop"
+                    android:transitionName="@string/transition_image"
                     tools:src="@drawable/profile" />
 
 
@@ -62,6 +63,7 @@
                         android:layout_width="@dimen/_78sdp"
                         android:layout_height="@dimen/_78sdp"
                         android:layout_marginTop="@dimen/_4sdp"
+                        android:transitionName="@string/transition_image"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="@dimen/_4sdp"
                         tools:src="@drawable/profile" />

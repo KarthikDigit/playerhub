@@ -46,6 +46,7 @@ public enum Preferences {
     private static final String WHISHLIST_PRODUCT = "whish_list_products";
     private static final String KEY_NOTI_COUNT = "noti_count";
     private static final String KEY_IS_FIRSTTIME_LAUNCH = "is_first_time_launch";
+    private static final String KEY_AUTO_IMAGE_DOWNLOAD = "auto_image_download";
 
     private UserPreferences mPreferenceHandle;
 
@@ -64,6 +65,16 @@ public enum Preferences {
         mPreferenceHandle.setInt(KEY_NOTI_COUNT, count);
     }
 
+
+    public void putAutoImageDownload(boolean isDownload) {
+
+        mPreferenceHandle.setBoolean(KEY_AUTO_IMAGE_DOWNLOAD, isDownload);
+    }
+
+    public boolean getAutoImageDownload() {
+
+        return mPreferenceHandle.getBoolean(KEY_AUTO_IMAGE_DOWNLOAD, true);
+    }
 
     public void putIsFirstTimeLaunch(boolean isFirstTime) {
 

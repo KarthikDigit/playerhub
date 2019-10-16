@@ -377,6 +377,11 @@ public class RecentFragment_backup extends MessageBaseFragment {
     }
 
     @Override
+    public void showFilteredList(String teamName) {
+
+    }
+
+    @Override
     public void searchData(String s) {
 
     }

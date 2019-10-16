@@ -243,6 +243,7 @@ public class MoreEventsFragment extends MultiStateViewFragment implements Events
 
 
         } else {
+
             showViewEmpty();
         }
     }

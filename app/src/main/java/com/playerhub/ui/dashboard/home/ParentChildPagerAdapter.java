@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((RelativeLayout) object);
+        return view == ((LinearLayout) object);
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
         final ParentChild parentChild = mList.get(position);
 
-        CircleImageView profileImage = itemView.findViewById(R.id.profile_image);
+        final CircleImageView profileImage = itemView.findViewById(R.id.profile_image);
         CircleImageView coachProfileImage = itemView.findViewById(R.id.profile_coach_image);
         TextView name = itemView.findViewById(R.id.name);
         TextView coach_name = itemView.findViewById(R.id.coach_name);
@@ -127,7 +128,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
 
                 if (onItemClicklistener != null)
-                    onItemClicklistener.OnItemClick(mList.get(position), position);
+                    onItemClicklistener.OnItemClick(profileImage, mList.get(position), position);
 
             }
         });
@@ -137,13 +138,13 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((RelativeLayout) object);
+        container.removeView((LinearLayout) object);
     }
 
 
     public interface OnItemClicklistener {
 
-        void OnItemClick(ParentChild parentChild, int position);
+        void OnItemClick(View view, ParentChild parentChild, int position);
 
     }
 

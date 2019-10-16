@@ -61,6 +61,21 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyItemInserted(contactListFiltered.size() - 1);
     }
 
+    public void update(int i, Object o) {
+
+        this.contactList.set(i, o);
+        this.contactListFiltered.set(i, o);
+        notifyItemChanged(i);
+    }
+
+
+    public void remove(int finalI) {
+
+        this.contactList.remove(finalI);
+        this.contactListFiltered.remove(finalI);
+        notifyItemRemoved(finalI);
+    }
+
     Object getItem(int position) {
 
         return contactListFiltered.get(position);
@@ -155,7 +170,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                         if (row instanceof User) {
 
-                            User user= (User) row;
+                            User user = (User) row;
 
                             if (user.name.toLowerCase().contains(charString.toLowerCase())) {
                                 filteredList.add(row);
@@ -163,7 +178,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                         } else if (row instanceof ConversationsLayout) {
 
-                            ConversationsLayout user= (ConversationsLayout) row;
+                            ConversationsLayout user = (ConversationsLayout) row;
 
                             if (user.getTitle().toLowerCase().contains(charString.toLowerCase())) {
                                 filteredList.add(row);

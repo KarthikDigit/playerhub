@@ -1,8 +1,14 @@
 package com.playerhub.ui.dashboard.profile;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -27,6 +33,9 @@ import io.reactivex.Observable;
 import retrofit2.Response;
 
 public class ProfileDetailsActivity extends MultiStateViewActivity {
+
+
+    public static final String EXTRA_LOGO = "logo";
 
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
@@ -61,8 +70,48 @@ public class ProfileDetailsActivity extends MultiStateViewActivity {
     @Override
     protected void initViews() {
         showViewContent();
+
+
         fetchProfileDetails();
+        setupWindowAnimation();
+
     }
+
+    private void setupWindowAnimation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+
+            Slide fade = new Slide();
+//            fade.setMode(Visibility.MODE_IN);
+            fade.setDuration(200);
+            getWindow().setEnterTransition(fade);
+
+            Explode fadeOut = new Explode();
+//            fadeOut.setMode(Visibility.MODE_OUT);
+            fadeOut.setDuration(100);
+
+            getWindow().setReturnTransition(fadeOut);
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+
+
+//            Explode fade = new Explode();
+//            fade.setDuration(1000);
+//            getWindow().setEnterTransition(fade);
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+
+        }
+
+    }
+
 
     @Override
     protected void onRetryOrCallApi() {
@@ -102,7 +151,22 @@ public class ProfileDetailsActivity extends MultiStateViewActivity {
 
     private void fetchProfileDetails() {
 
+        String logo = null;
 
+        Intent intent = getIntent();
+
+        if (intent != null && intent.hasExtra(EXTRA_LOGO)) {
+
+            logo = intent.getStringExtra(EXTRA_LOGO);
+        }
+
+        if (logo != null) {
+
+            Picasso.get().load(logo).error(R.drawable.avatar_mini).into(profileImage);
+            Picasso.get().load(logo).error(R.drawable.avatar_mini).into(fullImage);
+        }
+
+        final String finalLogo = logo;
         RetrofitAdapter.getNetworkApiServiceClient().fetchUserDetails(Preferences.INSTANCE.getAuthendicate())
 
                 .compose(MaterialProfileActivity.<ProfileDetails>apply())
@@ -114,7 +178,7 @@ public class ProfileDetailsActivity extends MultiStateViewActivity {
 
                         if (profileDetails != null && profileDetails.getData() != null) {
 
-                            setUpData(profileDetails);
+                            setUpData(profileDetails, finalLogo);
 
                         } else {
 
@@ -138,7 +202,7 @@ public class ProfileDetailsActivity extends MultiStateViewActivity {
 
     }
 
-    private void setUpData(ProfileDetails details) {
+    private void setUpData(ProfileDetails details, String finalLogo) {
 
         if (details.getSuccess()) {
 
@@ -150,8 +214,10 @@ public class ProfileDetailsActivity extends MultiStateViewActivity {
 
             setText(phoneNumber, "(" + getString(data.getCountryCode()) + ") " + getString(data.getPhone()));
 
-            Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(profileImage);
-            Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(fullImage);
+            if (finalLogo == null) {
+                Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(profileImage);
+                Picasso.get().load(data.getLogo()).error(R.drawable.avatar_mini).into(fullImage);
+            }
 
         } else {
 

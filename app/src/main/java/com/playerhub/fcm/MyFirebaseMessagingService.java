@@ -26,6 +26,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -63,7 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
              * Displaying a notification locally
              */
             if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(id)) {
-                if (type.toLowerCase().equalsIgnoreCase("singlechat")) {
+                if (type.toLowerCase().equalsIgnoreCase("chat")) {
 
                     MyNotificationManager.getInstance(this).displayNotificationInBoxStyle(title, body, type, id);
 

@@ -1,7 +1,15 @@
 package com.playerhub.ui.dashboard;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
+
+import com.playerhub.R;
 
 import java.util.List;
 
@@ -48,10 +56,28 @@ public class FragmentManger {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void showFragment(int position) {
 
         Fragment fragment = fragmentList.get(position);
-        manger.beginTransaction().hide(active).show(fragment).commit();
+
+        Fade slide = new Fade();
+        slide.setDuration(200);
+//        slide.setSlideEdge(Gravity.END);
+//        slide.setMode(Slide.MODE_IN);
+
+        Fade slide_out = new Fade();
+        slide_out.setDuration(200);
+//        slide_out.setSlideEdge(Gravity.START);
+//        slide_out.setMode(Slide.MODE_OUT);
+
+        fragment.setEnterTransition(slide);
+        fragment.setExitTransition(slide_out);
+
+//        manger.beginTransaction()
+//                .setCustomAnimations(R.anim.sliding_in_left, R.anim.sliding_out_right).hide(active).show(fragment).commit();
+        manger.beginTransaction()
+                .hide(active).show(fragment).commit();
         active = fragment;
     }
 

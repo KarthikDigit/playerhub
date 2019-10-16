@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
+    android:fillViewport="true"
     tools:context=".ui.dashboard.settings.SettingsFragment">
 
 
@@ -45,88 +46,170 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_16sdp">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <TextView
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/soundSwitch"
-                android:paddingRight="@dimen/_16sdp"
-                android:text="Push Notification "
-                android:textSize="@dimen/_16sdp" />
+                android:padding="@dimen/_16sdp">
 
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/soundSwitch"
-                android:theme="@style/SwitchCompatTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
+                <ImageView
+                    android:id="@+id/noti_img"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:alpha=".5"
+                    app:srcCompat="@drawable/ic_notifications_black_24dp" />
 
-            <!--android:thumb="@drawable/switch_thumb"-->
-            <!--android:track="@drawable/switch_track"-->
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_toLeftOf="@+id/soundSwitch"
+                    android:layout_toEndOf="@+id/noti_img"
+                    android:layout_toRightOf="@+id/noti_img"
+                    android:paddingRight="@dimen/_16sdp"
+                    android:text="Push Notification "
+                    android:textSize="@dimen/_12sdp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/line" />
 
-        <RelativeLayout
-            android:id="@+id/profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_16sdp">
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/soundSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"
+                    android:theme="@style/SwitchCompatTheme" />
 
-            <TextView
+                <!--android:thumb="@drawable/switch_thumb"-->
+                <!--android:track="@drawable/switch_track"-->
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/line" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/_16sdp"
-                android:text="Profile"
-                android:textSize="@dimen/_16sdp" />
-
-            <!--android:thumb="@drawable/switch_thumb"-->
-            <!--android:track="@drawable/switch_track"-->
-        </RelativeLayout>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/_16sdp">
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/line" />
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:alpha=".5"
+                    app:srcCompat="@drawable/ic_file_download_black_24dp" />
 
-        <RelativeLayout
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_16sdp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:text="Auto Image Download"
+                    android:textSize="@dimen/_12sdp" />
 
-            <TextView
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/downloadimageSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:theme="@style/SwitchCompatTheme" />
+
+                <!--android:thumb="@drawable/switch_thumb"-->
+                <!--android:track="@drawable/switch_track"-->
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:id="@+id/profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/_16sdp"
-                android:text="Logout"
-                android:textSize="@dimen/_16sdp" />
+                android:padding="@dimen/_16sdp">
 
-            <!--android:thumb="@drawable/switch_thumb"-->
-            <!--android:track="@drawable/switch_track"-->
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/line" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:alpha=".5"
+                    android:src="@drawable/person"
+                    android:transitionName="@string/transition_image" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_toEndOf="@+id/profile_img"
+                    android:layout_toRightOf="@+id/profile_img"
+                    android:paddingRight="@dimen/_16sdp"
+                    android:text="Profile"
+                    android:textSize="@dimen/_12sdp" />
+
+                <!--android:thumb="@drawable/switch_thumb"-->
+                <!--android:track="@drawable/switch_track"-->
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/line" />
+
+
+            <RelativeLayout
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_16sdp">
+
+                <ImageView
+                    android:id="@+id/logout_img"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:alpha=".5"
+                    app:srcCompat="@drawable/ic_logout" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_toEndOf="@+id/logout_img"
+                    android:layout_toRightOf="@+id/logout_img"
+                    android:paddingRight="@dimen/_16sdp"
+                    android:text="Logout"
+                    android:textSize="@dimen/_12sdp" />
+
+                <!--android:thumb="@drawable/switch_thumb"-->
+                <!--android:track="@drawable/switch_track"-->
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/line" />
+
+
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

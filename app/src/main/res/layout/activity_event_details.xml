@@ -283,6 +283,83 @@
 
                     </LinearLayout>
 
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/kidsView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:gravity="center|start"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:gravity="start|center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Paul Raju"
+                                android:textSize="@dimen/_12ssp" />
+
+                            <RadioGroup
+
+                                android:id="@+id/rg51"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginLeft="@dimen/_12sdp"
+                                android:background="@drawable/btn_select_bg"
+                                android:elevation="@dimen/_4sdp"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rg5r21"
+                                    android:layout_width="@dimen/_50sdp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/radio_btn_track1"
+                                    android:button="@null"
+                                    android:checked="true"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_8sdp"
+                                    android:text="YES"
+                                    android:textColor="@color/checker_track" />
+
+                                <RadioButton
+                                    android:id="@+id/rg5r11"
+                                    android:layout_width="@dimen/_50sdp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/radio_btn_track"
+                                    android:button="@null"
+                                    android:checked="false"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_8sdp"
+                                    android:text="NO"
+                                    android:textColor="@color/checker_track" />
+
+
+                            </RadioGroup>
+
+                        </TableRow>
+
+
+                    </TableLayout>
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -335,6 +412,18 @@
             android:text="EVENT DETAILS"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
+
+        <ImageView
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/_16sdp"
+            android:onClick="onBack"
+            android:tint="@color/white"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_share_black_24dp" />
 
 
     </RelativeLayout>

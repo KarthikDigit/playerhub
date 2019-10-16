@@ -158,7 +158,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         conversations.setUsers(users);
         conversations.setStatus(true);
-        conversations.setTimestamp(new Date().getTime());
+        conversations.setTimestamp(System.currentTimeMillis());
 
         final String id = databaseReference.push().getKey();
 
@@ -483,7 +483,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         messages.setName(Preferences.INSTANCE.getUserName());
 
         messages.setSender(Preferences.INSTANCE.getMsgUserId());
-        messages.setTimestamp(new Date().getTime());
+        messages.setTimestamp(System.currentTimeMillis());
         messages.setUpload_status(1);
 
         databaseReference.child(Constants.ARG_MESSAGES).child(conversations.getMessage_id()).child(id).setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -497,7 +497,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
                     last_conversation.setContent(comments.getText().toString());
                     last_conversation.setSender(Preferences.INSTANCE.getUserName());
                     last_conversation.setStatus(true);
-                    last_conversation.setTimestamp(new Date().getTime());
+                    last_conversation.setTimestamp(System.currentTimeMillis());
                     last_conversation.setType("text");
                     conversations.setLast_conversation(last_conversation);
 
@@ -622,7 +622,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("body", body);
-        data.put("type", "singlechat");
+        data.put("type", "chat");
         data.put("id", id);
 
         Map<String, Object> notification = new HashMap<>();
@@ -637,7 +637,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         rawParameters.put("to", sender_id);
 
 
-        Log.e(TAG, "sendPushMessage: "+new JSONObject(rawParameters).toString() );
+        Log.e(TAG, "sendPushMessage: " + new JSONObject(rawParameters).toString());
 
 
         RetrofitAdapter.getNetworkApiServiceClient().sendPustNotification(new JSONObject(rawParameters).toString())

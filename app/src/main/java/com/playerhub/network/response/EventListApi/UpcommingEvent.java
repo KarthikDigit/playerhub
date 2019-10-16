@@ -2,11 +2,22 @@
 package com.playerhub.network.response.EventListApi;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.playerhub.utils.Utils;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
-public class UpcommingEvent implements Serializable
-{
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
+
+public class UpcommingEvent implements Serializable {
+
+
+    private boolean isEmptyView = false;
 
     @SerializedName("id")
     @Expose
@@ -71,6 +82,15 @@ public class UpcommingEvent implements Serializable
     @SerializedName("team")
     @Expose
     private Team team;
+
+
+    public boolean isEmptyView() {
+        return isEmptyView;
+    }
+
+    public void setEmptyView(boolean emptyView) {
+        isEmptyView = emptyView;
+    }
 
     @Override
     public String toString() {
@@ -291,6 +311,27 @@ public class UpcommingEvent implements Serializable
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getContertedDate() {
+
+        Date date = Utils.convertStringToDate(getStartDate(), "yyyy-MM-dd");
+
+        return Utils.convertDateToString(date, "yyyy-MM-dd");
+    }
+
+    public CalendarDay getLocalDate() {
+
+        Date input = Utils.convertStringToDate(getStartDate(), "yyyy-MM-dd");
+
+
+//        LocalDateTime conv=LocalDateTime.ofInstant(input.toInstant(), ZoneId.systemDefault());
+//        LocalDate convDate=conv.toLocalDate();
+
+//        return LocalDate.from(Instant.ofEpochMilli(input.getTime()).atZone(ZoneId.systemDefault()));
+
+        return CalendarDay.from(LocalDate.from(Instant.ofEpochMilli(input.getTime()).atZone(ZoneId.systemDefault())));
+
     }
 
 }

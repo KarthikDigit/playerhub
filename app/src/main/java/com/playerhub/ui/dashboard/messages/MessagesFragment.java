@@ -3,16 +3,19 @@ package com.playerhub.ui.dashboard.messages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.playerhub.R;
@@ -22,6 +25,9 @@ import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.dashboard.chat.ChatActivity;
 import com.playerhub.ui.dashboard.messages.filteractivity.FilterActivity;
 import com.playerhub.viewpageadapter.ViewPagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +49,7 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
     ViewPager viewPager;
 
     @BindView(R.id.filter)
-    ImageView mFilter;
+    protected ImageView mFilter;
     @BindView(R.id.searchView)
     SearchView mSearchView;
 
@@ -51,6 +57,8 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
     LinearLayout mFilterLayout;
 
     private ViewPagerAdapter pagerAdapter;
+
+    public List<String> teamNameList = new ArrayList<>();
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -70,8 +78,9 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_messages, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        mFilter.setVisibility(View.GONE);
         pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        mSearchView.setIconifiedByDefault(true);
 
         pagerAdapter.addFragment(RecentFragment.getInstance("recent"), "Recent");
         pagerAdapter.addFragment(ContactListFragment.getInstance("contacts"), "Contacts");
@@ -113,8 +122,42 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
     @OnClick({R.id.filter})
     public void onFilterClick(View view) {
 
+        PopupMenu menu = new PopupMenu(getContext(), view);
 
-        startActivity(new Intent(view.getContext(), FilterActivity.class));
+        if (!teamNameList.isEmpty()) {
+
+            for (String s : teamNameList
+                    ) {
+
+                menu.getMenu().add(s);
+            }
+
+        } else {
+
+            menu.getMenu().add("All");
+
+        }
+        menu.show();
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (viewPager != null) {
+//            pagerAdapter.notifyDataSetChanged();
+                    int pos = viewPager.getCurrentItem();
+
+                    MessageBaseFragment fragment = (MessageBaseFragment) pagerAdapter.getItem(pos);
+
+                    fragment.showFilteredList(item.getTitle().toString());
+                }
+
+                return false;
+            }
+        });
+
+
+//        startActivity(new Intent(view.getContext(), FilterActivity.class));
 
     }
 
@@ -136,7 +179,7 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
                     item.setName(name);
 
                     Intent intent = new Intent(getContext(), ChatActivity.class);
-                    intent.putExtra("user", item);
+                    intent.putExtra("user", (Parcelable) item);
                     startActivity(intent);
 
 
@@ -153,6 +196,9 @@ public class MessagesFragment extends BaseFragment implements SearchView.OnQuery
     public void updateAdapter() {
 
         if (viewPager != null) {
+
+            mSearchView.clearFocus();
+            mSearchView.setIconified(true);
 //            pagerAdapter.notifyDataSetChanged();
             int pos = viewPager.getCurrentItem();
 

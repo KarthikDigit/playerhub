@@ -45,6 +45,16 @@ public interface NetworkApiService {
     @GET("events/{id}")
     Observable<EventDetailsApi> fetchEventDetailsById(@HeaderMap Map<String, String> headermap, @Path("id") int id);
 
+    @GET("events/{id}")
+    Observable<String> fetchEventStringById(@HeaderMap Map<String, String> headermap, @Path("id") int id);
+
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("event-attendence")
+    Observable<String> postKidsEvent(@HeaderMap Map<String, String> headermap, @Body KidsRequest json);
+
+
+
     //
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("deviceinfo")

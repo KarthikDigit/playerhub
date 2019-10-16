@@ -109,10 +109,11 @@ public class MyNotificationManager {
 
         Intent resultIntent = new Intent(mCtx, DashBoardActivity.class);
 //        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         resultIntent.putExtra("type", type);
-        resultIntent.putExtra("title", title);
-        resultIntent.putExtra("body", body);
+//        resultIntent.putExtra("title", title);
+//        resultIntent.putExtra("body", body);
         resultIntent.putExtra("id", id);
         /*
          *  Now we will create a pending intent
@@ -122,7 +123,7 @@ public class MyNotificationManager {
          *  We can detect this code in the activity that will open by this we can get
          *  Which notification opened the activity
          * */
-        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         /*
          *  Setting the pending intent to notification builder
@@ -166,7 +167,8 @@ public class MyNotificationManager {
 
         Intent resultIntent = new Intent(mCtx, DashBoardActivity.class);
 //        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         resultIntent.putExtra("type", type);
         resultIntent.putExtra("id", id);
         /*
@@ -177,7 +179,7 @@ public class MyNotificationManager {
          *  We can detect this code in the activity that will open by this we can get
          *  Which notification opened the activity
          * */
-        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         /*
          *  Setting the pending intent to notification builder

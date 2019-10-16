@@ -1,23 +1,28 @@
 package com.playerhub.ui.dashboard.home;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.playerhub.R;
-import com.playerhub.network.response.EventListApi.EventListResponseApi;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
+import com.playerhub.utils.AnimUtils;
 import com.playerhub.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.playerhub.ui.base.BaseFragment.TAG;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow> {
 
@@ -25,6 +30,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
     private Context context;
     private List<UpcommingEvent> list;
     private OnItemClickListener onItemClickListener;
+    private long DURATION = 200;
+    private boolean on_attach = true;
 
     public EventsAdapter(Context context, List<UpcommingEvent> list, OnItemClickListener onItemClickListener) {
         this.context = context;
@@ -38,6 +45,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
     public void updateList(List<UpcommingEvent> list) {
         this.list = new ArrayList<>();
+        this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
     }
@@ -103,34 +111,38 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
         final UpcommingEvent events = list.get(i);
 
-        Date date = Utils.convertStringToDate(events.getStartDate(), "yyyy-MM-dd");
 
-        String d = Utils.convertDateToString(date, "dd MMM");
+        if (!events.isEmptyView()) {
 
-        Date dateTaime = Utils.convertStringToDate(events.getStartTime(), "hh:mm:ss");
+            eventsRow.rootView.setVisibility(View.VISIBLE);
+            Date date = Utils.convertStringToDate(events.getStartDate(), "yyyy-MM-dd");
+
+            String d = Utils.convertDateToString(date, "dd MMM");
+
+            Date dateTaime = Utils.convertStringToDate(events.getStartTime(), "hh:mm:ss");
 //
-        String t = Utils.convertDateToString(dateTaime, "hh:mm a");
+            String t = Utils.convertDateToString(dateTaime, "hh:mm a");
 
-        eventsRow.dates.setText(d);
-        eventsRow.time.setText(t);
-        eventsRow.name.setText(events.getName());
-
-
-        String event_type = events.getType().getName() != null ? events.getType().getName() : "";
-
-        int color = getColor(event_type);
-        setColor(eventsRow.roundView, color);
-        setColorLine(eventsRow.lineView, color);
+            eventsRow.dates.setText(d);
+            eventsRow.time.setText(t);
+            eventsRow.name.setText(events.getName());
 
 
-        eventsRow.team_name.setText(events.getTeam().getName() != null ? events.getTeam().getName() : "");
+            String event_type = events.getType().getName() != null ? events.getType().getName() : "";
 
-        if (events.getType() != null) {
-            eventsRow.name2.setText(String.format("%s trip", events.getType().getName()));
-            eventsRow.name2.setVisibility(View.VISIBLE);
-        } else {
-            eventsRow.name2.setVisibility(View.GONE);
-        }
+            int color = getColor(event_type);
+            setColor(eventsRow.roundView, color);
+            setColorLine(eventsRow.lineView, color);
+
+
+            eventsRow.team_name.setText(events.getTeam().getName() != null ? events.getTeam().getName() : "");
+
+//            if (events.getType() != null) {
+//                eventsRow.name2.setText(String.format("%s trip", events.getType().getName()));
+//                eventsRow.name2.setVisibility(View.VISIBLE);
+//            } else {
+//                eventsRow.name2.setVisibility(View.GONE);
+//            }
 
 //        if (events.getDescription() != null && events.getDescription().toString().length()>0) {
 //
@@ -141,21 +153,64 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 //            eventsRow.name2.setVisibility(View.GONE);
 //        }
 
-        eventsRow.name3.setText(events.getLocation());
+            eventsRow.name3.setText(events.getLocation());
 
-        eventsRow.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            eventsRow.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                if (onItemClickListener != null) {
+                    if (onItemClickListener != null) {
 
-                    onItemClickListener.OnItemClick(view, events, i);
+                        onItemClickListener.OnItemClick(view, events, i);
+                    }
+
                 }
+            });
 
+            AnimUtils.setFadeAnimation(eventsRow.itemView);
+        } else {
+
+            eventsRow.rootView.setVisibility(View.INVISIBLE);
+        }
+
+//        FromRightToLeft(eventsRow.itemView, i);
+
+    }
+
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                Log.d(TAG, "onScrollStateChanged: Called " + newState);
+                on_attach = false;
+                super.onScrollStateChanged(recyclerView, newState);
             }
         });
 
+        super.onAttachedToRecyclerView(recyclerView);
     }
+
+    private void FromRightToLeft(View itemView, int i) {
+        if (!on_attach) {
+            i = -1;
+        }
+        boolean not_first_item = i == -1;
+        i = i + 1;
+        itemView.setTranslationX(itemView.getX() + 600);
+        itemView.setAlpha(0.f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(itemView, "translationX", itemView.getX() + 400, 0);
+        ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(itemView, "alpha", 1.f);
+        ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
+        animatorTranslateY.setStartDelay(not_first_item ? DURATION : (i * DURATION));
+        animatorTranslateY.setDuration((not_first_item ? 2 : 1) * DURATION);
+        animatorSet.playTogether(animatorTranslateY, animatorAlpha);
+        animatorSet.start();
+    }
+
 
     @Override
     public int getItemCount() {
@@ -166,7 +221,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
 
         private TextView dates, time, name, name2, name3, team_name;
-        private View roundView, lineView;
+        private View roundView, lineView, rootView;
 
         EventsRow(@NonNull View itemView) {
             super(itemView);
@@ -179,6 +234,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
             team_name = (TextView) itemView.findViewById(R.id.team_name);
             roundView = (View) itemView.findViewById(R.id.view2);
             lineView = (View) itemView.findViewById(R.id.view3);
+            rootView = (View) itemView.findViewById(R.id.rootview);
         }
     }
 

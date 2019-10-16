@@ -1,10 +1,15 @@
 package com.playerhub.ui.dashboard.notification;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +37,7 @@ import com.playerhub.ui.base.OnItemClickListener;
 import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
+import com.playerhub.ui.dashboard.home.paidevent.PaidEventDetailsActivity;
 import com.playerhub.ui.dashboard.notification.testmodel.NotificatinOr;
 import com.playerhub.utils.AlertUtils;
 import com.playerhub.utils.Utility;
@@ -154,6 +160,7 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
             RetrofitAdapter.getNetworkApiServiceClient().readNotification(Preferences.INSTANCE.getAuthendicate(), id)
                     .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new CallbackWrapper<ReadNotification>(this) {
+                        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                         @Override
                         protected void onSuccess(ReadNotification readNotification) {
 
@@ -209,13 +216,29 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
     }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void moveToEventDetailsActivity(NotificationApi.Data.Notification notification) {
 
 
         if (notification != null)
             if (notification.getNotificationType().toLowerCase().equalsIgnoreCase("event") && !notification.getDescription().toLowerCase().contains("event cancelled")) {
-                startActivity(EventDetailsActivity.getIntent(this, notification.getEventId()));
 
+                Intent i = EventDetailsActivity.getIntent(this, notification.getEventId());
+
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+
+                startActivity(i, transitionActivityOptions.toBundle());
+
+//                startActivity();
+
+
+            } else if (notification.getNotificationType().toLowerCase().equalsIgnoreCase("paid_event")) {
+
+                Intent i = PaidEventDetailsActivity.getIntent(this, 0);
+
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+
+                startActivity(i, transitionActivityOptions.toBundle());
 
             }
 

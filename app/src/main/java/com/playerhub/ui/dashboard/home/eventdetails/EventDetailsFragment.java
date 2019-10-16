@@ -2,24 +2,27 @@ package com.playerhub.ui.dashboard.home.eventdetails;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,24 +32,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.playerhub.R;
-import com.playerhub.common.CallbackWrapper;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventDetailsApi;
+import com.playerhub.network.service.KidsRequest;
 import com.playerhub.preference.Preferences;
-import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
-import com.playerhub.ui.dashboard.home.announcement.MultiSelectFragment;
 import com.playerhub.ui.dashboard.profile.MyCallBack;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class EventDetailsFragment extends MultiStateViewFragment implements OnMapReadyCallback {
+public class EventDetailsFragment extends MultiStateViewFragment implements OnMapReadyCallback, KidsViewAdapter.OnItemChangeListener {
 
 
     private static final String KEY_EVENT_ID = "event_id";
@@ -81,8 +85,17 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
 
     @BindView(R.id.actionBar)
     RelativeLayout mActionBar;
+    Unbinder unbinder;
+    @BindView(R.id.share_button)
+    ImageView shareButton;
+    @BindView(R.id.kidsView)
+    RecyclerView kidsView;
+
+    private KidsViewAdapter kidsViewAdapter;
 
     private GoogleMap map;
+
+    private long event_id = 0;
 
 
     public static EventDetailsFragment getInstance(int id) {
@@ -111,9 +124,16 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
         }
 
 
+        kidsView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        kidsViewAdapter = new KidsViewAdapter(getContext(), new ArrayList<EventDetailsApi.Data.Kid>(), this);
+
+        kidsView.setAdapter(kidsViewAdapter);
+
         callEventDetailsApi();
 
     }
+
 
     @Override
     protected void onRetryOrCallApi() {
@@ -161,6 +181,7 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
 
             getActivity().onBackPressed();
         }
+
     }
 
 
@@ -213,6 +234,11 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
 
                             EventDetailsApi.Data data = res.getData();
 
+                            event_id = data.getId();
+
+                            if (data.getKids() != null) {
+                                kidsViewAdapter.update(data.getKids());
+                            }
 
                             Log.e(TAG, "Event Details onSuccess: " + new Gson().toJson(data));
 
@@ -297,6 +323,81 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
 
 
     private static final String TAG = "EventDetailsActivity";
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.share_button)
+    public void onShareEvent() {
+
+
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        share.putExtra(Intent.EXTRA_SUBJECT, "Playerhub Event");
+        share.putExtra(Intent.EXTRA_TEXT, "https://www.playerhub.io/");
+        startActivity(Intent.createChooser(share, "Share link!"));
+
+    }
+
+    @Override
+    public void onItemChange(EventDetailsApi.Data.Kid kid, String value) {
+
+        postKidsAttend(kid, value);
+
+//        Toast.makeText(getContext(), "" + value, Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    private void postKidsAttend(EventDetailsApi.Data.Kid kid, String value) {
+
+
+        if (!(event_id > 0)) {
+
+            return;
+
+        }
+
+
+        KidsRequest kidsRequest = new KidsRequest();
+
+        kidsRequest.setEvent_id(event_id);
+        kidsRequest.setKid_id(kid.getId());
+
+        if (value.toLowerCase().equalsIgnoreCase("yes")) {
+
+            kidsRequest.setType(1);
+
+        } else {
+            kidsRequest.setType(0);
+        }
+
+
+        RetrofitAdapter.getNetworkApiServiceClient().postKidsEvent(Preferences.INSTANCE.getAuthendicate(), kidsRequest)
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MyCallBack<String>(getContext(), this, true, false) {
+
+                    @Override
+                    public void onSuccess(String s) {
+
+
+                        Log.e(TAG, "onSuccess: " + s);
+
+                    }
+                });
+    }
 
     private class GeocoderHandler extends Handler {
 

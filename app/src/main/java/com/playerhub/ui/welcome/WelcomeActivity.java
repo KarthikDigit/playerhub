@@ -22,17 +22,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.playerhub.R;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.login.LoginActivity;
+import com.rd.PageIndicatorView;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private LinearLayout dotsLayout;
+    private RelativeLayout dotsLayout;
+    private PageIndicatorView pageIndicatorView;
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
@@ -74,7 +77,8 @@ public class WelcomeActivity extends AppCompatActivity {
 //        new GooglePlayStoreAppVersionNameLoader().execute();
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        dotsLayout = (RelativeLayout) findViewById(R.id.layoutDots);
+        pageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
@@ -87,7 +91,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.welcome_slide3};
 
         // adding bottom dots
-        addBottomDots(0);
+//        addBottomDots(0);
 
         // making notification bar transparent
         changeStatusBarColor();
@@ -95,6 +99,8 @@ public class WelcomeActivity extends AppCompatActivity {
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+        pageIndicatorView.setViewPager(viewPager);
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,22 +128,23 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
 
-        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
-        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
-
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
-            dotsLayout.addView(dots[i]);
-        }
-
-        if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
+//        dots = new TextView[layouts.length];
+//
+//        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
+//        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
+//
+//        dotsLayout.removeAllViews();
+//        for (int i = 0; i < dots.length; i++) {
+//            dots[i] = new TextView(this);
+//            dots[i].setText(Html.fromHtml("&#8226;"));
+//            dots[i].setTextSize(35);
+//            dots[i].setTextColor(colorsInactive[currentPage]);
+//            dotsLayout.addView(dots[i]);
+//        }
+//
+//        if (dots.length > 0)
+//            dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
     private int getItem(int i) {
@@ -145,8 +152,18 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
+
         Preferences.INSTANCE.putIsFirstTimeLaunch(false);
-        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+
+        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+
+        if (getIntent().getExtras() != null) {
+            intent.putExtras(getIntent().getExtras());
+        }
+
+        startActivity(intent);
+
+
         finish();
     }
 

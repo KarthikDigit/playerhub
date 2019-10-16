@@ -128,9 +128,9 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         CardView cardView = (CardView) view.findViewById(R.id.cardView);
 
 
-        if (mBaseElevation == 0) {
-            mBaseElevation = cardView.getCardElevation();
-        }
+//        if (mBaseElevation == 0) {
+//            mBaseElevation = cardView.getCardElevation();
+//        }
 
 //        cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
 

@@ -9,16 +9,25 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,11 +48,13 @@ import com.playerhub.listener.Observer;
 import com.playerhub.listener.Subject;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
+import com.playerhub.trans.EventDetailsTransition;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.dashboard.home.HomeFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.moreevent.EventsFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
@@ -70,10 +81,10 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
     private Animation blink;
     private BottomNavigationView navigation;
-    TextView notificationsBadge;
+    private TextView notificationsBadge;
     private String currentVersion = "";
     private FragmentManger manger;
-
+    private BottomNavigationMenuView bottomNavigationMenuView;
     private static boolean isFirstTimeUpdateCall = true;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -140,7 +151,7 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        BottomNavigationMenuView bottomNavigationMenuView =
+        bottomNavigationMenuView =
                 (BottomNavigationMenuView) navigation.getChildAt(0);
         View v = bottomNavigationMenuView.getChildAt(2);
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
@@ -178,8 +189,24 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 //        }
 
         clearNotification();
+        setupWindowAnimation();
     }
 
+
+    private void setupWindowAnimation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Explode fade = new Explode();
+            fade.setDuration(1000);
+            getWindow().setEnterTransition(fade);
+
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setDuration(1000);
+//            getWindow().setReturnTransition(slide);
+        }
+
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -204,6 +231,8 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     private void clearNotification() {
 
 
+//        showToast("Called");
+
 //        boolean b = (getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0;
 //
 //        if (b) {
@@ -212,10 +241,16 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
 //        setIntent(new Intent());
 
+//        Log.e(TAG, "clearNotification: " + intent.hasExtra("id") + "  " + intent.hasExtra("type")+" "+intent.getStringExtra("type"));
+
         if (intent != null && intent.hasExtra("id") && intent.hasExtra("type")) {
 
             String id = intent.getStringExtra("id");
             String type = intent.getStringExtra("type");
+
+//            Log.e(TAG, "clearNotification: " + id + "   " + type);
+
+//            showToast(type + "   " + id);
 
 
             if (id != null && !TextUtils.isEmpty(id) && !TextUtils.isEmpty(type)) {
@@ -226,6 +261,8 @@ public class DashBoardActivity extends BaseActivity implements Subject {
                 if (type.toLowerCase().equalsIgnoreCase("chat")) {
 
                     manger.showFragment(2);
+
+                    navigation.setSelectedItemId(R.id.navigation_message);
 
                 } else if (type.toLowerCase().equalsIgnoreCase("event")) {
 //                                getIntent().removeExtra("type");
@@ -261,7 +298,8 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add(MoreEventsFragment.getInstance(true, true));
+//        fragmentList.add(MoreEventsFragment.getInstance(true, true));
+        fragmentList.add(new EventsFragment());
         fragmentList.add(new MessagesFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new MoreAnnouncementFragment());
@@ -299,13 +337,20 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     }
 
 
-    private void showMoreEventDetails(boolean isBackEnabled) {
+    public void showMoreEventDetails(boolean isBackEnabled) {
 
         manger.showFragment(1);
 
-        if (manger.getActive() instanceof MoreEventsFragment) {
-            ((MoreEventsFragment) manger.getActive()).showHideBackButton(isBackEnabled);
-        }
+        navigation.getMenu().findItem(R.id.navigation_store).setChecked(true);
+
+//        if (manger.getActive() instanceof MoreEventsFragment) {
+//            ((MoreEventsFragment) manger.getActive()).showHideBackButton(isBackEnabled);
+//        }
+//        if (manger.getActive() instanceof EventsFragment) {
+//            ((EventsFragment) manger.getActive());
+//        }
+//
+//        showToast("Called " + isBackEnabled);
 
     }
 
@@ -331,11 +376,60 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void callFragmentFromOutSide(Fragment fragment) {
+
+        fragment.setSharedElementEnterTransition(new EventDetailsTransition());
+        fragment.setEnterTransition(new Slide());
+        fragment.setExitTransition(new Slide());
+        fragment.setSharedElementReturnTransition(new EventDetailsTransition());
 
         if (fragment instanceof MoreEventsFragment) {
 
-            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .add(R.id.content, fragment)
+//                    .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
+//                    .addToBackStack(fragment.getClass().getName())
+//                    .commit();
+//
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_out_down, R.anim.slide_in_down)
+                    .add(R.id.content, fragment)
+
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+
+            ((MoreEventsFragment) fragment).showHideBackButton(false);
+//            showMoreEventDetails(false);
+        } else if (fragment instanceof EventDetailsFragment) {
+            getSupportFragmentManager().beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_out_down, R.anim.slide_in_down)
+                    .add(R.id.content, fragment)
+                    .addToBackStack(fragment.getClass().getName()).commit();
+        } else
+            manger.showFragment(4);
+//            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
+
+    }
+
+    public void callFragmentFromOutSideWithAnimation(Fragment fragment) {
+
+        if (fragment instanceof MoreEventsFragment) {
+
+            // Defines enter transition for all fragment views
+//            Slide slideTransition = new Slide(Gravity.RIGHT);
+//            slideTransition.setDuration(1000);
+//            sharedElementFragment2.setEnterTransition(slideTransition);
+//
+//            // Defines enter transition only for shared element
+//            ChangeBounds changeBoundsTransition = TransitionInflater.from(this).inflateTransition(R.transition.change_bounds);
+//            fragmentB.setSharedElementEnterTransition(changeBoundsTransition);
+
+            getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(fragment.getClass().getName()).commit();
 
             ((MoreEventsFragment) fragment).showHideBackButton(false);
 //            showMoreEventDetails(false);
@@ -347,12 +441,19 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void callFragmentFromOutSide(Fragment fragment, boolean isToday) {
+
+        fragment.setSharedElementEnterTransition(new EventDetailsTransition());
+        fragment.setEnterTransition(new Slide());
+        fragment.setExitTransition(new Slide());
+        fragment.setSharedElementReturnTransition(new EventDetailsTransition());
 
         if (fragment instanceof MoreEventsFragment) {
 
             showMoreEventDetails(false, isToday);
         } else if (fragment instanceof EventDetailsFragment) {
+//            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_out_down, R.anim.slide_in_down).add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.content, fragment).addToBackStack(fragment.getClass().getName()).commit();
         } else
             manger.showFragment(4);

@@ -174,6 +174,7 @@ public class PostAnnouncementFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
+//                getActivity().finish();
             }
         });
         send.setOnClickListener(new View.OnClickListener() {
@@ -232,6 +233,7 @@ public class PostAnnouncementFragment extends DialogFragment {
                             ProgressUtils.hideProgress();
 
                             dismiss();
+//                            getActivity().finish();
                         }
 
                         @Override
@@ -240,7 +242,7 @@ public class PostAnnouncementFragment extends DialogFragment {
                             ProgressUtils.hideProgress();
 
                             dismiss();
-
+//                            getActivity().finish();
                             Log.e(TAG, "onError: " + e.getMessage());
 
                         }

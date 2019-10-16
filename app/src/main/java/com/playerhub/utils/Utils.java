@@ -93,4 +93,10 @@ public class Utils {
         return list;
 
     }
+
+    public static String Capitalize(String str) {
+
+        if(str == null) return str;
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }

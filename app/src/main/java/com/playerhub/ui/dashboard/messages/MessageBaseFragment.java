@@ -12,6 +12,8 @@ public abstract class MessageBaseFragment extends MultiStateViewFragment {
     public abstract void refreshData();
 
 
+    public abstract void showFilteredList(String teamName);
+
     public abstract void searchData(String s);
 
     public void showFabGroupCreateButton(View view) {

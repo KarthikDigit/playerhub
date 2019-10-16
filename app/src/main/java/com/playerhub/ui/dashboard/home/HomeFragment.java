@@ -1,12 +1,18 @@
 package com.playerhub.ui.dashboard.home;
 
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.transition.ChangeBounds;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,8 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +36,7 @@ import com.playerhub.network.response.Coach;
 import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
+import com.playerhub.trans.EventDetailsTransition;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
@@ -40,6 +47,7 @@ import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
+import com.playerhub.utils.AnimUtils;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
@@ -85,6 +93,10 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     RelativeLayout announcement_layout;
 
     Unbinder unbinder1;
+    @BindView(R.id.topLayout)
+    RelativeLayout topLayout;
+    @BindView(R.id.bottomLayout)
+    LinearLayout bottomLayout;
 
     private ParentChildPagerAdapter parentChildPagerAdapter;
     private CardPagerAdapter mCardAdapter;
@@ -107,9 +119,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
 
-        profileViewPager.setClipToPadding(false);
-        profileViewPager.setPadding(150, 10, 150, 20);
-        profileViewPager.setPageMargin(0);
+//        profileViewPager.setClipToPadding(false);
+//        profileViewPager.setPadding(60, 10, 60, 10);
+//        profileViewPager.setPageMargin(50);
         parentChildPagerAdapter = new ParentChildPagerAdapter(getContext());
 
         profileViewPager.setAdapter(parentChildPagerAdapter);
@@ -127,6 +139,10 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
             }
         });
+
+
+        profileViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
 //
 //        new TapTargetSequence(getActivity())
 //                .targets(
@@ -139,7 +155,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         mCardAdapter = new CardPagerAdapter(this);
 //        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
 
-        mCardShadowTransformer = new ShadowTransformer(profileViewPager1, mCardAdapter);
+//        mCardShadowTransformer = new ShadowTransformer(profileViewPager1, mCardAdapter);
 
         profileViewPager1.setAdapter(mCardAdapter);
 //        profileViewPager1.setPageTransformer(false, mCardShadowTransformer);
@@ -178,6 +194,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
                     case R.id.fab_add_event:
 
                         addEvent();
+
                         break;
 
 //                    case R.id.fab_add_paid_event:
@@ -185,7 +202,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //                        break;
 
                     case R.id.fab_add_announcement:
+
                         addAnnouncement();
+
                         break;
 
 
@@ -212,7 +231,13 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         }
 
         loadData();
+
+
+        AnimUtils.setSlideDownAnimation(topLayout);
+        AnimUtils.setSlideUpAnimation(bottomLayout);
+
     }
+
 
     private void loadData() {
 
@@ -331,6 +356,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addEvent() {
 
         if (mFloatingMenu.isOptionsMenuOpened()) {
@@ -342,16 +368,25 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //        addEventFragment.show(getChildFragmentManager(), "AddFragment");
 
 
-        startActivity(new Intent(getContext(), AddEventActivity.class));
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+
+
+        startActivity(new Intent(getContext(), AddEventActivity.class), options.toBundle());
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addAnnouncement() {
         if (mFloatingMenu.isOptionsMenuOpened()) {
             mFloatingMenu.closeOptionsMenu();
         }
 
         PostAnnouncementFragment addEventFragment = new PostAnnouncementFragment();
+        addEventFragment.setSharedElementEnterTransition(new ChangeBounds());
+        addEventFragment.setEnterTransition(new Slide());
+        addEventFragment.setExitTransition(new Slide());
+        addEventFragment.setSharedElementReturnTransition(new ChangeBounds());
+
 //        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         addEventFragment.show(getChildFragmentManager(), "PostAnnouncement");
@@ -503,7 +538,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     }
 
     @Override
-    public void OnItemClick(ParentChild parentChild, int position) {
+    public void OnItemClick(View sharedView, ParentChild parentChild, int position) {
 
 
 //        MyNotificationManager.getInstance(getContext())
@@ -512,13 +547,48 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
         if (parentChild.getType() == ParentChild.TYPE.PARENT) {
 
-            startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+
+            Intent i = new Intent(getContext(), ProfileDetailsActivity.class);
+            i.putExtra(ProfileDetailsActivity.EXTRA_LOGO, parentChild.getImgUrl());
+
+//            View sharedView = blueIconImageView;
+            String transitionName = getString(R.string.transition_image);
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+
+                startActivity(i, transitionActivityOptions.toBundle());
+            } else {
+
+                startActivity(i);
+
+            }
+
+//            startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
 
         } else if (parentChild.getType() == ParentChild.TYPE.CHILD) {
 
 
+            Intent i = MaterialProfileActivity.getInstance(getContext(), parentChild.getId());
+            i.putExtra(ProfileDetailsActivity.EXTRA_LOGO, parentChild.getImgUrl());
+//            View sharedView = blueIconImageView;
+            String transitionName = getString(R.string.transition_image);
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+
+                startActivity(i, transitionActivityOptions.toBundle());
+            } else {
+
+                startActivity(i);
+
+            }
+
+
 //            startActivity(KidsProfile.getInstance(getContext(), parentChild.getId()));
-            startActivity(MaterialProfileActivity.getInstance(getContext(), parentChild.getId()));
+//            startActivity(MaterialProfileActivity.getInstance(getContext(), parentChild.getId()));
 
 
 //            startActivity(new Intent(getContext(), KidsProfile.class));
@@ -539,7 +609,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     public void OnItemClick(int pos) {
 
         if (pos == mCardAdapter.getSize() - 1) {
+
             moveToAnnouncementEventActivity();
+
         } else {
 
             AnnouncementApi.Datum datum = mCardAdapter.getItem(pos);
@@ -559,6 +631,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void moveToAnnouncementEventActivity() {
 
 
