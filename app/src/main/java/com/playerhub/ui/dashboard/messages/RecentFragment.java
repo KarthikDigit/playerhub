@@ -340,7 +340,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 ////                                            value.setTimestamp(conversations.getTimestamp());
                                             recentAdapter.update(finalI, value);
 //                                            }
-                                        } catch (DatabaseException e) {
+                                        } catch (DatabaseException | IndexOutOfBoundsException | NullPointerException e) {
                                             Log.e(TAG, "onDataChange: " + e.getMessage());
                                         }
                                     }

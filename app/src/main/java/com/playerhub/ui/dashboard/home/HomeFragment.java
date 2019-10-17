@@ -83,14 +83,14 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
     @BindView(R.id.viewPager)
     ViewPager profileViewPager;
-    @BindView(R.id.viewPager1)
-    ViewPager profileViewPager1;
+//    @BindView(R.id.viewPager1)
+//    ViewPager profileViewPager1;
     @BindView(R.id.pageIndicatorView)
     PageIndicatorView indicatorView;
 
-
-    @BindView(R.id.announcement_layout)
-    RelativeLayout announcement_layout;
+//
+//    @BindView(R.id.announcement_layout)
+//    RelativeLayout announcement_layout;
 
     Unbinder unbinder1;
     @BindView(R.id.topLayout)
@@ -157,15 +157,15 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
 //        mCardShadowTransformer = new ShadowTransformer(profileViewPager1, mCardAdapter);
 
-        profileViewPager1.setAdapter(mCardAdapter);
-//        profileViewPager1.setPageTransformer(false, mCardShadowTransformer);
-//        profileViewPager1.setOffscreenPageLimit(3);
-
-        announcement_layout.setVisibility(View.GONE);
-
-        profileViewPager1.setClipChildren(false);
-        profileViewPager1.setPadding(100, 10, 100, 20);
-        profileViewPager1.setPageMargin(0);
+//        profileViewPager1.setAdapter(mCardAdapter);
+////        profileViewPager1.setPageTransformer(false, mCardShadowTransformer);
+////        profileViewPager1.setOffscreenPageLimit(3);
+//
+//        announcement_layout.setVisibility(View.GONE);
+//
+//        profileViewPager1.setClipChildren(false);
+//        profileViewPager1.setPadding(100, 10, 100, 20);
+//        profileViewPager1.setPageMargin(0);
 
 //        profileViewPager.setPageTransformer(true, new DepthPageTransformer());
 
@@ -425,24 +425,24 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     private void setAnnouncementData(List<AnnouncementApi.Datum> upcommingEventList) {
 
 
-        if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
-
-            if (profileViewPager1 != null)
-                announcement_layout.setVisibility(View.VISIBLE);
-
-            if (!upcommingEventList.isEmpty()) {
-                mCardAdapter.updateList(HomeEventListFragment.getOnlyFiveInTheList(upcommingEventList));
-
-            } else {
-                if (profileViewPager1 != null) {
-                    announcement_layout.setVisibility(View.GONE);
-
-
-                }
-            }
-
-
-        }
+//        if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
+//
+//            if (profileViewPager1 != null)
+//                announcement_layout.setVisibility(View.VISIBLE);
+//
+//            if (!upcommingEventList.isEmpty()) {
+//                mCardAdapter.updateList(HomeEventListFragment.getOnlyFiveInTheList(upcommingEventList));
+//
+//            } else {
+//                if (profileViewPager1 != null) {
+//                    announcement_layout.setVisibility(View.GONE);
+//
+//
+//                }
+//            }
+//
+//
+//        }
 
     }
 

@@ -23,7 +23,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:background="@color/white"
-        app:itemIconSize="@dimen/_20sdp"
+        app:itemIconSize="@dimen/_18sdp"
         app:itemTextAppearanceActive="@style/BottomNavigationTextActive"
         app:itemTextAppearanceInactive="@style/BottomNavigationTextInActive"
         app:labelVisibilityMode="labeled"

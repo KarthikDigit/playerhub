@@ -99,13 +99,13 @@
 
     <style name="BottomNavigationTextActive" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textSize">@dimen/_6sdp</item>
         <!--<item name="android:textStyle">bold</item>-->
     </style>
 
     <style name="BottomNavigationTextInActive" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textSize">@dimen/_8sdp</item>
         <!--<item name="android:textStyle">bold</item>-->
     </style>
 

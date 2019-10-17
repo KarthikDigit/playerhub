@@ -55,4 +55,9 @@
     <dimen name="text_size_xmedium">14dp</dimen>
     <dimen name="text_size_large">16dp</dimen>
 
+    <!--<dimen name="design_navigation_icon_size" tools:override="true">@dimen/_12sdp</dimen>-->
+    <!--<dimen name="design_bottom_navigation_text_size" tools:override="true">@dimen/_6ssp</dimen>-->
+    <!--<dimen name="design_bottom_navigation_active_text_size" tools:override="true">@dimen/_6ssp-->
+    <!--</dimen>-->
+
 </resources>

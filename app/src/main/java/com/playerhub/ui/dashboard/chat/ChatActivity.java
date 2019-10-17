@@ -103,6 +103,8 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     private Object user;
     private DatabaseReference databaseReference;
 
+    private long messageCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +123,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         final List<String> users = new ArrayList<>();
+        final List<String> dummyusers = new ArrayList<>();
 
 
         user = getIntent().getSerializableExtra("user");
@@ -150,6 +153,8 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         users.add(secondUser);
         users.add(Preferences.INSTANCE.getMsgUserId());
+        dummyusers.add(Preferences.INSTANCE.getMsgUserId());
+        dummyusers.add(secondUser);
 
         Log.e(TAG, "onCreate:  ids " + Preferences.INSTANCE.getMsgUserId() + " secondUser " + secondUser);
 
@@ -173,18 +178,22 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
                     @Override
                     public void onSuccess(@NonNull DataSnapshot dataSnapshot) {
 
+//                        Log.e(TAG, "onSuccess: " + dataSnapshot.getChildrenCount());
 
-                        boolean isAlreadyCreated = checkAlreadyConversationMessageIdCreated(dataSnapshot, users);
+                        boolean isAlreadyCreated = checkAlreadyConversationMessageIdCreated(dataSnapshot, users, dummyusers);
 
 
                         if (!isAlreadyCreated) {
 
+
+//                            Log.e(TAG, "onSuccess: not there  ");
+//
                             createConversationMessageId(databaseReference, id);
 
                         }
 
 
-                        Log.e(TAG, "onSuccess: isAlready " + isAlreadyCreated + "   " + new Gson().toJson(conversations));
+//                        Log.e(TAG, "onSuccess: isAlready " + isAlreadyCreated + "   " + new Gson().toJson(conversations));
 
 
                         getAllMessages(conversations.getMessage_id());
@@ -275,9 +284,9 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     private void changeIsTypingInFireBase(DatabaseReference databaseReference, Conversations.Is_Typing is_typing) {
         conversations.setIs_typing(is_typing);
         if (user instanceof ContactListApi.Datum) {
-            databaseReference.child(Constants.ARG_CONVERSATION).child(((ContactListApi.Datum) user).getUserID()).child(conversations.getMessage_id()).setValue(conversations);
+            databaseReference.child(Constants.ARG_CONVERSATION).child(((ContactListApi.Datum) user).getUserID()).child(conversations.getMessage_id()).child("is_typing").setValue(is_typing);
         } else if (user instanceof User) {
-            databaseReference.child(Constants.ARG_CONVERSATION).child(((User) user).id).child(conversations.getMessage_id()).setValue(conversations);
+            databaseReference.child(Constants.ARG_CONVERSATION).child(((User) user).id).child(conversations.getMessage_id()).child("is_typing").setValue(is_typing);
         }
     }
 
@@ -290,24 +299,25 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     }
 
     private boolean checkAlreadyConversationMessageIdCreated(DataSnapshot
-                                                                     dataSnapshot, List<String> users) {
+                                                                     dataSnapshot, List<String> users, List<String> dummyusers) {
 
+//        Log.e(TAG, "checkAlreadyConversationMessageIdCreated: " + dataSnapshot.getChildrenCount());
         boolean isThere = false;
 
-        try {
 
-            //                List<Conversations> messagesList = new ArrayList<>();
-            for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+        //                List<Conversations> messagesList = new ArrayList<>();
+        for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+            try {
                 Conversations value = dataSnapshotChild.getValue(Conversations.class);
 
-                if (value != null && value.getType() != null && !TextUtils.isEmpty(value.getType()) && !value.getType().toLowerCase().equalsIgnoreCase("group")) {
-                    Log.e(TAG, "onDataChange: " + new Gson().toJson(value.getMessage_id()));
-                    List<String> ne = new ArrayList<>();
-                    ne.add(users.get(1));
-                    ne.add(users.get(0));
-
+                if (value != null && !TextUtils.isEmpty(value.getType()) && !value.getType().toLowerCase().equalsIgnoreCase("group")) {
+//                    Log.e(TAG, "onDataChange: " + new Gson().toJson(value.getMessage_id()));
+////                    List<String> ne = new ArrayList<>();
+////                    ne.add(users.get(1));
+////                    ne.add(users.get(0));
+//
                     try {
-                        if (users != null && (value.getUsers().containsAll(users) || value.getUsers().containsAll(ne))) {
+                        if (users != null && (value.getUsers().containsAll(users) || value.getUsers().containsAll(dummyusers))) {
                             conversations = value;
                             isThere = true;
                             return isThere;
@@ -315,13 +325,12 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
                     } catch (NullPointerException e) {
                         Log.e(TAG, "onDataChange: " + e.getMessage());
                     }
-
+//
                 }
+            } catch (DatabaseException e) {
 
+                Log.e(TAG, "onDataChange: " + e.getMessage());
             }
-        } catch (DatabaseException e) {
-
-            Log.e(TAG, "onDataChange: " + e.getMessage());
         }
 
 
@@ -459,6 +468,8 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     }
 
     private void sendMessages(String imageUrl) {
+        messageCount++;
+//        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).keepSynced(true);
 
         String msg = comments.getText().toString();
 
@@ -486,13 +497,14 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         messages.setTimestamp(System.currentTimeMillis());
         messages.setUpload_status(1);
 
+
         databaseReference.child(Constants.ARG_MESSAGES).child(conversations.getMessage_id()).child(id).setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
                 if (task.isComplete()) {
                     long count = conversations.getUnread() + 1;
-                    conversations.setUnread(count);
+//                    conversations.setUnread(count);
                     Conversations.Last_Conversation last_conversation = new Conversations.Last_Conversation();
                     last_conversation.setContent(comments.getText().toString());
                     last_conversation.setSender(Preferences.INSTANCE.getUserName());
@@ -503,10 +515,63 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
 
                     //Update unRead messsages to 0
-                    FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(0)).child(conversations.getMessage_id()).setValue(conversations);
+//                    FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(0)).child(conversations.getMessage_id()).setValue(conversations);
 
 
                     FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).child(conversations.getMessage_id()).child("last_conversation").setValue(last_conversation);
+
+
+                    if (conversations.getUsers().get(0).toLowerCase().equalsIgnoreCase(Preferences.INSTANCE.getMsgUserId().toLowerCase())) {
+                        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(1)).child(conversations.getMessage_id()).child("unread").setValue(messageCount);
+//                        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(1)).child(conversations.getMessage_id()).getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                Conversations conversations = dataSnapshot.getValue(Conversations.class);
+//
+//
+//                                if (conversations != null) {
+//
+//                                    Log.e(TAG, "onDataChange: " + new Gson().toJson(conversations));
+//
+//                                    Log.e(TAG, "onDataChange :1 count  " + conversations.getUnread());
+//                                    long count = conversations.getUnread() + 1;
+//
+//                                    FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(1)).child(conversations.getMessage_id()).child("unread").setValue(count);
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
+                    } else {
+
+//                        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(0)).child(conversations.getMessage_id()).getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                Conversations conversations = dataSnapshot.getValue(Conversations.class);
+//
+//                                if (conversations != null) {
+//                                    Log.e(TAG, "onDataChange :0 count  " + conversations.getUnread());
+//                                    long count = conversations.getUnread() + 1;
+//
+//                                    FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(0)).child(conversations.getMessage_id()).child("unread").setValue(count);
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
+
+                        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(conversations.getUsers().get(0)).child(conversations.getMessage_id()).child("unread").setValue(messageCount);
+                    }
 
                     checkIsUserLive();
 

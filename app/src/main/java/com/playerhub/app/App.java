@@ -11,6 +11,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.database.FirebaseDatabase;
 import com.playerhub.R;
+import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.picasso.LruCache;
@@ -57,6 +58,10 @@ public class App extends Application {
         Preferences.INSTANCE.createPreferences(this);
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().getReference().keepSynced(true);
+//        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).getDatabase().setPersistenceEnabled(true);
+//        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).keepSynced(true);
+
 
         Picasso.setSingletonInstance(getCustomPicasso());
     }

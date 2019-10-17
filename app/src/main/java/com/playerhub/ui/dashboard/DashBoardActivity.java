@@ -104,6 +104,10 @@ public class DashBoardActivity extends BaseActivity implements Subject {
                 case R.id.navigation_store:
                     showMoreEventDetails(true);
                     return true;
+
+                case R.id.navigation_announcement:
+                    manger.showFragment(4);
+                    return true;
                 case R.id.navigation_settings:
                     manger.showFragment(3);
                     return true;
