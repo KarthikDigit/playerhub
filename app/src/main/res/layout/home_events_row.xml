@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/_16sdp"
-    android:paddingTop="8dp"
+    android:paddingTop="@dimen/_12sdp"
     android:paddingRight="@dimen/_16sdp"
-    android:paddingBottom="4dp">
+    android:paddingBottom="@dimen/_8sdp">
 
     <LinearLayout
         android:id="@+id/rootview"

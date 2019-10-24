@@ -55,6 +55,7 @@ import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.EventsFragment;
+import com.playerhub.ui.dashboard.home.moreevent.EventsUpdatedFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
@@ -303,7 +304,8 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
 //        fragmentList.add(MoreEventsFragment.getInstance(true, true));
-        fragmentList.add(new EventsFragment());
+//        fragmentList.add(new EventsFragment());
+        fragmentList.add(new EventsUpdatedFragment());
         fragmentList.add(new MessagesFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new MoreAnnouncementFragment());

@@ -78,303 +78,336 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clipToPadding="false"
-                android:fillViewport="true"
-                android:paddingTop="@dimen/_8sdp">
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_18sdp"
-                            android:alpha=".5"
-                            app:srcCompat="@drawable/ic_group" />
+                        android:layout_marginRight="@dimen/_8sdp"
+                        app:cardElevation="@dimen/_4sdp"
+                        app:contentPadding="@dimen/_12sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_16sdp"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/team_name"
-                                fontPath="fonts/Barlow-Regular.ttf"
+                            <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:alpha=".5"
+                                app:srcCompat="@drawable/ic_group" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_14sdp"
-                                tools:text="Barca NY 04 PRO" />
+                                android:layout_marginLeft="@dimen/_16sdp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/team_name"
+                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_14sdp"
+                                    tools:text="Barca NY 04 PRO" />
+
+                            </LinearLayout>
+
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
-
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:alpha=".5"
-                            app:srcCompat="@drawable/ic_team_icon_01" />
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        app:cardElevation="@dimen/_4sdp"
+                        app:contentPadding="@dimen/_12sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_16sdp"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                            <TextView
-                                android:id="@+id/event_type"
-                                fontPath="fonts/Barlow-Regular.ttf"
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha=".5"
+                                app:srcCompat="@drawable/ic_team_icon_01" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:alpha=".8"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_12sdp"
-                                tools:text="Event Type" />
+                                android:layout_marginLeft="@dimen/_16sdp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/event_type"
+                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:alpha=".8"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_12sdp"
+                                    tools:text="Event Type" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:alpha=".5"
+                                app:srcCompat="@drawable/ic_small_calendar" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_16sdp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/date_time"
+                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_14sdp"
+                                    tools:text="Sun,Aug 21,2018" />
+
+                                <TextView
+                                    android:id="@+id/event_time"
+                                    fontPath="fonts/Roboto-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:lineSpacingExtra="2dp"
+                                    android:textSize="@dimen/_10sdp"
+                                    tools:text="09:15 AM - 10:15 AM" />
 
 
-                    <LinearLayout
+                                <TextView
+                                    android:id="@+id/event_repeat"
+                                    fontPath="fonts/Roboto-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:lineSpacingExtra="2dp"
+                                    android:textSize="@dimen/_10sdp"
+                                    tools:text="Repeat Every Monday,Wednesday,\nuntil Septemper 01,2018" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_18sdp"
-                            android:alpha=".5"
-                            app:srcCompat="@drawable/ic_small_calendar" />
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        app:cardElevation="@dimen/_4sdp"
+                        app:contentPadding="@dimen/_12sdp">
 
                         <LinearLayout
+                            android:id="@+id/description_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_16sdp"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/date_time"
-                                fontPath="fonts/Barlow-Regular.ttf"
+                            <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:alpha=".5"
+                                app:srcCompat="@drawable/ic_des" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_16sdp"
+                                android:orientation="vertical">
 
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_14sdp"
-                                tools:text="Sun,Aug 21,2018" />
+                                <TextView
+                                    android:id="@+id/description"
+                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="2dp"
+                                    android:textSize="@dimen/_10sdp"
+                                    tools:text="All the players to be assembled on time at the Turf Location" />
 
-                            <TextView
-                                android:id="@+id/event_time"
-                                fontPath="fonts/Roboto-Regular.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:lineSpacingExtra="2dp"
-                                android:textSize="@dimen/_10sdp"
-                                tools:text="09:15 AM - 10:15 AM" />
-
-
-                            <TextView
-                                android:id="@+id/event_repeat"
-                                fontPath="fonts/Roboto-Regular.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:lineSpacingExtra="2dp"
-                                android:textSize="@dimen/_10sdp"
-                                tools:text="Repeat Every Monday,Wednesday,\nuntil Septemper 01,2018" />
+                            </LinearLayout>
 
                         </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/description_layout"
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/_18sdp"
-                            android:layout_height="@dimen/_18sdp"
-                            android:alpha=".5"
-                            app:srcCompat="@drawable/ic_des" />
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        app:cardElevation="@dimen/_4sdp"
+                        app:contentPadding="@dimen/_12sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_16sdp"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/description"
-                                fontPath="fonts/Barlow-Regular.ttf"
+                            <LinearLayout
+                                android:id="@+id/location_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:lineSpacingExtra="2dp"
-                                android:textSize="@dimen/_10sdp"
-                                tools:text="All the players to be assembled on time at the Turf Location" />
+                                android:gravity="center"
+                                android:orientation="horizontal">
 
-                        </LinearLayout>
+                                <ImageView
+                                    android:layout_width="@dimen/_24sdp"
+                                    android:layout_height="@dimen/_24sdp"
+                                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
-                    </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_14sdp"
+                                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/location_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_14sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/location"
+                                        fontPath="fonts/Barlow-Regular.ttf"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:text="480 W John St, Hicksville, NY 11801,USA " />
 
-                        <ImageView
-                            android:layout_width="@dimen/_24sdp"
-                            android:layout_height="@dimen/_24sdp"
-                            app:srcCompat="@drawable/ic_location_on_black_24dp" />
+                                </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_14sdp"
-                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/location"
-                                fontPath="fonts/Barlow-Regular.ttf"
+                            </LinearLayout>
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/_10sdp"
-                                tools:text="480 W John St, Hicksville, NY 11801,USA " />
+                                android:layout_height="@dimen/_120sdp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_8sdp" />
 
                         </LinearLayout>
-
-
-                    </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/kidsView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp" />
+                        android:clipToPadding="false"
+                        android:paddingBottom="@dimen/_8sdp"
+                        tools:listitem="@layout/item_kids" />
 
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        android:gravity="center|start"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                        <TableRow
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16sdp"
-                            android:gravity="start|center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Paul Raju"
-                                android:textSize="@dimen/_12ssp" />
-
-                            <RadioGroup
-
-                                android:id="@+id/rg51"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_marginLeft="@dimen/_12sdp"
-                                android:background="@drawable/btn_select_bg"
-                                android:elevation="@dimen/_4sdp"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/rg5r21"
-                                    android:layout_width="@dimen/_50sdp"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/radio_btn_track1"
-                                    android:button="@null"
-                                    android:checked="true"
-                                    android:gravity="center"
-                                    android:padding="@dimen/_8sdp"
-                                    android:text="YES"
-                                    android:textColor="@color/checker_track" />
-
-                                <RadioButton
-                                    android:id="@+id/rg5r11"
-                                    android:layout_width="@dimen/_50sdp"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/radio_btn_track"
-                                    android:button="@null"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:padding="@dimen/_8sdp"
-                                    android:text="NO"
-                                    android:textColor="@color/checker_track" />
+                    <!--<TableLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/_20sdp"-->
+                    <!--android:layout_marginTop="@dimen/_16sdp"-->
+                    <!--android:layout_marginRight="@dimen/_16sdp"-->
+                    <!--android:gravity="center|start"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:visibility="gone">-->
 
 
-                            </RadioGroup>
+                    <!--<TableRow-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/_16sdp"-->
+                    <!--android:gravity="start|center"-->
+                    <!--android:orientation="horizontal">-->
 
-                        </TableRow>
+                    <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Paul Raju"-->
+                    <!--android:textSize="@dimen/_12ssp" />-->
+
+                    <!--<RadioGroup-->
+
+                    <!--android:id="@+id/rg51"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="right"-->
+                    <!--android:layout_marginLeft="@dimen/_12sdp"-->
+                    <!--android:background="@drawable/btn_select_bg"-->
+                    <!--android:elevation="@dimen/_4sdp"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<RadioButton-->
+                    <!--android:id="@+id/rg5r21"-->
+                    <!--android:layout_width="@dimen/_50sdp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/radio_btn_track1"-->
+                    <!--android:button="@null"-->
+                    <!--android:checked="true"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="@dimen/_8sdp"-->
+                    <!--android:text="YES"-->
+                    <!--android:textColor="@color/checker_track" />-->
+
+                    <!--<RadioButton-->
+                    <!--android:id="@+id/rg5r11"-->
+                    <!--android:layout_width="@dimen/_50sdp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/radio_btn_track"-->
+                    <!--android:button="@null"-->
+                    <!--android:checked="false"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="@dimen/_8sdp"-->
+                    <!--android:text="NO"-->
+                    <!--android:textColor="@color/checker_track" />-->
 
 
-                    </TableLayout>
+                    <!--</RadioGroup>-->
+
+                    <!--</TableRow>-->
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:background="@color/colorPrimary"
-                        android:minHeight="@dimen/_150sdp">
+                    <!--</TableLayout>-->
 
-                        <fragment
-                            android:id="@+id/map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center" />
 
-                    </LinearLayout>
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginTop="@dimen/_16sdp"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:minHeight="@dimen/_150sdp">-->
+
+                    <!---->
+
+                    <!--</LinearLayout>-->
 
 
                 </LinearLayout>

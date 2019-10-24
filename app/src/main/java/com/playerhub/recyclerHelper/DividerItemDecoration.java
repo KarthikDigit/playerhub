@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.playerhub.R;
+
 /**
  * Created by administrator on 15/04/18.
  */
@@ -14,7 +16,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
     public DividerItemDecoration(Context context) {
-        //mDivider = context.getResources().getDrawable(R.drawable.line_divider);
+        mDivider = context.getResources().getDrawable(R.drawable.line_divider);
         //mDivider = ContextCompat.getDrawable(context, R.drawable.line_divider);
     }
 

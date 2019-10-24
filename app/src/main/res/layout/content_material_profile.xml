@@ -29,7 +29,6 @@
             android:paddingTop="@dimen/_16sdp"
             android:paddingBottom="@dimen/_16sdp">
 
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/team_name"
                 android:layout_width="match_parent"
@@ -64,11 +63,11 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="Coach"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:inputType="text"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -77,8 +76,8 @@
                 android:id="@+id/organation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:enabled="false"
+                android:theme="@style/TextInputLayoutAppearance"
 
                 app:errorEnabled="true">
 
@@ -88,10 +87,10 @@
                     android:enabled="false"
                     android:hint="Organization"
                     android:inputType="text"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -99,8 +98,8 @@
                 android:id="@+id/firstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:focusable="false"
+                android:theme="@style/TextInputLayoutAppearance"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -109,10 +108,10 @@
                     android:enabled="false"
                     android:hint="First Name"
                     android:inputType="text"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -120,8 +119,8 @@
                 android:id="@+id/lastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:focusable="false"
+                android:theme="@style/TextInputLayoutAppearance"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -130,19 +129,19 @@
                     android:enabled="false"
                     android:hint="Last Name"
                     android:inputType="text"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/dob"
                 android:layout_width="match_parent"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:layout_height="wrap_content"
                 android:focusable="false"
+                android:theme="@style/TextInputLayoutAppearance"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -151,10 +150,10 @@
                     android:enabled="false"
                     android:hint="DOB"
                     android:inputType="text"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -172,10 +171,10 @@
                     android:enabled="false"
                     android:hint="Phone Number"
                     android:inputType="number"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -183,8 +182,8 @@
                 android:id="@+id/parent_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:focusable="false"
+                android:theme="@style/TextInputLayoutAppearance"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -192,11 +191,11 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="Parent Email"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:inputType="text"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -213,11 +212,11 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="Parent Name"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:inputType="text"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -225,8 +224,8 @@
                 android:id="@+id/join_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
                 android:focusable="false"
+                android:theme="@style/TextInputLayoutAppearance"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -234,11 +233,11 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="Joined On"
-                    android:textColor="@color/light_gray"
-                    android:textColorHint="@color/gray"
                     android:inputType="text"
                     android:paddingLeft="@dimen/_16sdp"
                     android:paddingRight="@dimen/_16sdp"
+                    android:textColor="@color/light_gray"
+                    android:textColorHint="@color/gray"
                     android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
