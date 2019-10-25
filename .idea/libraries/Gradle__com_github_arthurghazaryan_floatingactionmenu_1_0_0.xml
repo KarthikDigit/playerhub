@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.arthurghazaryan:floatingactionmenu-1.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/floatingactionmenu-1.0.0.aar/22744faa90d0f79b5587ba6830f76c5b/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/floatingactionmenu-1.0.0.aar/22744faa90d0f79b5587ba6830f76c5b/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.arthurghazaryan/floatingactionmenu/1.0.0/fe1663c1c971d4f0ce580b7712587778bc133ea3/floatingactionmenu-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
