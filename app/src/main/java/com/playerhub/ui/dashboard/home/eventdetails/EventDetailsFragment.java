@@ -36,6 +36,8 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.network.service.KidsRequest;
 import com.playerhub.preference.Preferences;
+import com.playerhub.recyclerHelper.ItemOffsetDecoration;
+import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.profile.MyCallBack;
@@ -129,6 +131,11 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
         kidsViewAdapter = new KidsViewAdapter(getContext(), new ArrayList<EventDetailsApi.Data.Kid>(), this);
 
         kidsView.setAdapter(kidsViewAdapter);
+
+
+        kidsView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+
+//        kidsView.addItemDecoration(new ItemOffsetDecoration(18));
 
         callEventDetailsApi();
 

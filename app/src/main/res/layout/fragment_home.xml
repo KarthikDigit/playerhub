@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:attrs="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@mipmap/bg"
     android:focusable="true"
     android:orientation="vertical"
     tools:context=".ui.dashboard.home.HomeFragment">
@@ -14,19 +15,13 @@
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#6852D9">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imagelogo"
-            android:layout_width="@dimen/_80sdp"
+            android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="@dimen/_16sdp"
             android:adjustViewBounds="true"
             android:src="@drawable/logo_barca"
             android:visibility="visible" />
@@ -46,6 +41,7 @@
                 android:layout_width="24dp"
                 android:layout_height="27dp"
                 android:layout_centerInParent="true"
+                android:rotation="20"
                 android:src="@drawable/ic_notification_alert_01"
                 android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +57,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="0"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout2"
-        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:msv_animateViewChanges="true"
         app:msv_emptyView="@layout/empty_view"
@@ -100,202 +95,101 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <!--android:background="@drawable/round_test"-->
 
-                <RelativeLayout
-                    android:id="@+id/topLayout"
+                <FrameLayout
+                    android:id="@+id/myrootView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp"
-                    android:background="@color/white">
+                    android:layout_height="@dimen/_190sdp"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:elevation="@dimen/_14sdp">
 
-                    <LinearLayout
+
+                    <View
+                        android:id="@+id/myView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:background="@drawable/round_test"
+                        android:visibility="visible" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-
-                            <com.github.florent37.arclayout.ArcLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:arc_cropDirection="cropOutside"
-                                app:arc_height="@dimen/_24sdp"
-                                app:arc_position="bottom">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="#6852D9" />
-
-                            </com.github.florent37.arclayout.ArcLayout>
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5" />
-
-
-                    </LinearLayout>
-
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/_16sdp"
-                        app:cardCornerRadius="@dimen/_4sdp"
-                        app:cardElevation="@dimen/_4sdp">
-
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:clipToPadding="false"
-                            android:padding="@dimen/_16sdp" />
-
-                        <com.rd.PageIndicatorView
-                            android:id="@+id/pageIndicatorView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|center"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            app:piv_animationType="scale"
-                            app:piv_dynamicCount="true"
-                            app:piv_interactiveAnimation="true"
-                            app:piv_selectedColor="@color/colorPrimaryDark"
-                            app:piv_unselectedColor="@color/colorPrimary"
-                            app:piv_viewPager="@id/viewPager"
-                            attrs:piv_padding="@dimen/_2sdp"
-                            attrs:piv_radius="@dimen/_2sdp" />
-
-                    </android.support.v7.widget.CardView>
-
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_140sdp"
-                    android:background="@drawable/header"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/fullImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:alpha=".2"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/avatar"
-                        android:visibility="gone" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|top"
-                        android:orientation="vertical">
-
-
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/viewPager4"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_100sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_8sdp" />
-
-
-                        <com.rd.PageIndicatorView
-                            android:id="@+id/pageIndicatorView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            app:piv_animationType="scale"
-                            app:piv_dynamicCount="true"
-                            app:piv_interactiveAnimation="true"
-                            app:piv_selectedColor="@color/white"
-                            app:piv_unselectedColor="@color/line"
-                            app:piv_viewPager="@id/viewPager"
-                            attrs:piv_padding="@dimen/_2sdp"
-                            attrs:piv_radius="@dimen/_2sdp" />
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <!--<RelativeLayout-->
-                    <!--android:id="@+id/announcement_layout"-->
+                    <!--<com.github.mmin18.widget.RealtimeBlurView-->
+                    <!--android:id="@+id/testView"-->
                     <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="@dimen/_80sdp"-->
-                    <!--android:layout_marginTop="@dimen/_minus8sdp"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:visibility="gone">-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--app:realtimeBlurRadius="20dp"-->
+                    <!--android:background="@color/bg_color"-->
+                    <!--app:realtimeOverlayColor="#3000" />-->
 
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<View-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:layout_weight="1" />-->
-
-                        <!--<View-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:layout_weight="1" />-->
-                    <!--</LinearLayout>-->
-
-                    <!--<android.support.v4.view.ViewPager-->
-                        <!--android:id="@+id/viewPager1"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_centerInParent="true"-->
-                        <!--android:background="@android:color/transparent"-->
-                        <!--android:clipToPadding="false"-->
-                        <!--android:overScrollMode="never"-->
-                        <!--android:paddingStart="@dimen/card_padding"-->
-                        <!--android:paddingLeft="@dimen/card_padding"-->
-                        <!--android:paddingEnd="@dimen/card_padding"-->
-                        <!--android:paddingRight="@dimen/card_padding" />-->
-                <!--</RelativeLayout>-->
-
-
-                <!--<android.support.v4.widget.NestedScrollView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:clipToPadding="false">-->
-
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="vertical">-->
-
-
-                <LinearLayout
-                    android:id="@+id/bottomLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <fragment
-                        android:id="@+id/fragment"
-                        android:name="com.playerhub.ui.dashboard.home.HomeEventListFragment"
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="@dimen/_190sdp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false" />
 
-                </LinearLayout>
+                    <com.rd.PageIndicatorView
+                        android:id="@+id/pageIndicatorView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        app:piv_animationType="worm"
+                        app:piv_dynamicCount="true"
+                        app:piv_interactiveAnimation="true"
+                        app:piv_selectedColor="@color/white"
+                        app:piv_unselectedColor="@color/whitealpha1"
+                        app:piv_viewPager="@id/viewPager"
+                        attrs:piv_padding="@dimen/_2sdp"
+                        attrs:piv_radius="@dimen/_2sdp" />
+
+                </FrameLayout>
 
 
-                <!--</LinearLayout>-->
+                <FrameLayout
+                    android:id="@+id/btn_announcement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@drawable/round_ann"
+                    android:clickable="true"
+                    android:elevation="@dimen/_12sdp"
+                    android:padding="@dimen/_12sdp">
 
 
-                <!--</android.support.v4.widget.NestedScrollView>-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_iconfinder_announcement_2742787"
+                            android:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:drawableTint="@color/white"
+                            android:paddingLeft="@dimen/_8sdp"
+                            android:text="@string/announcement_event"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_16ssp" />
+
+                    </LinearLayout>
+
+
+                </FrameLayout>
+
+                <fragment
+                    android:id="@+id/fragment"
+                    android:name="com.playerhub.ui.dashboard.home.HomeEventListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_8sdp" />
 
 
             </LinearLayout>
@@ -303,21 +197,6 @@
 
     </com.playerhub.customview.MultiStateView>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/fab_l"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_margin="@dimen/_16sdp"-->
-    <!--android:src="@drawable/ic_add_black_24dp"-->
-    <!--android:transitionName="@string/share_transition_name"-->
-    <!--app:backgroundTint="@color/colorPrimary"-->
-    <!--app:background_color="@color/light_gray3"-->
-    <!--app:color="@color/colorPrimaryDark"-->
-    <!--app:elevation="@dimen/_12sdp"-->
-    <!--app:fabSize="normal" />-->
 
     <com.github.ag.floatingactionmenu.OptionsFabLayout
         android:id="@+id/fab_l"
@@ -329,4 +208,4 @@
         app:options_menu="@menu/menu_floating"
         app:src="@drawable/ic_add_black_24dp" />
 
-</RelativeLayout>
+</LinearLayout>

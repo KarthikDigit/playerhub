@@ -59,6 +59,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
 
         return new EventsRow(view);
+
+
     }
 
     private void setColorLine(View view, int color) {

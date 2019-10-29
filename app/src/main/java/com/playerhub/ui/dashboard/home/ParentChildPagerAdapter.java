@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -65,7 +63,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == ((RelativeLayout) object);
     }
 
     @Override
@@ -94,32 +92,32 @@ public class ParentChildPagerAdapter extends PagerAdapter {
         final ParentChild parentChild = mList.get(position);
 
         final CircleImageView profileImage = itemView.findViewById(R.id.profile_image);
-        CircleImageView coachProfileImage = itemView.findViewById(R.id.profile_coach_image);
+//        CircleImageView coachProfileImage = itemView.findViewById(R.id.profile_coach_image);
         TextView name = itemView.findViewById(R.id.name);
-        TextView coach_name = itemView.findViewById(R.id.coach_name);
-        TextView teeam_name = itemView.findViewById(R.id.team_name);
-        TextView whois = itemView.findViewById(R.id.whois);
+//        TextView coach_name = itemView.findViewById(R.id.coach_name);
+//        TextView teeam_name = itemView.findViewById(R.id.team_name);
+//        TextView whois = itemView.findViewById(R.id.whois);
 
         ImageUtility.loadImage(profileImage, parentChild.getImgUrl());
 
-        if (!TextUtils.isEmpty(parentChild.getCoachImage())) {
-            coachProfileImage.setVisibility(View.VISIBLE);
-            ImageUtility.loadImage(coachProfileImage, parentChild.getCoachImage());
-        } else coachProfileImage.setVisibility(View.GONE);
-        name.setText(parentChild.getName());
-
-        if (!TextUtils.isEmpty(parentChild.getCoachName())) {
-            coach_name.setVisibility(View.VISIBLE);
-            coach_name.setText(parentChild.getCoachName());
-        } else coach_name.setVisibility(View.GONE);
-
-        if (!TextUtils.isEmpty(parentChild.getTeamName())) {
-            teeam_name.setVisibility(View.VISIBLE);
-            teeam_name.setText(parentChild.getTeamName());
-        } else teeam_name.setVisibility(View.GONE);
-
-
-        whois.setText(parentChild.getWhoIs());
+//        if (!TextUtils.isEmpty(parentChild.getCoachImage())) {
+//            coachProfileImage.setVisibility(View.VISIBLE);
+//            ImageUtility.loadImage(coachProfileImage, parentChild.getCoachImage());
+//        } else coachProfileImage.setVisibility(View.GONE);
+//        name.setText(parentChild.getName());
+//
+//        if (!TextUtils.isEmpty(parentChild.getCoachName())) {
+//            coach_name.setVisibility(View.VISIBLE);
+//            coach_name.setText(parentChild.getCoachName());
+//        } else coach_name.setVisibility(View.GONE);
+//
+//        if (!TextUtils.isEmpty(parentChild.getTeamName())) {
+//            teeam_name.setVisibility(View.VISIBLE);
+//            teeam_name.setText(parentChild.getTeamName());
+//        } else teeam_name.setVisibility(View.GONE);
+//
+//
+//        whois.setText(parentChild.getWhoIs());
 
         container.addView(itemView);
 
@@ -138,7 +136,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((RelativeLayout) object);
     }
 
 

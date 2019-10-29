@@ -291,6 +291,16 @@ public class DashBoardActivity extends BaseActivity implements Subject {
     }
 
 
+    public void showAnnouncement() {
+
+        manger.showFragment(4);
+
+        navigation.getMenu().findItem(R.id.navigation_announcement).setChecked(true);
+
+
+    }
+
+
     public void addFragment() {
 
 

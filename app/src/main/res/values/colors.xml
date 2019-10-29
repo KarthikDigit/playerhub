@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#614ccb</color>
-    <color name="colorPrimaryDark">#6249e4</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#171A5D</color>
+    <!--<color name="colorPrimary">#614ccb</color>-->
+    <color name="colorPrimaryDark">#171A5D</color>
+    <!--<color name="colorPrimaryDark">#6249e4</color>-->
+    <!--<color name="colorAccent">#D81B60</color>-->
+    <color name="colorAccent">#171A5D</color>
     <color name="white">#ffffff</color>
-    <color name="whitealpha">#80ffffff</color>
+    <color name="whitealpha">#90ffffff</color>
+    <color name="whitealpha1">#80ffffff</color>
     <color name="black">#000000</color>
     <color name="light_gray">#80000000</color>
     <color name="light_gray3">#60000000</color>
@@ -336,6 +340,12 @@
     <color name="light_gray1">#f2f2f2</color>
     <color name="price_color">#E6BC22</color>
     <color name="color_ee">#EEEEEE</color>
+    <color name="bg_color">#171A5D</color>
+    <color name="bg_color_alpha">#30171a5d</color>
+    <color name="bg_color_alpha1">#70171a5d</color>
+    <color name="bg_color_white_alpha1">#40ffffff</color>
+    <color name="bg_color_white_alpha2">#40171A5D</color>
+    <color name="bg_color_white_alpha3">#c3171a5d</color>
 
 
 </resources>

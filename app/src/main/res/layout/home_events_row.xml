@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_8sdp"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginRight="@dimen/_8sdp"
+    android:background="@drawable/bg_test"
+    android:elevation="@dimen/_2sdp"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/_16sdp"
-    android:paddingTop="@dimen/_12sdp"
-    android:paddingRight="@dimen/_16sdp"
-    android:paddingBottom="@dimen/_8sdp">
+    android:padding="@dimen/_8sdp">
 
     <LinearLayout
         android:id="@+id/rootview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/whitealpha"
         android:orientation="horizontal">
 
 
@@ -47,6 +50,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-5dp"
                 android:background="@color/colorPrimary"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/view2"
                 tools:layout_editor_absoluteX="92dp" />
 
@@ -60,6 +64,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
+            android:background="@color/whitealpha"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +140,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center|start"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/_14sdp"
@@ -156,4 +161,4 @@
 
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

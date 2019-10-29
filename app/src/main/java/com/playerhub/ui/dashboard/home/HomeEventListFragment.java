@@ -65,14 +65,14 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
     private static final String TAG = "HomeEventListFragment";
 
-    @BindView(R.id.eventListContent)
-    LinearLayout eventListContent;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.msg)
-    TextView msg;
+//    @BindView(R.id.eventListContent)
+//    LinearLayout eventListContent;
+//    @BindView(R.id.progress_layout)
+//    RelativeLayout progressLayout;
+//    @BindView(R.id.progress_bar)
+//    ProgressBar progressBar;
+//    @BindView(R.id.msg)
+//    TextView msg;
 
     @BindView(R.id.today_event_view)
     EventView eventView;
@@ -80,12 +80,12 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     @BindView(R.id.upcoming_event_view)
     EventView upcomingEventView;
 
-    private CardPagerAdapter mCardAdapter;
-    private ShadowTransformer mCardShadowTransformer;
-
-
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
+//    private CardPagerAdapter mCardAdapter;
+//    private ShadowTransformer mCardShadowTransformer;
+//
+//
+//    @BindView(R.id.viewPager)
+//    ViewPager mViewPager;
     Unbinder unbinder;
 
 
@@ -159,16 +159,16 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
     private void initView() {
 
-        mCardAdapter = new CardPagerAdapter(this);
-//        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
-
-        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-
-        mViewPager.setAdapter(mCardAdapter);
-        mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        mViewPager.setOffscreenPageLimit(3);
-
-        mViewPager.setVisibility(View.GONE);
+//        mCardAdapter = new CardPagerAdapter(this);
+////        mCardAdapter.addCardItem(new CardItem(getString(R.string.sample_date)));
+//
+//        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+//
+//        mViewPager.setAdapter(mCardAdapter);
+//        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+//        mViewPager.setOffscreenPageLimit(3);
+//
+//        mViewPager.setVisibility(View.GONE);
         callEventListApi();
     }
 
@@ -341,16 +341,16 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
         if (upcommingEventList != null && !upcommingEventList.isEmpty()) {
 
-            if (mViewPager != null)
-                mViewPager.setVisibility(View.VISIBLE);
-
-            if (!upcommingEventList.isEmpty()) {
-                mCardAdapter.updateList(getOnlyFiveInTheList(upcommingEventList));
-
-            } else {
-                if (mViewPager != null)
-                    mViewPager.setVisibility(View.GONE);
-            }
+//            if (mViewPager != null)
+//                mViewPager.setVisibility(View.VISIBLE);
+//
+//            if (!upcommingEventList.isEmpty()) {
+//                mCardAdapter.updateList(getOnlyFiveInTheList(upcommingEventList));
+//
+//            } else {
+//                if (mViewPager != null)
+//                    mViewPager.setVisibility(View.GONE);
+//            }
 
 
         }
@@ -415,32 +415,32 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     private void showHideLoading(boolean isLoading) {
 
 
-        if (isLoading) {
-            if (eventListContent != null)
-                eventListContent.setVisibility(View.GONE);
-            if (progressLayout != null)
-                progressLayout.setVisibility(View.VISIBLE);
-        } else {
-            if (eventListContent != null)
-                eventListContent.setVisibility(View.VISIBLE);
-            if (eventListContent != null)
-                progressLayout.setVisibility(View.GONE);
-        }
+//        if (isLoading) {
+////            if (eventListContent != null)
+////                eventListContent.setVisibility(View.GONE);
+////            if (progressLayout != null)
+////                progressLayout.setVisibility(View.VISIBLE);
+//        } else {
+//            if (eventListContent != null)
+//                eventListContent.setVisibility(View.VISIBLE);
+////            if (eventListContent != null)
+////                progressLayout.setVisibility(View.GONE);
+//        }
 
     }
 
 
     private void showErrorMsg(String m) {
 
-        if (eventListContent != null)
-            eventListContent.setVisibility(View.GONE);
-        if (progressLayout != null)
-            progressLayout.setVisibility(View.VISIBLE);
-
-        if (progressBar != null)
-            progressBar.setVisibility(View.GONE);
-        msg.setVisibility(View.VISIBLE);
-        msg.setText(m);
+//        if (eventListContent != null)
+//            eventListContent.setVisibility(View.GONE);
+////        if (progressLayout != null)
+////            progressLayout.setVisibility(View.VISIBLE);
+//
+//        if (progressBar != null)
+//            progressBar.setVisibility(View.GONE);
+//        msg.setVisibility(View.VISIBLE);
+//        msg.setText(m);
 
 
     }
@@ -467,23 +467,23 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
     }
 
-    @OnClick({R.id.load_more_events})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.load_more_events:
-                moveToMoreEventActivity(true);
-                break;
-
-//            case R.id.today_event_view:
+//    @OnClick({R.id.load_more_events})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.load_more_events:
 //                moveToMoreEventActivity(true);
 //                break;
 //
-//            case R.id.upcoming_event_view:
-//
-//                moveToMoreEventActivity(false);
-//                break;
-        }
-    }
+////            case R.id.today_event_view:
+////                moveToMoreEventActivity(true);
+////                break;
+////
+////            case R.id.upcoming_event_view:
+////
+////                moveToMoreEventActivity(false);
+////                break;
+//        }
+//    }
 
 
     private void moveToMoreEventActivity(boolean isToday) {
@@ -497,6 +497,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void moveToAnnouncementEventActivity() {
 
 
@@ -511,21 +512,21 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     @Override
     public void OnItemClick(int pos) {
 
-        if (pos == mCardAdapter.getSize() - 1) {
-            moveToAnnouncementEventActivity();
-        } else {
-
-            AnnouncementApi.Datum datum = mCardAdapter.getItem(pos);
-
-            AnnouncementDialogFragment.getInstance(datum, false).show(getChildFragmentManager(), "Announcement");
-
-        }
+//        if (pos == mCardAdapter.getSize() - 1) {
+//            moveToAnnouncementEventActivity();
+//        } else {
+//
+//            AnnouncementApi.Datum datum = mCardAdapter.getItem(pos);
+//
+//            AnnouncementDialogFragment.getInstance(datum, false).show(getChildFragmentManager(), "Announcement");
+//
+//        }
 
     }
 
     @Override
     public void OnItemDeleteClick(int pos) {
-        mCardAdapter.remove(pos);
+//        mCardAdapter.remove(pos);
         upadateUI();
     }
 
@@ -537,12 +538,12 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     private void upadateUI() {
 
 
-        if (!(mCardAdapter.getSize() > 0)) {
-
-            mViewPager.setVisibility(View.GONE);
-        } else {
-            mViewPager.setVisibility(View.VISIBLE);
-        }
+//        if (!(mCardAdapter.getSize() > 0)) {
+//
+//            mViewPager.setVisibility(View.GONE);
+//        } else {
+//            mViewPager.setVisibility(View.VISIBLE);
+//        }
 
     }
 }

@@ -4,16 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:id="@+id/today_event_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        app:cardCornerRadius="@dimen/_4sdp"
-        app:cardElevation="@dimen/_4sdp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +17,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_16sdp">
+                android:padding="@dimen/_16sdp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/event_name"
@@ -32,6 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="@string/today_event"
+                    android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
 
@@ -73,7 +69,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/line" />
+                android:background="@color/line"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -84,7 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:padding="16dp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
                     android:visibility="visible" />
 
                 <TextView
@@ -101,6 +99,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
 </FrameLayout>

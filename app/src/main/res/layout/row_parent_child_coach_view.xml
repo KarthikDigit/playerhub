@@ -1,95 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="@dimen/_12sdp"
     android:gravity="center"
-    android:orientation="vertical"
-    android:elevation="@dimen/_12sdp">
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="@dimen/_48sdp"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="@dimen/_8sdp"
-        android:transitionName="@string/transition_image"
-        tools:src="@drawable/profile" />
-
-
-    <TextView
-        android:id="@+id/name"
-        fontPath="fonts/Barlow-Bold.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="DAVID ANSAH"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/team_name"
-        fontPath="fonts/Barlow-Regular.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:textAllCaps="false"
-        android:textSize="@dimen/_12ssp"
-        android:typeface="serif"
-        android:visibility="visible"
-        tools:text="William Floyd Colonials" />
-
-    <TextView
-        android:id="@+id/whois"
-        fontPath="fonts/Barlow-Regular.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:textAllCaps="false"
-        android:textSize="@dimen/_10ssp"
-        android:typeface="serif"
-        android:visibility="gone"
-        tools:text="William Floyd Colonials" />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_coach_image"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
+            android:id="@+id/profile_image"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:transitionName="@string/transition_image"
+            app:civ_border_color="@color/bg_color_white_alpha1"
+            app:civ_border_width="@dimen/_6sdp"
+            app:civ_fill_color="@color/bg_color_white_alpha1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.00999999"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:src="@drawable/profile" />
+
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:src="@drawable/avatar_mini"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image"
+            app:layout_constraintStart_toStartOf="@+id/profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
+
+        <TextView
+            android:id="@+id/name"
+            fontPath="fonts/Barlow-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_image"
+            android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="@dimen/_2sdp"
-            tools:src="@drawable/profile" />
-
-        <TextView
-            android:id="@+id/coach_name"
-            fontPath="fonts/Barlow-Bold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:text="DAVID ANSAH"
-            android:textSize="@dimen/_10ssp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            app:layout_constraintVertical_bias="0.0" />
 
-</LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <!--<TextView-->
+    <!--android:id="@+id/team_name"-->
+    <!--fontPath="fonts/Barlow-Regular.ttf"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/name"-->
+    <!--android:layout_marginTop="@dimen/_4sdp"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:textSize="@dimen/_12ssp"-->
+    <!--android:typeface="serif"-->
+
+    <!--android:visibility="gone"-->
+    <!--tools:text="William Floyd Colonials" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/whois"-->
+    <!--fontPath="fonts/Barlow-Regular.ttf"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/name"-->
+    <!--android:layout_marginTop="@dimen/_4sdp"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:textSize="@dimen/_10ssp"-->
+    <!--android:typeface="serif"-->
+    <!--android:visibility="gone"-->
+    <!--tools:text="William Floyd Colonials" />-->
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/_8sdp"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+    <!--android:id="@+id/profile_coach_image"-->
+    <!--android:layout_width="@dimen/_32sdp"-->
+    <!--android:layout_height="@dimen/_32sdp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--app:civ_border_color="@color/colorPrimary"-->
+    <!--app:civ_border_width="@dimen/_2sdp"-->
+    <!--tools:src="@drawable/profile" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/coach_name"-->
+    <!--fontPath="fonts/Barlow-Bold.ttf"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:text="DAVID ANSAH"-->
+    <!--android:textSize="@dimen/_10ssp"-->
+    <!--android:textStyle="bold" />-->
+    <!--</LinearLayout>-->
+
+</RelativeLayout>

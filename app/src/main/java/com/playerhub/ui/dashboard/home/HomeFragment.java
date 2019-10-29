@@ -2,14 +2,15 @@ package com.playerhub.ui.dashboard.home;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.transition.ChangeBounds;
 import android.transition.Slide;
@@ -20,13 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.ag.floatingactionmenu.OptionsFabLayout;
-import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
@@ -36,7 +35,6 @@ import com.playerhub.network.response.Coach;
 import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
-import com.playerhub.trans.EventDetailsTransition;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
@@ -47,7 +45,6 @@ import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
-import com.playerhub.utils.AnimUtils;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
@@ -73,17 +70,19 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     ConstraintLayout notiImg;
     @BindView(R.id.textView2)
     TextView notificationCount;
+
+
     Unbinder unbinder;
 
-    @BindView(R.id.fullImage)
-    ImageView mFullImage;
+//    @BindView(R.id.fullImage)
+//    ImageView mFullImage;
 
     @BindView(R.id.fab_l)
     OptionsFabLayout mFloatingMenu;
 
     @BindView(R.id.viewPager)
     ViewPager profileViewPager;
-//    @BindView(R.id.viewPager1)
+    //    @BindView(R.id.viewPager1)
 //    ViewPager profileViewPager1;
     @BindView(R.id.pageIndicatorView)
     PageIndicatorView indicatorView;
@@ -93,11 +92,16 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //    RelativeLayout announcement_layout;
 
     Unbinder unbinder1;
-    @BindView(R.id.topLayout)
-    RelativeLayout topLayout;
-    @BindView(R.id.bottomLayout)
-    LinearLayout bottomLayout;
-
+    @BindView(R.id.myView)
+    View myView;
+    @BindView(R.id.myrootView)
+    FrameLayout myrootView;
+    @BindView(R.id.rootview)
+    LinearLayout rootview;
+    @BindView(R.id.btn_announcement)
+    FrameLayout btnAnnouncement;
+    //    @BindView(R.id.testView)
+//    RealtimeBlurView testView;
     private ParentChildPagerAdapter parentChildPagerAdapter;
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
@@ -141,7 +145,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         });
 
 
-        profileViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+//        profileViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
 //
 //        new TapTargetSequence(getActivity())
@@ -233,8 +237,34 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         loadData();
 
 
-        AnimUtils.setSlideDownAnimation(topLayout);
-        AnimUtils.setSlideUpAnimation(bottomLayout);
+        int color = ContextCompat.getColor(getContext(), R.color.bg_color);
+
+//        makeRoundCorner(color, 20, testView, 0, color);
+
+
+//        AnimUtils.setSlideDownAnimation(topLayout);
+//        AnimUtils.setSlideUpAnimation(bottomLayout);
+
+
+//        ViewFilter.getInstance(getContext())
+//                //Use blur effect or implement your custom IRenderer
+//                .setRenderer(new BlurRenderer(10))
+//                .applyFilterOnView(myView, rootview);
+
+
+//        rectangle_layout_overlay.resetShapeSize(30);
+
+
+    }
+
+
+    public static void makeRoundCorner(int bgcolor, int radius, View v, int strokeWidth, int strokeColor) {
+
+        GradientDrawable gdDefault = new GradientDrawable();
+        gdDefault.setColor(bgcolor);
+        gdDefault.setCornerRadius(radius);
+        gdDefault.setStroke(strokeWidth, strokeColor);
+        v.setBackgroundDrawable(gdDefault);
 
     }
 
@@ -655,6 +685,20 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder1 = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @OnClick(R.id.btn_announcement)
+    public void onViewClicked() {
+
+
+        if (getActivity() instanceof DashBoardActivity) {
+
+
+            ((DashBoardActivity) getActivity()).showAnnouncement();
+
+        }
+
+
     }
 
 

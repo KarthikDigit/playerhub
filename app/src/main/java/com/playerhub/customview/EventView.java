@@ -12,10 +12,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.playerhub.R;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
+import com.playerhub.recyclerHelper.EqualSpacingItemDecoration;
 import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
 import com.playerhub.ui.dashboard.home.EventsAdapter;
 
@@ -36,7 +38,7 @@ public class EventView extends FrameLayout {
     @BindView(R.id.error_msg_event)
     TextView errorMsgEvent;
     @BindView(R.id.today_event_content)
-    CardView todayEventContent;
+    RelativeLayout todayEventContent;
 
     private OnClickListener onClickListener;
     private EventsAdapter.OnItemClickListener onItemClickListener;
@@ -76,7 +78,8 @@ public class EventView extends FrameLayout {
         eventsAdapter = new EventsAdapter(getContext(), new ArrayList<UpcommingEvent>(), onItemClickListener);
         eventList.setAdapter(eventsAdapter);
         eventList.setNestedScrollingEnabled(false);
-        eventList.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+//        eventList.addItemDecoration(new EqualSpacingItemDecoration(16, EqualSpacingItemDecoration.VERTICAL));
+//        eventList.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         loadMoreEvents.setOnClickListener(onClickListener);
     }
 
