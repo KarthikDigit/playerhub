@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/loaderrorcontent" />
             <option value="$PROJECT_DIR$/nestedcalendar" />
+            <option value="$PROJECT_DIR$/videocompressor" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

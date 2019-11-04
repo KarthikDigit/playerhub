@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/bg_color">
 
     <com.playerhub.customview.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +12,6 @@
         android:id="@+id/multiStateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:visibility="visible"
         app:msv_animateViewChanges="true"
         app:msv_emptyView="@layout/empty_view"
@@ -24,18 +23,65 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical"
             android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/actionBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:onClick="onBack"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    fontPath="fonts/poppins_bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/back"
+                    android:text="EVENT DETAILS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:id="@+id/share_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:onClick="onBack"
+                    android:tint="@color/white"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_share_black_24dp" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/event_top1" />
+
+
+            </RelativeLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@drawable/header"
+                android:layout_weight="7"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <TextView
@@ -46,7 +92,8 @@
                     android:layout_marginTop="@dimen/_50sdp"
                     android:text="@string/barca_ny_04_pro"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="gone" />
 
                 <TextView
                     fontPath="fonts/Barlow-Regular.ttf"
@@ -77,6 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@color/bg_color_dull"
                 android:clipToPadding="false"
                 android:fillViewport="true">
 
@@ -92,7 +140,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_16sdp">
 
                         <LinearLayout
@@ -104,7 +152,7 @@
                             <ImageView
                                 android:layout_width="@dimen/_18sdp"
                                 android:layout_height="@dimen/_18sdp"
-                                android:tint="@color/yellow_500"
+                                android:tint="@color/yellow"
                                 app:srcCompat="@drawable/ic_group" />
 
                             <LinearLayout
@@ -115,11 +163,11 @@
 
                                 <TextView
                                     android:id="@+id/team_name"
-                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    fontPath="fonts/poppins_medium.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_14sdp"
+                                    android:textSize="@dimen/_12ssp"
                                     tools:text="Barca NY 04 PRO" />
 
                             </LinearLayout>
@@ -136,7 +184,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_16sdp">
 
                         <LinearLayout
@@ -181,7 +229,7 @@
                             <ImageView
                                 android:layout_width="@dimen/_18sdp"
                                 android:layout_height="@dimen/_18sdp"
-                                android:tint="@color/yellow_500"
+                                android:tint="@color/yellow"
                                 app:srcCompat="@drawable/ic_small_calendar" />
 
                             <LinearLayout
@@ -192,32 +240,32 @@
 
                                 <TextView
                                     android:id="@+id/date_time"
-                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    fontPath="fonts/poppins_medium.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_14sdp"
+                                    android:textSize="@dimen/_12ssp"
                                     tools:text="Sun,Aug 21,2018" />
 
                                 <TextView
                                     android:id="@+id/event_time"
-                                    fontPath="fonts/Roboto-Regular.ttf"
+                                    fontPath="fonts/poppins_light.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:lineSpacingExtra="2dp"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textSize="@dimen/_10ssp"
                                     tools:text="09:15 AM - 10:15 AM" />
 
 
                                 <TextView
                                     android:id="@+id/event_repeat"
-                                    fontPath="fonts/Roboto-Regular.ttf"
+                                    fontPath="fonts/poppins_light.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:lineSpacingExtra="2dp"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textSize="@dimen/_10ssp"
                                     tools:text="Repeat Every Monday,Wednesday,\nuntil Septemper 01,2018" />
 
                             </LinearLayout>
@@ -232,7 +280,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_16sdp">
 
                         <LinearLayout
@@ -245,7 +293,7 @@
                             <ImageView
                                 android:layout_width="@dimen/_18sdp"
                                 android:layout_height="@dimen/_18sdp"
-                                android:tint="@color/yellow_500"
+                                android:tint="@color/yellow"
                                 app:srcCompat="@drawable/ic_des" />
 
                             <LinearLayout
@@ -256,11 +304,12 @@
 
                                 <TextView
                                     android:id="@+id/description"
-                                    fontPath="fonts/Barlow-Regular.ttf"
+                                    fontPath="fonts/poppins_medium.ttf"
+                                    android:textColor="@color/black"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="2dp"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textSize="@dimen/_12ssp"
                                     tools:text="All the players to be assembled on time at the Turf Location" />
 
                             </LinearLayout>
@@ -275,7 +324,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_16sdp">
 
                         <LinearLayout
@@ -293,7 +342,7 @@
                                 <ImageView
                                     android:layout_width="@dimen/_24sdp"
                                     android:layout_height="@dimen/_24sdp"
-                                    android:tint="@color/yellow_500"
+                                    android:tint="@color/yellow"
                                     app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
                                 <LinearLayout
@@ -304,10 +353,11 @@
 
                                     <TextView
                                         android:id="@+id/location"
-                                        fontPath="fonts/Barlow-Regular.ttf"
+                                        android:textColor="@color/black"
+                                        fontPath="fonts/poppins_medium.ttf"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_10sdp"
+                                        android:textSize="@dimen/_12ssp"
                                         tools:text="480 W John St, Hicksville, NY 11801,USA " />
 
                                 </LinearLayout>
@@ -327,7 +377,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp">
+                        app:cardElevation="@dimen/_2sdp">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/kidsView"
@@ -347,7 +397,7 @@
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_180sdp"
+                        android:layout_height="@dimen/_240sdp"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_16sdp" />
 
@@ -442,44 +492,5 @@
 
     </com.playerhub.customview.MultiStateView>
 
-
-    <RelativeLayout
-        android:id="@+id/actionBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16sdp"
-            android:onClick="onBack"
-            android:tint="@color/white"
-            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
-        <TextView
-            android:id="@+id/title"
-            fontPath="fonts/Barlow-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="EVENT DETAILS"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
-
-        <ImageView
-            android:id="@+id/share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/_16sdp"
-            android:onClick="onBack"
-            android:tint="@color/white"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_share_black_24dp" />
-
-
-    </RelativeLayout>
 
 </RelativeLayout>

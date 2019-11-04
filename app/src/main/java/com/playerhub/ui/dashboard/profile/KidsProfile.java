@@ -44,6 +44,7 @@ import com.playerhub.utils.ProgressUtils;
 import com.playerhub.utils.TextInputUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -368,6 +369,11 @@ public class KidsProfile extends MultiStateViewActivity implements CameraAndGall
                     }
                 });
 
+
+    }
+
+    @Override
+    public void onVideo(File file) {
 
     }
 

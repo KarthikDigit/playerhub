@@ -16,6 +16,9 @@ import android.widget.RelativeLayout;
 import com.playerhub.R;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseFragment;
+import com.playerhub.ui.dashboard.addsubaccount.AddSubAccountActivity;
+import com.playerhub.ui.dashboard.changecreditcard.ChangeCreditCardActivity;
+import com.playerhub.ui.dashboard.contact.ContactActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
 import com.playerhub.ui.login.LoginActivity;
 
@@ -72,7 +75,7 @@ public class SettingsFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.logout, R.id.profile})
+    @OnClick({R.id.logout, R.id.profile, R.id.create_creditcard, R.id.contact, R.id.addsubaccount})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
@@ -103,6 +106,63 @@ public class SettingsFragment extends BaseFragment {
                 } else {
 
                     startActivity(i);
+
+                }
+
+                break;
+
+            case R.id.create_creditcard:
+
+//                startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+
+                Intent i1 = new Intent(getContext(), ChangeCreditCardActivity.class);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), profileImg, transitionName);
+
+                    startActivity(i1, transitionActivityOptions.toBundle());
+                } else {
+
+                    startActivity(i1);
+
+                }
+
+                break;
+
+            case R.id.addsubaccount:
+
+//                startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+
+                Intent i2 = new Intent(getContext(), AddSubAccountActivity.class);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), profileImg, transitionName);
+
+                    startActivity(i2, transitionActivityOptions.toBundle());
+                } else {
+
+                    startActivity(i2);
+
+                }
+
+                break;
+
+            case R.id.contact:
+
+//                startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+
+                Intent i3 = new Intent(getContext(), ContactActivity.class);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), profileImg, transitionName);
+
+                    startActivity(i3, transitionActivityOptions.toBundle());
+                } else {
+
+                    startActivity(i3);
 
                 }
 

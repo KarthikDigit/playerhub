@@ -4,12 +4,21 @@ public class Messages {
 
 
     private String img_url;
+    private String video_url;
     private String msg;
     private String name;
     private String sender;
     private String status;
     private long timestamp;
     private long upload_status;
+
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
+    }
 
     public String getImg_url() {
         return img_url;

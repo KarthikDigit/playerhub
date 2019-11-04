@@ -29,9 +29,11 @@
                 android:visibility="gone" />
 
             <TextView
+                fontPath="fonts/poppins_bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
                 android:text="MESSAGES"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />

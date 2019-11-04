@@ -9,15 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.playerhub.R;
@@ -28,14 +24,10 @@ import com.playerhub.network.response.EventListApi.EventListResponseApi;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.network.response.NotificationApi;
 import com.playerhub.preference.Preferences;
-import com.playerhub.ui.base.BaseFragment;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
-import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
-import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
-import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
-import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
+import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -80,13 +68,15 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     @BindView(R.id.upcoming_event_view)
     EventView upcomingEventView;
 
-//    private CardPagerAdapter mCardAdapter;
+    //    private CardPagerAdapter mCardAdapter;
 //    private ShadowTransformer mCardShadowTransformer;
 //
 //
 //    @BindView(R.id.viewPager)
 //    ViewPager mViewPager;
     Unbinder unbinder;
+    @BindView(R.id.see_all)
+    Button seeAll;
 
 
     public HomeEventListFragment() {
@@ -396,6 +386,19 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     public void networkConnected() {
 
         callEventListApi();
+    }
+
+    @OnClick(R.id.see_all)
+    public void onSeeAllClicked() {
+
+
+        if (getActivity() instanceof DashBoardActivity) {
+
+
+            ((DashBoardActivity) getActivity()).showAllEvent();
+
+        }
+
     }
 
 

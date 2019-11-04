@@ -45,6 +45,7 @@ import com.playerhub.utils.KeyboardUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -655,6 +656,11 @@ public class ChatActivity_latest extends ChatBaseActivity implements ChatRecycle
 
         imageUploadToFirebase(bitmap);
 
+
+    }
+
+    @Override
+    public void onVideo(File file) {
 
     }
 

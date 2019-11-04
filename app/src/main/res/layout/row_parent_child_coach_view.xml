@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:elevation="@dimen/_12sdp"
     android:gravity="center"
-    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@android:color/transparent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/name"
-            fontPath="fonts/Barlow-Bold.ttf"
+            fontPath="fonts/poppins_bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
@@ -56,7 +56,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="DAVID ANSAH"
+            tools:text="DAVID ANSAH"
             android:textColor="@color/white"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"

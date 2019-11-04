@@ -29,8 +29,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:padding="@dimen/_16sdp"
+                fontPath="fonts/poppins_bold.ttf"
                 android:text="@string/announcement"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />

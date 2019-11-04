@@ -7,8 +7,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.StrictMode;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -17,19 +18,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.playerhub.DownloadVideoImage;
+import com.playerhub.ExoPlayerActivity;
 import com.playerhub.R;
-import com.playerhub.customview.ProgressImageView;
+import com.playerhub.VideoPlayerActivity;
+import com.playerhub.VideoViewFragment;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.dashboard.messages.Messages;
 import com.playerhub.utils.ImageUtility;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.playerhub.utils.ImageUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -120,6 +125,69 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             myChatViewHolder.imageView.setVisibility(View.GONE);
         }
 
+        final String video_url = chat.getVideo_url();
+
+
+        if (!TextUtils.isEmpty(video_url)) {
+
+            Glide.with(myChatViewHolder.videoView.getContext()).asBitmap().load(video_url)
+                    .thumbnail(0.3f).apply(new RequestOptions())
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(myChatViewHolder.videoView);
+            myChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+            myChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+
+
+            myChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    ExoPlayerActivity.startActivity(v.getContext(), video_url);
+//                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
+
+//                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
+//
+//                    VideoViewFragment viewFragment = VideoViewFragment.getInstance(video_url);
+//
+//                    viewFragment.show(manager, "Video");
+
+
+                }
+            });
+
+//            new DownloadVideoImage(new DownloadVideoImage.OnImageDownloadCallback() {
+//                @Override
+//                public void onImageSuccess(Bitmap bitmap) {
+//                    myChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+//                    myChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+//                    myChatViewHolder.videoView.setImageBitmap(bitmap);
+//
+//                }
+//            }).execute(video_url);
+
+//            myChatViewHolder.videoView.setVisibility(View.VISIBLE);
+//            myChatViewHolder.videoView.layout(0, 0, 0, 0);
+////            GlideApp
+////                    .with(myChatViewHolder.videoView.getContext())
+////                    .asBitmap()
+////                    .load(Uri.fromFile(new File(video_url)))
+////                    .into(myChatViewHolder.videoView);
+//
+//            try {
+//                Bitmap bitmap = ImageUtils.retriveVideoFrameFromVideo(video_url);
+//                myChatViewHolder.videoView.setImageBitmap(bitmap);
+//            } catch (Throwable throwable) {
+//                myChatViewHolder.videoView.setVisibility(View.GONE);
+//                Log.e(TAG, "configureOtherChatViewHolder: " + throwable.getMessage());
+//            }
+
+        } else {
+
+            myChatViewHolder.videoLayout.setVisibility(View.GONE);
+        }
+
 
         String msg = chat.getMsg();
 
@@ -175,6 +243,67 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             otherChatViewHolder.imageView.setVisibility(View.GONE);
         }
 
+        final String video_url = chat.getVideo_url();
+
+
+        if (!TextUtils.isEmpty(video_url)) {
+
+
+            Glide.with(otherChatViewHolder.videoView.getContext()).asBitmap().load(video_url)
+                    .thumbnail(0.3f).apply(new RequestOptions())
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(otherChatViewHolder.videoView);
+            otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+            otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+
+            otherChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+//                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
+                    ExoPlayerActivity.startActivity(v.getContext(), video_url);
+//                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
+//
+//                    VideoViewFragment viewFragment = VideoViewFragment.getInstance(video_url);
+//
+//                    viewFragment.show(manager, "Video");
+
+
+                }
+            });
+
+//            new DownloadVideoImage(new DownloadVideoImage.OnImageDownloadCallback() {
+//                @Override
+//                public void onImageSuccess(Bitmap bitmap) {
+//                    otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+//                    otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+//                    otherChatViewHolder.videoView.setImageBitmap(bitmap);
+//
+//                }
+//            }).execute(video_url);
+
+//            otherChatViewHolder.videoView.setVisibility(View.VISIBLE);
+//            otherChatViewHolder.videoView.layout(0, 0, 0, 0);
+////            GlideApp
+////                    .with(otherChatViewHolder.videoView.getContext())
+////                    .asBitmap()
+////                    .load(Uri.fromFile(new File(video_url)))
+////                    .into(otherChatViewHolder.videoView);
+//            try {
+//                Bitmap bitmap = ImageUtils.retriveVideoFrameFromVideo(video_url);
+//                otherChatViewHolder.videoView.setImageBitmap(bitmap);
+//            } catch (Throwable throwable) {
+//                otherChatViewHolder.videoView.setVisibility(View.GONE);
+//                Log.e(TAG, "configureOtherChatViewHolder: " + throwable.getMessage());
+//            }
+
+        } else {
+
+            otherChatViewHolder.videoLayout.setVisibility(View.GONE);
+        }
+
+
         String msg = chat.getMsg();
 
         otherChatViewHolder.txtChatMessage.setText(msg);
@@ -215,11 +344,14 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static class MyChatViewHolder extends RecyclerView.ViewHolder {
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
-        private ImageView imageView;
+        private ImageView imageView, videoView;
+        private RelativeLayout videoLayout;
 
         public MyChatViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img);
+            videoView = (ImageView) itemView.findViewById(R.id.videoView);
+            videoLayout = (RelativeLayout) itemView.findViewById(R.id.video_layout);
             txtChatMessage = (TextView) itemView.findViewById(R.id.text_view_chat_message);
             txtTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
@@ -228,11 +360,14 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static class OtherChatViewHolder extends RecyclerView.ViewHolder {
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
-        private ImageView imageView;
+        private ImageView imageView, videoView;
+        private RelativeLayout videoLayout;
 
         public OtherChatViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img);
+            videoView = (ImageView) itemView.findViewById(R.id.videoView);
+            videoLayout = (RelativeLayout) itemView.findViewById(R.id.video_layout);
             txtTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
             txtChatMessage = (TextView) itemView.findViewById(R.id.text_view_chat_message);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);

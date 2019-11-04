@@ -99,7 +99,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center|start"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/_14sdp"

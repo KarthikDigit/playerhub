@@ -1,1 +1,1 @@
-include ':app', ':loaderrorcontent', ':nestedcalendar'
+include ':app', ':loaderrorcontent', ':nestedcalendar', ':videocompressor'

@@ -9,11 +9,13 @@
 
     <TextView
         android:id="@+id/kid_name"
+        fontPath="fonts/poppins_medium.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:minWidth="@dimen/_100sdp"
         android:text="Ligori Mani "
+        android:textColor="@color/black"
         android:textSize="@dimen/_12ssp" />
 
     <RadioGroup
@@ -24,22 +26,26 @@
         android:layout_marginLeft="@dimen/_12sdp"
         android:background="@drawable/btn_select_bg"
         android:elevation="@dimen/_4sdp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/_2sdp">
 
         <RadioButton
             android:id="@+id/kid_yes"
-            android:layout_width="@dimen/_50sdp"
+            fontPath="fonts/poppins_medium.ttf"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_track1"
             android:button="@null"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
             android:text="YES"
-            android:textColor="@color/checker_track" />
+            android:textColor="@color/checker_track"
+            android:textSize="@dimen/_12ssp" />
 
         <RadioButton
             android:id="@+id/kid_no"
-            android:layout_width="@dimen/_50sdp"
+            fontPath="fonts/poppins_medium.ttf"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_track"
             android:button="@null"
@@ -47,7 +53,8 @@
             android:gravity="center"
             android:padding="@dimen/_8sdp"
             android:text="NO"
-            android:textColor="@color/checker_track" />
+            android:textColor="@color/checker_track"
+            android:textSize="@dimen/_12ssp" />
 
 
     </RadioGroup>

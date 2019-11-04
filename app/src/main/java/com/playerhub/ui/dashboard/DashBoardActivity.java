@@ -300,6 +300,15 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
     }
 
+    public void showAllEvent() {
+
+        showMoreEventDetails(true);
+
+        navigation.getMenu().findItem(R.id.navigation_store).setChecked(true);
+
+
+    }
+
 
     public void addFragment() {
 

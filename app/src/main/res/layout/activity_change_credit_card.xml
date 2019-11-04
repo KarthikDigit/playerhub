@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.changecreditcard.ChangeCreditCardActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_lay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
+
+
+            <com.playerhub.customview.CustomEditTextViewSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:custom_hint="Select Kid"
+                app:custom_title="Kid" />
+
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                fontPath="fonts/poppins_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Credit Card Details" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp" />
+
+            <com.playerhub.customview.CustomEditTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:custom_hint=""
+                app:custom_title="Credit Card Number" />
+
+            <com.playerhub.customview.CustomEditTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:custom_hint=""
+                app:custom_title="Name on the card" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.playerhub.customview.CustomEditTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    app:custom_hint=""
+                    app:custom_title="FirstName" />
+
+                <Space
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="match_parent" />
+
+                <com.playerhub.customview.CustomEditTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    app:custom_hint=""
+                    app:custom_title="LastName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.playerhub.customview.CustomEditTextViewSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    app:custom_hint="Select month"
+                    app:custom_title="Expiration Date" />
+
+                <Space
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="match_parent" />
+
+                <com.playerhub.customview.CustomEditTextViewSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    app:custom_hint="Select Date"
+                    app:custom_title="" />
+
+            </LinearLayout>
+
+
+            <com.playerhub.customview.CustomEditTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:custom_hint=""
+                app:custom_title="Security Code " />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:cardElevation="@dimen/_4sdp">
+
+        <Button
+            android:id="@+id/update"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/update"
+            android:textSize="@dimen/_12ssp" />
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

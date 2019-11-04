@@ -247,11 +247,12 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
                                 kidsViewAdapter.update(data.getKids());
                             }
 
-                            Log.e(TAG, "Event Details onSuccess: " + new Gson().toJson(data));
+//                            Log.e(TAG, "Event Details onSuccess: " + new Gson().toJson(data));
 
 //                            title.setText(getString(data.getEventType()));
 
                             eventName.setText(getString(data.getEventName()));
+                            title.setText(getString(data.getEventName()).toUpperCase());
 
                             teamName.setText(getString(data.getTeamName()));
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,7 @@ import org.threeten.bp.temporal.WeekFields;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -86,7 +88,7 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
     @BindView(R.id.showAllEvents)
     ImageView showAllEvents;
     @BindView(R.id.calendar_back_forward_view)
-    CardView calendarBackForwardView;
+    LinearLayout calendarBackForwardView;
     @BindView(R.id.today_date)
     TextView todayDate;
     //    @BindView(R.id.root)
@@ -97,7 +99,10 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
     private int dayOfMonth;
     private EventsAdapterUpdated eventsAdapter;
     private List<UpcommingEvent> eventList = new ArrayList<>();
-    private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    //    private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    private String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+//    private ArrayList<String> months1 = new ArrayList<String>();
 
     private boolean isFullEvents = true;
 
@@ -116,6 +121,15 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events_updated, container, false);
         unbinder = ButterKnife.bind(this, view);
+//        for (int i = 0; i < 12; i++) {
+//            Calendar cal = Calendar.getInstance();
+//            SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+//            cal.set(Calendar.MONTH, i);
+//            String month_name = month_date.format(cal.getTime());
+//            months[i] = month_name;
+//            months1.add(month_name);
+//        }
+
 
         initCalendarView();
         initRecyclerView();
@@ -313,7 +327,7 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
 
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.addItemDecoration(new SimpleDividerItemDecorationFullLine(getContext()));
+//        rv.addItemDecoration(new SimpleDividerItemDecorationFullLine(getContext()));
 
         eventsAdapter = new EventsAdapterUpdated(getContext(), new ArrayList<UpcommingEvent>(), this);
 
@@ -378,7 +392,7 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
 
         List<CalendarDay> localDateList = new ArrayList<>(dateOnly);
 
-        calendarView.addDecorator(new EventDecorator(Color.RED, localDateList));
+        calendarView.addDecorator(new EventDecorator(ContextCompat.getColor(getContext(), R.color.eventSelectionColor), localDateList));
 
         for (int i = 0; i < localDateList.size(); i++) {
 
@@ -429,9 +443,9 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
             if (!upcommingEventList.isEmpty()) {
 //                showViewContent();
 //                eventsAdapter.updateList(upcommingEventList);
-                UpcommingEvent upcommingEvent = new UpcommingEvent();
-                upcommingEvent.setEmptyView(true);
-                upcommingEventList.add(upcommingEvent);
+//                UpcommingEvent upcommingEvent = new UpcommingEvent();
+//                upcommingEvent.setEmptyView(true);
+//                upcommingEventList.add(upcommingEvent);
 
                 eventsAdapter.updateList(upcommingEventList);
 
@@ -668,7 +682,7 @@ public class EventsUpdatedFragment extends BaseFragment implements EventsAdapter
 
         @Override
         public void decorate(DayViewFacade view) {
-            view.addSpan(new DotSpan(8, color));
+            view.addSpan(new DotSpan(5, color));
         }
     }
 }

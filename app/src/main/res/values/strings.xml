@@ -106,6 +106,8 @@
     <string name="share_transition_name">add_event</string>
     <string name="add_event">Add event</string>
     <string name="add_announcement">Add Announcement</string>
+    <string name="update">Update</string>
+    <string name="create_sub_account">Create Account</string>
 
 
 </resources>

@@ -55,7 +55,8 @@ public class EventsAdapterUpdated extends RecyclerView.Adapter<EventsAdapterUpda
     public EventsRow onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_events_row_updated, viewGroup, false);
+//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_events_row_updated, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_events_row, viewGroup, false);
 
 
         return new EventsRow(view);

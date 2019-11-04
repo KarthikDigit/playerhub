@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.4"
-                android:background="@drawable/header"
+                android:background="@color/bg_color"
                 android:orientation="vertical">
 
                 <ImageView
@@ -100,7 +100,7 @@
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_8sdp">
 
                         <LinearLayout
@@ -138,7 +138,7 @@
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginRight="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_4sdp"
+                        app:cardElevation="@dimen/_2sdp"
                         app:contentPadding="@dimen/_8sdp">
 
                         <LinearLayout
@@ -196,10 +196,12 @@
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
         <TextView
-            fontPath="fonts/Barlow-Regular.ttf"
+            fontPath="fonts/poppins_bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_32sdp"
+            android:padding="@dimen/_16sdp"
             android:text="Profile"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"

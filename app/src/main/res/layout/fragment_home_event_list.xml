@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_home_screen"
-    android:elevation="@dimen/_12sdp"
+
     android:orientation="vertical"
     tools:context=".ui.dashboard.home.HomeEventListFragment">
 
@@ -13,25 +13,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:padding="@dimen/_8sdp">
 
         <TextView
+            fontPath="fonts/poppins_medium.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Schedule"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_14ssp" />
 
         <Button
+            android:id="@+id/see_all"
+            fontPath="fonts/poppins_medium.ttf"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_34sdp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/roundtest"
-            android:minWidth="@dimen/_100sdp"
+            android:minWidth="@dimen/_80sdp"
             android:text="See All"
             android:textAllCaps="false"
             android:textColor="@color/white"

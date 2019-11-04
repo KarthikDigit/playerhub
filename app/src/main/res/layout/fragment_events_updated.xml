@@ -1,222 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f4f4"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_240sdp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/cr"
+        android:clickable="false" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/_16sdp"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_16sdp"
+                    android:tint="@color/white"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:padding="@dimen/_16sdp"
-                android:text="EVENTS"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp" />
+                <TextView
+                    fontPath="fonts/poppins_bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_16sdp"
+                    android:text="EVENTS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
 
 
-            <ImageView
-                android:id="@+id/showAllEvents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:src="@drawable/ic_small_calendar"
-                android:tint="@color/white" />
+                <ImageView
+                    android:id="@+id/showAllEvents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:src="@drawable/ic_small_calendar"
+                    android:tint="@color/white" />
 
 
-            <android.support.v7.widget.SearchView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
-                android:theme="@style/searchViewTheme"
-                android:visibility="gone"
-                app:iconifiedByDefault="true"
-                app:queryBackground="@color/colorPrimary" />
+                <android.support.v7.widget.SearchView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:theme="@style/searchViewTheme"
+                    android:visibility="gone"
+                    app:iconifiedByDefault="true"
+                    app:queryBackground="@color/colorPrimary" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        <RelativeLayout
 
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/calendar_back_forward_view"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="@dimen/_4sdp"
-                app:contentPadding="@dimen/_12sdp">
+                android:layout_height="match_parent"
+                android:alpha=".4"
+                android:background="@color/bg_color" />
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-
-                    <ImageView
-                        android:id="@+id/calendar_go_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/month_display"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Month"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
-
-
-                    <ImageView
-                        android:id="@+id/calendar_forward"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendar"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_4sdp"
-                android:layout_marginBottom="8dp"
-                android:background="#f4f4f4"
-                app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:mcv_allowClickDaysOutsideCurrentMonth="true"
-                app:mcv_firstDayOfWeek="monday"
-                app:mcv_selectionColor="@color/colorPrimary"
-                app:mcv_selectionMode="single"
-                app:mcv_showOtherDates="all"
-                app:mcv_tileHeight="@dimen/_28sdp"
-                app:mcv_tileWidth="match_parent"
-                app:mcv_titleAnimationOrientation="horizontal" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="@dimen/_4sdp">
-
-                <!--<android.support.v4.widget.NestedScrollView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:minHeight="@dimen/_320sdp"
                     android:orientation="vertical">
 
 
-                    <TextView
-                        android:id="@+id/today_date"
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--android:id="@+id/calendar_back_forward_view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/_8sdp"-->
+                    <!--android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--android:layout_marginRight="@dimen/_8sdp"-->
+                    <!--app:cardBackgroundColor="@color/white"-->
+                    <!--app:cardElevation="@dimen/_4sdp"-->
+                    <!--app:contentPadding="@dimen/_12sdp">-->
+
+
+                    <LinearLayout
+                        android:id="@+id/calendar_back_forward_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:alpha=".6"
-                        android:padding="@dimen/_12sdp"
-                        android:text="FRIDAY JUNE 12, 2007"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10ssp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:padding="@dimen/_12sdp">
 
-                    <View
+
+                        <ImageView
+                            android:id="@+id/calendar_go_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/yellow"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/month_display"
+                            fontPath="fonts/poppins_light.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Month"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+
+
+                        <ImageView
+                            android:id="@+id/calendar_forward"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/yellow"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+                    </LinearLayout>
+
+                    <!--</android.support.v7.widget.CardView>-->
+
+
+                    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                        android:id="@+id/calendar"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_4sdp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:mcv_allowClickDaysOutsideCurrentMonth="true"
+                        app:mcv_dateTextAppearance="@style/CustomDateTextAppearance"
+                        app:mcv_firstDayOfWeek="monday"
+                        app:mcv_selectionColor="@color/eventSelectionColor"
+                        app:mcv_selectionMode="single"
+                        app:mcv_showOtherDates="all"
+                        app:mcv_tileHeight="@dimen/_32sdp"
+                        app:mcv_tileWidth="match_parent"
+                        app:mcv_titleAnimationOrientation="horizontal"
+                        app:mcv_weekDayTextAppearance="@style/WeekDayTextAppearnce" />
 
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--android:layout_marginBottom="@dimen/_8sdp"-->
+                    <!--app:cardBackgroundColor="@color/white"-->
+                    <!--app:cardCornerRadiust="@dimen/_8sdp"-->
+                    <!--app:cardElevation="@dimen/_4sdp">-->
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
+                    <!--<android.support.v4.widget.NestedScrollView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:clipToPadding="false"
-                        android:visibility="visible"
-                        tools:listitem="@layout/home_events_row" />
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:background="@drawable/bg_home_screen"
+                        android:minHeight="@dimen/_100sdp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/noevents"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:gravity="center"
-                        android:padding="@dimen/_16sdp"
-                        android:text="There is no events"
-                        android:visibility="gone" />
 
+                        <TextView
+                            android:id="@+id/today_date"
+                            fontPath="fonts/poppins_bold.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|start"
+                            android:padding="@dimen/_12sdp"
+                            android:text="FRIDAY JUNE 12, 2007"
+                            android:textColor="@color/yellow"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line" />
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:clipToPadding="false"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:visibility="visible"
+                            tools:listitem="@layout/home_events_row" />
+
+                        <TextView
+                            android:id="@+id/noevents"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:gravity="center"
+                            android:padding="@dimen/_16sdp"
+                            android:text="There is no events"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                    <!--</android.support.v4.widget.NestedScrollView>-->
+                    <!--</android.support.v7.widget.CardView>-->
+                    <!--<com.southernbox.nestedcalendar.view.WeekTitleView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="#fafafa"-->
+                    <!--android:visibility="gone" />-->
                 </LinearLayout>
-                <!--</android.support.v4.widget.NestedScrollView>-->
-            </android.support.v7.widget.CardView>
-            <!--<com.southernbox.nestedcalendar.view.WeekTitleView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="#fafafa"-->
-            <!--android:visibility="gone" />-->
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

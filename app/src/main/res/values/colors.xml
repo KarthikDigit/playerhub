@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#171A5D</color>
+    <color name="colorPrimary">@color/bg_color</color>
     <!--<color name="colorPrimary">#614ccb</color>-->
-    <color name="colorPrimaryDark">#171A5D</color>
+    <color name="colorPrimaryDark">#000046</color>
+    <!--<color name="colorPrimaryDark">#000024</color>-->
     <!--<color name="colorPrimaryDark">#6249e4</color>-->
     <!--<color name="colorAccent">#D81B60</color>-->
     <color name="colorAccent">#171A5D</color>
@@ -125,6 +126,7 @@
     <color name="green_A400">#00E676</color>
     <color name="green_A700">#00C853</color>
 
+    <color name="yellow">#FDC52C</color>
     <color name="yellow_50">#FFFDE7</color>
     <color name="yellow_100">#FFF9C4</color>
     <color name="yellow_200">#FFF59D</color>
@@ -340,12 +342,16 @@
     <color name="light_gray1">#f2f2f2</color>
     <color name="price_color">#E6BC22</color>
     <color name="color_ee">#EEEEEE</color>
-    <color name="bg_color">#171A5D</color>
+    <color name="bg_color">#16104B</color>
+    <color name="btn_color">#171A5D</color>
+    <color name="bg_color1">#a2a4c9</color>
     <color name="bg_color_alpha">#30171a5d</color>
     <color name="bg_color_alpha1">#70171a5d</color>
     <color name="bg_color_white_alpha1">#40ffffff</color>
     <color name="bg_color_white_alpha2">#40171A5D</color>
-    <color name="bg_color_white_alpha3">#c3171a5d</color>
+    <color name="bg_color_white_alpha3">#95171A5D</color>
+    <color name="eventSelectionColor">#F50057</color>
+    <color name="bg_color_dull">#F4F4F4</color>
 
 
 </resources>

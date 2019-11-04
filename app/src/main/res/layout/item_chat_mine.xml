@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,6 +22,33 @@
         android:background="@drawable/chat_rounded_rect_bg_green"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/video_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/videoView"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:alpha=".5"
+                android:padding="@dimen/padding_small"
+                android:src="@mipmap/ic_launcher"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerInParent="true"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_play_circle_filled_black_24dp" />
+
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/img"
@@ -37,8 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_small"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/grey_100"
+            android:textSize="@dimen/_12sdp"
             tools:text="Noice man !" />
 
         <TextView
@@ -49,8 +77,8 @@
             android:paddingLeft="@dimen/padding_small"
             android:paddingRight="@dimen/padding_small"
             android:paddingBottom="@dimen/padding_small"
-            android:textSize="@dimen/_8sdp"
             android:textColor="@color/grey_100"
+            android:textSize="@dimen/_8sdp"
             tools:text="10:00 AM" />
 
     </LinearLayout>

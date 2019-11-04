@@ -5,25 +5,34 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.MetricAffectingSpan;
+import android.text.style.TypefaceSpan;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.Visibility;
-import android.view.Gravity;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.commit451.elasticdragdismisslayout.ElasticDragDismissFrameLayout;
+import com.commit451.elasticdragdismisslayout.ElasticDragDismissListener;
 import com.playerhub.R;
 import com.playerhub.cameraorgallery.CameraAndGallary;
 import com.playerhub.customview.MultiStateView;
@@ -41,7 +50,10 @@ import com.playerhub.utils.KeyboardUtils;
 import com.playerhub.utils.TextInputUtil;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
@@ -52,9 +64,6 @@ import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Response;
-
-import static android.transition.Visibility.MODE_IN;
-import static com.playerhub.ui.dashboard.profile.KidsProfile.setWindowFlag;
 
 public class MaterialProfileActivity extends MultiStateViewActivity implements CameraAndGallary.CameraAndGallaryCallBack {
 
@@ -104,6 +113,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     MultiStateView multiStateView;
     @BindView(R.id.actionBar_layout)
     RelativeLayout mActionBarLayout;
+    @BindView(R.id.rootview)
+    ElasticDragDismissFrameLayout rootview;
 
     //    @BindView(R.id.collapsing_toolbar)
 //    CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -191,6 +202,10 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //            getSupportActionBar().setTitle("Profile");
+
+            setActionBarTitleBold("Profile");
+
+
         }
 
         cameraAndGallary = new CameraAndGallary(this, this);
@@ -202,6 +217,20 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         setupWindowAnimation();
 
         onRetryOrCallApi();
+
+
+        rootview.addListener(new ElasticDragDismissListener() {
+            @Override
+            public void onDrag(float elasticOffset, float elasticOffsetPixels, float rawOffset, float rawOffsetPixels) {
+
+            }
+
+            @Override
+            public void onDragDismissed() {
+
+                ActivityCompat.finishAffinity(MaterialProfileActivity.this);
+            }
+        });
     }
 
     public static <T> ObservableTransformer<T, T> apply() {
@@ -429,6 +458,11 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 
     }
 
+    @Override
+    public void onVideo(File file) {
+
+    }
+
     private void updateKidDetails() {
 
 
@@ -501,4 +535,13 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
             }
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
 }

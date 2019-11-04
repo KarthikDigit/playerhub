@@ -239,4 +239,27 @@
         <item name="colorControlActivated">#FFFFFF</item>
     </style>
 
+
+    <!-- In res/values/styles.xml -->
+    <style name="CustomDateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/my_date_text_color</item>
+    </style>
+
+    <style name="HeaderTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/my_headr_text_color</item>
+    </style>
+
+    <style name="WeekDayTextAppearnce" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <!--<item name="android:textColor">@color/yellow_500</item>-->
+        <item name="android:textColor">@color/mcv_text_date_light1</item>
+        <!--<item name="fontFamily">@font/shirkhand</item>-->
+    </style>
+
+    <!--<style name="CustomTextAppearance" parent="TextAppearance.AppCompat.Medium">-->
+        <!--&lt;!&ndash;<item name="android:textColor">@color/yellow_500</item>&ndash;&gt;-->
+        <!--<item name="android:textColor">@color/mcv_text_date_light1</item>-->
+        <!--&lt;!&ndash;<item name="fontFamily">@font/shirkhand</item>&ndash;&gt;-->
+    <!--</style>-->
+
+
 </resources>

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/loaderrorcontent/loaderrorcontent.iml" filepath="$PROJECT_DIR$/loaderrorcontent/loaderrorcontent.iml" />
       <module fileurl="file://$PROJECT_DIR$/nestedcalendar/nestedcalendar.iml" filepath="$PROJECT_DIR$/nestedcalendar/nestedcalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/playerhub.iml" filepath="$PROJECT_DIR$/playerhub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videocompressor/videocompressor.iml" filepath="$PROJECT_DIR$/videocompressor/videocompressor.iml" />
     </modules>
   </component>
 </project>

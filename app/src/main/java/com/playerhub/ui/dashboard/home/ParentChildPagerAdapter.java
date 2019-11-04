@@ -104,7 +104,7 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 //            coachProfileImage.setVisibility(View.VISIBLE);
 //            ImageUtility.loadImage(coachProfileImage, parentChild.getCoachImage());
 //        } else coachProfileImage.setVisibility(View.GONE);
-//        name.setText(parentChild.getName());
+        name.setText(parentChild.getName().toUpperCase());
 //
 //        if (!TextUtils.isEmpty(parentChild.getCoachName())) {
 //            coach_name.setVisibility(View.VISIBLE);

@@ -3,13 +3,20 @@ package com.playerhub.ui.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.MetricAffectingSpan;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -27,6 +34,7 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.request.Deviceinfo;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
+import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
 import com.playerhub.utils.NetworkHelper;
 import com.playerhub.utils.ProgressUtils;
 import com.vlonjatg.progressactivity.ProgressLayout;
@@ -96,11 +104,43 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
         disposable.clear();
     }
 
+
+    public void setActionBarTitleBold(String title) {
+
+
+        SpannableString s = new SpannableString(title);
+
+
+//            Typeface typeface=Typeface.createFromAsset(getAssets(),"fonts/poppins_bold.ttf");
+        s.setSpan(new TypefaceSpan(this, "poppins_bold.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        getSupportActionBar().setTitle(s);
+
+    }
+
     public void showToast(String msg) {
 
 
         Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
 
+
+    }
+
+    public void setBackButtonEnabledAndTitleBold(String title) {
+
+        if (getSupportActionBar() != null) {
+
+
+//            getSupportActionBar().setTitle(Html.fromHtml(title));
+
+            setActionBarTitleBold(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//            Spannable text = new SpannableString(getSupportActionBar().getTitle());
+//            text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//            getSupportActionBar().setTitle(text);
+        }
 
     }
 
@@ -426,6 +466,53 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
 
             ProgressUtils.hideProgress();
 
+        }
+    }
+
+
+    /**
+     * Style a {@link Spannable} with a custom {@link Typeface}.
+     *
+     * @author Tristan Waddington
+     */
+    public class TypefaceSpan extends MetricAffectingSpan {
+        /**
+         * An <code>LruCache</code> for previously loaded typefaces.
+         */
+        private LruCache<String, Typeface> sTypefaceCache =
+                new LruCache<String, Typeface>(12);
+
+        private Typeface mTypeface;
+
+        /**
+         * Load the {@link Typeface} and apply to a {@link Spannable}.
+         */
+        public TypefaceSpan(Context context, String typefaceName) {
+            mTypeface = sTypefaceCache.get(typefaceName);
+
+            if (mTypeface == null) {
+                mTypeface = Typeface.createFromAsset(context.getApplicationContext()
+                        .getAssets(), String.format("fonts/%s", typefaceName));
+
+                // Cache the loaded Typeface
+                sTypefaceCache.put(typefaceName, mTypeface);
+            }
+        }
+
+        @Override
+        public void updateMeasureState(TextPaint p) {
+            p.setTypeface(mTypeface);
+
+            // Note: This flag is required for proper typeface rendering
+            p.setFlags(p.getFlags() | Paint.SUBPIXEL_TEXT_FLAG);
+        }
+
+        @Override
+        public void updateDrawState(TextPaint tp) {
+            tp.setTypeface(mTypeface);
+
+            // Note: This flag is required for proper typeface rendering
+            tp.setFlags(tp.getFlags() | Paint.SUBPIXEL_TEXT_FLAG);
         }
     }
 }

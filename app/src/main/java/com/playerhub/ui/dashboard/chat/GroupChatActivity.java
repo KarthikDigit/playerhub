@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
@@ -46,10 +47,12 @@ import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.Messages;
 import com.playerhub.ui.dashboard.messages.User;
 import com.playerhub.utils.KeyboardUtils;
+import com.vincent.videocompressor.VideoCompress;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,6 +96,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     private CameraAndGallary cameraAndGallary;
     private ChatRecyclerAdapter mChatRecyclerAdapter;
     private Conversations conversations = new Conversations();
+    private static boolean isVideo = false;
 
 
     @Override
@@ -365,12 +369,17 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 //        messages.setImg_url(imageUrl);
         if (!TextUtils.isEmpty(imageUrl)) {
 
-            messages.setImg_url(imageUrl);
+//            messages.setImg_url(imageUrl);
+            if (isVideo) {
+                messages.setVideo_url(imageUrl);
+            } else {
+                messages.setImg_url(imageUrl);
+            }
 
         }
 
         showLoading();
-
+        isVideo = false;
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         final String id = databaseReference.push().getKey();
@@ -552,8 +561,26 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
     }
 
-    private void imageUploadToFirebase(Bitmap bitmap) {
+    @Override
+    public void onVideo(File file) {
 
+        long maxLength = 20000000;
+
+        if (file.length() > maxLength) {
+            //failed length validation
+
+            showToast("Too big file, Please select less than 10MB Video file...");
+
+        } else {
+            //continue
+//            uploadVideo(file);
+            compressVideo(file);
+        }
+
+    }
+
+    private void imageUploadToFirebase(Bitmap bitmap) {
+        isVideo = false;
 
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getReference().child("photos");
@@ -604,6 +631,111 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
                 });
             }
         });
+
+    }
+
+    private void compressVideo(File file) {
+
+        File f = new File(getExternalCacheDir() + "/Playerhub/videos");
+        if (f.mkdirs() || f.isDirectory()) {
+            final String destPath = f.getPath() + File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".mp4";
+
+            VideoCompress.compressVideoLow(file.getPath(), destPath, new VideoCompress.CompressListener() {
+                @Override
+                public void onStart() {
+                    //Start Compress
+                    showLoading();
+                }
+
+                @Override
+                public void onSuccess() {
+                    //Finish successfully
+
+                    hideLoading();
+
+                    File compresedVideoFile = new File(destPath);
+                    uploadVideo(compresedVideoFile);
+
+                }
+
+                @Override
+                public void onFail() {
+                    //Failed
+
+                    hideLoading();
+                }
+
+                @Override
+                public void onProgress(float percent) {
+                    //Progress
+                }
+            });
+        }
+
+    }
+
+
+    private void uploadVideo(final File file) {
+
+        isVideo = true;
+
+        String name = new SimpleDateFormat("yyyyddMMHHmmss").format(new Date()) + "" + System.nanoTime();
+
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference videoRef = storageRef.child("videos").child(name);//storageRef.child("FolderToCreate").child("NameYoWantToAdd");
+// add File/URI
+
+
+        showLoading();
+
+//        videoRef = storageRef.child(name);
+        videoRef.putFile(Uri.fromFile(file))
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Upload succeeded
+
+                        hideLoading();
+
+                        file.delete();
+
+                        videoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                hideLoading();
+                                Log.e(TAG, "onSuccess: url " + uri.toString());
+//                Log.e(TAG, "onSuccess: " + uri.getPath());
+
+                                sendMessages(uri.toString());
+                            }
+                        });
+
+//                        Log.e(TAG, "onSuccess: " + taskSnapshot.getUploadSessionUri().getPath());
+
+//                        Toast.makeText(getApplicationContext(), "Upload Success...", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Upload failed
+                        hideLoading();
+//                        Toast.makeText(getApplicationContext(), "Upload failed...", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(
+                new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        //calculating progress percentage
+//                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                        //displaying percentage in progress dialog
+//                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                    }
+                });
+
 
     }
 }

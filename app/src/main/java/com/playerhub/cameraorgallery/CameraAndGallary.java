@@ -18,6 +18,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.playerhub.Util;
 import com.playerhub.ui.dashboard.profile.KidsProfile;
 import com.playerhub.utils.ImageUtils;
 
@@ -26,10 +27,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class CameraAndGallary {
     private static final String TAG = "CameraAndGallary";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private static final int REQUEST_TAKE_VIDEO = 200;
     private String userChoosenTask;
     private CameraAndGallaryCallBack cameraAndGallaryCallBack;
     private Context mContext;
@@ -54,7 +57,7 @@ public class CameraAndGallary {
 
     public void selectImage() {
 
-        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Video", "Cancel"};
 
         Context context = getCurrentContext();
 
@@ -66,6 +69,8 @@ public class CameraAndGallary {
 
                 if (items[item].equals("Cancel")) {
                     dialog.dismiss();
+                } else if (items[item].toString().toLowerCase().equals("Video".toLowerCase())) {
+                    callVideo();
                 } else {
                     userChoosenTask = items[item].toString();
                     callCameraOrGallery();
@@ -73,6 +78,28 @@ public class CameraAndGallary {
             }
         });
         builder.show();
+    }
+
+
+    private void callVideo() {
+
+        Intent takeVideoIntent = new Intent();
+        takeVideoIntent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
+        takeVideoIntent.setAction(Intent.ACTION_GET_CONTENT);
+        takeVideoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+
+        if (mContext instanceof Activity) {
+
+            ((Activity) mContext).startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+
+        } else {
+
+            fragment.startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+
+        }
+
+
     }
 
     private void callCameraOrGallery() {
@@ -152,7 +179,12 @@ public class CameraAndGallary {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == SELECT_FILE)
+
+            if (requestCode == REQUEST_TAKE_VIDEO) {
+
+                onVideoCall(data);
+
+            } else if (requestCode == SELECT_FILE)
 
                 onSelectFromGalleryResult(data);
 
@@ -168,6 +200,27 @@ public class CameraAndGallary {
         return mContext instanceof Activity ? mContext : fragment.getContext();
     }
 
+
+    private void onVideoCall(Intent data) {
+
+        if (data != null && data.getData() != null) {
+
+
+            String filePath = null;
+            try {
+                filePath = Util.getFilePath(mContext, data.getData());
+                File file = new File(filePath);
+
+                if (cameraAndGallaryCallBack != null) cameraAndGallaryCallBack.onVideo(file);
+
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
     private void onSelectFromGalleryResult(Intent data) {
 
         Context context = getCurrentContext();
@@ -181,7 +234,8 @@ public class CameraAndGallary {
                 e.printStackTrace();
             }
         }
-        cameraAndGallaryCallBack.onSelectFromGalleryResult(bm);
+        if (cameraAndGallaryCallBack != null)
+            cameraAndGallaryCallBack.onSelectFromGalleryResult(bm);
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -259,7 +313,8 @@ public class CameraAndGallary {
             Bitmap rotatedImage = Bitmap.createBitmap(thumbnail, 0, 0, thumbnail.getWidth(), thumbnail.getHeight(), matrix, true);
 
 
-            cameraAndGallaryCallBack.onSelectFromGalleryResult(rotatedImage);
+            if (cameraAndGallaryCallBack != null)
+                cameraAndGallaryCallBack.onSelectFromGalleryResult(rotatedImage);
 
         } else {
 
@@ -279,6 +334,8 @@ public class CameraAndGallary {
     public interface CameraAndGallaryCallBack {
 
         void onSelectFromGalleryResult(Bitmap bitmap);
+
+        void onVideo(File file);
 
     }
 

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:width="@dimen/_30sdp"
-        android:height="@dimen/_30sdp"
+        android:width="@dimen/_10sdp"
+        android:height="@dimen/_10sdp"
         android:gravity="center"
         tools:targetApi="m">
         <animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"

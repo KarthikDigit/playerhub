@@ -4,13 +4,30 @@ package com.playerhub.ui.dashboard.home;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.transition.ChangeBounds;
 import android.transition.Slide;
@@ -19,14 +36,19 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fivehundredpx.android.blur.BlurringView;
 import com.github.ag.floatingactionmenu.OptionsFabLayout;
 import com.playerhub.R;
+import com.playerhub.common.BlurBuilder;
 import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
 import com.playerhub.network.RetrofitAdapter;
@@ -59,6 +81,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+//import jp.wasabeef.blurry.Blurry;
 import retrofit2.Response;
 
 /**
@@ -71,7 +94,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     @BindView(R.id.textView2)
     TextView notificationCount;
 
-
+    RenderScript rs;
     Unbinder unbinder;
 
 //    @BindView(R.id.fullImage)
@@ -94,10 +117,14 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     Unbinder unbinder1;
     @BindView(R.id.myView)
     View myView;
+//    @BindView(R.id.myrView)
+//    View myrView;
+    //    @BindView(R.id.blurimage)
+//    ImageView mBlurImage;
     @BindView(R.id.myrootView)
     FrameLayout myrootView;
     @BindView(R.id.rootview)
-    LinearLayout rootview;
+    RelativeLayout rootview;
     @BindView(R.id.btn_announcement)
     FrameLayout btnAnnouncement;
     //    @BindView(R.id.testView)
@@ -106,6 +133,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private Animation blink;
+    private Bitmap mBlurredBitmap;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -255,8 +283,188 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //        rectangle_layout_overlay.resetShapeSize(30);
 
 
+//        Blurry.with(getContext())
+//                .radius(10)
+//                .sampling(8)
+//
+//                .color(Color.argb(66, 22, 16, 75))
+//                .async()
+//                .animate(500)
+//                .onto(myrootView);
+
+
+//        Blurry.with(getContext()).radius(20).sampling(8) .color(Color.argb(66, 255, 255, 0)).async().capture(mBlurImage).into(mBlurImage);
+
+
+//        myView.setBlurredView(rootview);
+
+//
+//        if (myView.getWidth() > 0) {
+//
+////            Bitmap mBitmap1 = BlurBuilder.getScreenshot(myrootView);//loadBitmap(myrootView, myView);
+////            setBackgroundOnView(myView, mBitmap1);
+////
+////            blur(BlurBuilder.getScreenshot(myrView), myView);
+//////            Bitmap image = BlurBuilder.blur(myrootView);
+//////            myView.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+//        } else {
+//
+//            myView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                @Override
+//                public void onGlobalLayout() {
+//
+//                    Bitmap mBitmap1 =BlurBuilder.getScreenshot(myrootView); ;//loadBitmap(rootview, myView);
+//                    setBackgroundOnView(myView, mBitmap1);
+////                    blur(BlurBuilder.getScreenshot(myrView), myView);
+////
+//////                    Bitmap image = BlurBuilder.blur(myrootView);
+//////                    myView.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+//                }
+//            });
+//
+//        }
+
+//        Bitmap image = BlurBuilder.blur(rootview);
+//        myView.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
+
     }
 
+
+    private void setBackgroundOnView(View view, Bitmap bitmap) {
+        Drawable d;
+        if (bitmap != null) {
+            d = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            ((RoundedBitmapDrawable) d).setCornerRadius(getResources().getDimensionPixelOffset(R.dimen.rounded_corner));
+
+        } else {
+            d = ContextCompat.getDrawable(getContext(), R.drawable.round_test);
+        }
+        view.setBackground(d);
+    }
+
+    private Bitmap loadBitmap(View backgroundView, View targetView) {
+        Rect backgroundBounds = new Rect();
+        backgroundView.getHitRect(backgroundBounds);
+        if (!targetView.getLocalVisibleRect(backgroundBounds)) {
+            // NONE of the imageView is within the visible window
+            return null;
+        }
+
+        Bitmap blurredBitmap = captureView(backgroundView);
+        //capture only the area covered by our target view
+        int[] loc = new int[2];
+        int[] bgLoc = new int[2];
+        backgroundView.getLocationInWindow(bgLoc);
+        targetView.getLocationInWindow(loc);
+        int height = targetView.getHeight();
+        int y = loc[1];
+        if (bgLoc[1] >= loc[1]) {
+            //view is going off the screen at the top
+            height -= (bgLoc[1] - loc[1]);
+            if (y < 0)
+                y = 0;
+        }
+        if (y + height > blurredBitmap.getHeight()) {
+            height = blurredBitmap.getHeight() - y;
+            Log.d("TAG", "Height = " + height);
+            if (height <= 0) {
+                //below the screen
+                return null;
+            }
+        }
+        Matrix matrix = new Matrix();
+        //half the size of the cropped bitmap
+        //to increase performance, it will also
+        //increase the blur effect.
+        matrix.setScale(0.5f, 0.5f);
+        Bitmap bitmap = Bitmap.createBitmap(blurredBitmap,
+                (int) targetView.getX(),
+                y,
+                targetView.getMeasuredWidth(),
+                height,
+                matrix,
+                true);
+
+        return bitmap;
+        //If handling rounded corners yourself.
+        //Create rounded corners on the Bitmap
+        //keep in mind that our bitmap is half
+        //the size of the original view, setting
+        //it as the background will stretch it out
+        //so you will need to use a smaller value
+        //for the rounded corners than you would normally
+        //to achieve the correct look.
+        //ImageHelper.roundCorners(
+        //bitmap,
+        //getResources().getDimensionPixelOffset(R.dimen.rounded_corner),
+        //false);
+    }
+
+    public Bitmap captureView(View view) {
+        if (mBlurredBitmap != null) {
+            return mBlurredBitmap;
+        }
+        //Find the view we are after
+        //Create a Bitmap with the same dimensions
+        mBlurredBitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
+                view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_4444); //reduce quality and remove opacity
+        //Draw the view inside the Bitmap
+        Canvas canvas = new Canvas(mBlurredBitmap);
+        view.draw(canvas);
+
+        //blur it
+        ImageHelper.blurBitmapWithRenderscript(rs, mBlurredBitmap);
+
+        //Make it frosty
+        Paint paint = new Paint();
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        ColorFilter filter = new LightingColorFilter(0xFFFFFFFF, 0x00222222); // lighten
+        //ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);    // darken
+        paint.setColorFilter(filter);
+        canvas.drawBitmap(mBlurredBitmap, 0, 0, paint);
+
+        return mBlurredBitmap;
+    }
+
+
+    private void blur(Bitmap bkg, View view) {
+        long startMs = System.currentTimeMillis();
+
+        float radius = 20;
+
+        Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth()),
+                (int) (view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(overlay);
+
+        canvas.translate(-view.getLeft(), -view.getTop());
+        canvas.drawBitmap(bkg, 0, 0, null);
+
+        RenderScript rs = RenderScript.create(getActivity());
+
+        Allocation overlayAlloc = Allocation.createFromBitmap(
+                rs, overlay);
+
+        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(
+                rs, overlayAlloc.getElement());
+
+        blur.setInput(overlayAlloc);
+
+        blur.setRadius(radius);
+
+        blur.forEach(overlayAlloc);
+
+        overlayAlloc.copyTo(overlay);
+
+        view.setBackground(new BitmapDrawable(
+                getResources(), overlay));
+
+        rs.destroy();
+
+//        myrView.setVisibility(View.GONE);
+//        statusText.setText(System.currentTimeMillis() - startMs + "ms");
+    }
 
     public static void makeRoundCorner(int bgcolor, int radius, View v, int strokeWidth, int strokeColor) {
 
