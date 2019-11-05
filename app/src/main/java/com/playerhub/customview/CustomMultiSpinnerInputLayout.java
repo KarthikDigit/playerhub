@@ -4,14 +4,9 @@ import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListPopupWindow;
-import android.widget.Toast;
 
 import com.playerhub.network.response.TeamResponse;
-import com.playerhub.ui.dashboard.home.announcement.MultiSelectFragment;
+import com.playerhub.ui.dashboard.announcement.MultiSelectFragment;
 
 import java.util.ArrayList;
 import java.util.List;

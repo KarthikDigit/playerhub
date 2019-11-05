@@ -26,7 +26,7 @@ import com.playerhub.network.response.NotificationApi;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
-import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 
 import java.util.ArrayList;

@@ -17,7 +17,8 @@ public final class MyAppGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         super.applyOptions(context, builder);
-        builder.setDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.progress_animation).error(R.drawable.logo));
+//        builder.setDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.progress_animation).error(R.drawable.logo));
+        builder.setDefaultRequestOptions(new RequestOptions().error(R.drawable.logo));
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.playerhub.ExoPlayerActivity;
 import com.playerhub.R;
 import com.playerhub.VideoPlayerActivity;
 import com.playerhub.VideoViewFragment;
+import com.playerhub.customview.ChatVideoView;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.dashboard.messages.Messages;
 import com.playerhub.utils.ImageUtility;
@@ -129,16 +130,9 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         if (!TextUtils.isEmpty(video_url)) {
-
-            Glide.with(myChatViewHolder.videoView.getContext()).asBitmap().load(video_url)
-                    .thumbnail(0.3f).apply(new RequestOptions())
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(myChatViewHolder.videoView);
+            myChatViewHolder.videoLayout.loadImage(video_url);
             myChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
             myChatViewHolder.videoLayout.layout(0, 0, 0, 0);
-
-
             myChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -248,12 +242,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (!TextUtils.isEmpty(video_url)) {
 
-
-            Glide.with(otherChatViewHolder.videoView.getContext()).asBitmap().load(video_url)
-                    .thumbnail(0.3f).apply(new RequestOptions())
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(otherChatViewHolder.videoView);
+            otherChatViewHolder.videoLayout.loadImage(video_url);
             otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
             otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
 
@@ -344,14 +333,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static class MyChatViewHolder extends RecyclerView.ViewHolder {
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
-        private ImageView imageView, videoView;
-        private RelativeLayout videoLayout;
+        private ImageView imageView;
+        private ChatVideoView videoLayout;
 
         public MyChatViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img);
-            videoView = (ImageView) itemView.findViewById(R.id.videoView);
-            videoLayout = (RelativeLayout) itemView.findViewById(R.id.video_layout);
+            videoLayout = (ChatVideoView) itemView.findViewById(R.id.video_layout);
             txtChatMessage = (TextView) itemView.findViewById(R.id.text_view_chat_message);
             txtTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
@@ -360,14 +348,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static class OtherChatViewHolder extends RecyclerView.ViewHolder {
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
-        private ImageView imageView, videoView;
-        private RelativeLayout videoLayout;
+        private ImageView imageView;
+        private ChatVideoView videoLayout;
 
         public OtherChatViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img);
-            videoView = (ImageView) itemView.findViewById(R.id.videoView);
-            videoLayout = (RelativeLayout) itemView.findViewById(R.id.video_layout);
+            videoLayout = (ChatVideoView) itemView.findViewById(R.id.video_layout);
             txtTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
             txtChatMessage = (TextView) itemView.findViewById(R.id.text_view_chat_message);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);

@@ -1,12 +1,10 @@
 package com.playerhub.ui.dashboard;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,13 +19,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.transition.ChangeBounds;
 import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Slide;
-import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,18 +44,16 @@ import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.trans.EventDetailsTransition;
 import com.playerhub.ui.base.BaseActivity;
+import com.playerhub.ui.dashboard.announcement.announcementviewmodel.AnnouncementListFragment;
 import com.playerhub.ui.dashboard.home.HomeFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
-import com.playerhub.ui.dashboard.home.announcement.MoreAnnouncementFragment;
-import com.playerhub.ui.dashboard.home.moreevent.EventsFragment;
+import com.playerhub.ui.dashboard.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.home.moreevent.EventsUpdatedFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
 import com.playerhub.ui.dashboard.messages.MessagesFragment;
 import com.playerhub.ui.dashboard.settings.SettingsFragment;
-import com.playerhub.ui.welcome.WelcomeActivity;
-import com.playerhub.utils.NetworkHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -327,7 +319,7 @@ public class DashBoardActivity extends BaseActivity implements Subject {
         fragmentList.add(new EventsUpdatedFragment());
         fragmentList.add(new MessagesFragment());
         fragmentList.add(new SettingsFragment());
-        fragmentList.add(new MoreAnnouncementFragment());
+        fragmentList.add(new AnnouncementListFragment());
         manger.addFragment(fragmentList);
 
 

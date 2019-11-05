@@ -1,9 +1,7 @@
 package com.playerhub.ui.dashboard.home;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +12,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.playerhub.R;
 import com.playerhub.network.response.AnnouncementApi;
-import com.playerhub.network.response.EventListApi.UpcommingEvent;
-import com.playerhub.ui.dashboard.home.announcement.AnnouncementDialogFragment;
-import com.playerhub.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapter.EventsRow> {

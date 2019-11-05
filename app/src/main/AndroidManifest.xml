@@ -252,7 +252,7 @@
         <activity
             android:name=".ui.dashboard.home.addevent.EventSharingActivity"
             android:theme="@style/AppTheme.Sharing" />
-        <activity android:name=".ui.dashboard.home.announcement.PostAnnouncementActivity" />
+        <activity android:name=".ui.dashboard.announcement.PostAnnouncementActivity" />
         <activity
             android:name=".ui.dashboard.home.paidevent.PaidEventDetailsActivity"
             android:screenOrientation="portrait"

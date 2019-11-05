@@ -22,32 +22,11 @@
         android:background="@drawable/chat_rounded_rect_bg_green"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <com.playerhub.customview.ChatVideoView
             android:id="@+id/video_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/videoView"
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_120sdp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:alpha=".5"
-                android:padding="@dimen/padding_small"
-                android:src="@mipmap/ic_launcher"
-                android:visibility="visible" />
-
-            <ImageView
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_centerInParent="true"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_play_circle_filled_black_24dp" />
-
-
-        </RelativeLayout>
+            android:visibility="gone" />
 
 
         <ImageView

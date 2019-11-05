@@ -1,13 +1,9 @@
 package com.playerhub.ui.dashboard.home.addevent;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Build;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -22,13 +18,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.playerhub.R;
 import com.playerhub.ui.base.BaseActivity;
-import com.playerhub.ui.dashboard.home.announcement.PostAnnouncementFragment;
+import com.playerhub.ui.dashboard.announcement.PostAnnouncementFragment;
 
 
 public class EventSharingActivity extends BaseActivity {
