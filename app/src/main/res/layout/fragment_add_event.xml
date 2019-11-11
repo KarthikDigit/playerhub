@@ -140,6 +140,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableRight="@drawable/ic_small_calendar"
+                            android:drawableTint="@color/black5"
                             android:focusable="false"
                             android:hint="Start Date"
 
@@ -197,8 +198,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableRight="@drawable/ic_small_calendar"
+                            android:drawableTint="@color/black5"
                             android:focusable="false"
-
                             android:hint="End Date"
                             android:inputType="text"
 

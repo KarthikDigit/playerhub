@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_8sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <View
+                android:id="@+id/icon"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:background="@color/shimmer_bg_color"
+                android:visibility="visible" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/icon"
+            android:layout_toRightOf="@+id/icon"
+            android:paddingLeft="@dimen/_16sdp">
+
+
+            <View
+                android:id="@+id/name"
+                fontPath="fonts/poppins_medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/_12ssp"
+                android:background="@color/shimmer_bg_color"
+                android:paddingRight="@dimen/_16sdp"
+
+                />
+
+            <TextView
+                android:id="@+id/description"
+                fontPath="fonts/Barlow-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:lineSpacingExtra="@dimen/_2sdp"
+                android:paddingRight="@dimen/_16sdp"
+                android:text="@string/barca_ny_04_pro"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/description"
+                android:layout_marginTop="@dimen/_minus15sdp">
+
+
+                <RelativeLayout
+                    android:id="@+id/count_lay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_half"
+                    android:backgroundTint="@color/shimmer_bg_color">
+
+                    <!--<View-->
+                    <!--android:id="@+id/count"-->
+                    <!--android:layout_width="10dp"-->
+                    <!--android:layout_height="10dp"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:background="@color/white" />-->
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_below="@+id/count_lay"
+                    android:background="@color/shimmer_bg_color" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

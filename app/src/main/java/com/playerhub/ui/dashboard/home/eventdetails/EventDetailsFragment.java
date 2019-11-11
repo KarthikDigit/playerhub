@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -38,6 +39,7 @@ import com.playerhub.network.service.KidsRequest;
 import com.playerhub.preference.Preferences;
 import com.playerhub.recyclerHelper.ItemOffsetDecoration;
 import com.playerhub.recyclerHelper.SimpleDividerItemDecoration;
+import com.playerhub.recyclerHelper.SimpleDividerItemDecorationFullLine;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.DashBoardActivity;
 import com.playerhub.ui.dashboard.profile.MyCallBack;
@@ -81,9 +83,9 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
     @BindView(R.id.content)
     LinearLayout content;
     @BindView(R.id.description_layout)
-    LinearLayout descriptionLayout;
+    CardView descriptionLayout;
     @BindView(R.id.location_layout)
-    LinearLayout locationLayout;
+    CardView locationLayout;
 
     @BindView(R.id.actionBar)
     RelativeLayout mActionBar;
@@ -133,7 +135,7 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
         kidsView.setAdapter(kidsViewAdapter);
 
 
-        kidsView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+        kidsView.addItemDecoration(new SimpleDividerItemDecorationFullLine(getContext()));
 
 //        kidsView.addItemDecoration(new ItemOffsetDecoration(18));
 
@@ -178,6 +180,7 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
     public void onManuallyParseError(Response<?> response, boolean isToastMsg) {
 
         showToast("Something went wrong");
+
     }
 
 

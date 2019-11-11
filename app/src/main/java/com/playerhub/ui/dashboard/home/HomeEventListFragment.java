@@ -31,6 +31,7 @@ import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -147,6 +148,21 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        eventView.onResume();
+        upcomingEventView.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        eventView.onPause();
+        upcomingEventView.onPause();
+        super.onPause();
+    }
+
     private void initView() {
 
 //        mCardAdapter = new CardPagerAdapter(this);
@@ -166,7 +182,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
     public void callEventListApi() {
 
 
-        showHideLoading(true);
+//        showHideLoading(true);
 
 
         Observable<NotificationApi> observableNoti = RetrofitAdapter.getNetworkApiServiceClient().getAllNotification(Preferences.INSTANCE.getAuthendicate())
@@ -187,18 +203,24 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
         }).subscribeWith(new DisposableObserver<NotiAndEvents>() {
             @Override
             public void onNext(NotiAndEvents value) {
-                showHideLoading(false);
+//                showHideLoading(false);
+                eventView.stopShimmerAnimation();
+                upcomingEventView.stopShimmerAnimation();
                 setNotiAndEventsData(value);
             }
 
             @Override
             public void onError(Throwable e) {
+                eventView.stopShimmerAnimation();
+                upcomingEventView.stopShimmerAnimation();
                 showHideLoading(false);
             }
 
             @Override
             public void onComplete() {
-                showHideLoading(false);
+                eventView.stopShimmerAnimation();
+                upcomingEventView.stopShimmerAnimation();
+//                showHideLoading(false);
             }
 
         }));

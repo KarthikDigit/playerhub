@@ -159,5 +159,13 @@ dependencies {
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
+    implementation 'com.github.StephenVinouze:ShapeView:1.1.1'
+
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
 }

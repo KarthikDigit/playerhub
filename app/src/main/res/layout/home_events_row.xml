@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/_8sdp"
+    android:layout_marginLeft="@dimen/_16sdp"
     android:layout_marginTop="@dimen/_8sdp"
-    android:layout_marginRight="@dimen/_8sdp"
+    android:layout_marginRight="@dimen/_16sdp"
     android:background="@drawable/bg_test"
     android:elevation="@dimen/_2sdp"
     android:orientation="horizontal"
@@ -38,10 +38,7 @@
                 android:id="@+id/view2"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@drawable/event_circle"
-                tools:layout_editor_absoluteX="73dp"
-                tools:layout_editor_absoluteY="123dp" />
+                android:background="@drawable/event_circle" />
 
             <View
                 android:id="@+id/view3"
@@ -78,22 +75,23 @@
                 fontPath="fonts/poppins_medium.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18 SEP"
+                tools:text="18 SEP"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <TextView
                 android:id="@+id/txt_time"
-                fontPath="fonts/poppins_medium.ttf"
+                fontPath="fonts/poppins_light.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="09:30 AM"
+                tools:text="09:30 AM"
                 android:textAllCaps="true"
-                android:textColor="@color/black"
                 android:textFontWeight="600"
                 android:textSize="@dimen/_10ssp" />
+
+
         </LinearLayout>
 
 
@@ -106,14 +104,15 @@
 
             <TextView
                 android:id="@+id/name"
-                fontPath="fonts/poppins_light.ttf"
+                fontPath="fonts/poppins_medium.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="Euro Beach Soccer league 2018"
+                tools:text="Euro Beach Soccer league 2018"
                 android:textAllCaps="true"
-                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11ssp"
                 android:transitionName="@string/transition_name" />
 
             <TextView
@@ -124,7 +123,7 @@
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_10ssp"
                 tools:text="Disney trip" />
 
             <TextView
@@ -135,8 +134,8 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="Disney trip"
-                android:textSize="@dimen/_8ssp"
+                tools:text="Disney trip"
+                android:textSize="@dimen/_10ssp"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -160,8 +159,8 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="Orlando,FL,USA"
-                    android:textSize="@dimen/_8ssp" />
+                    tools:text="Orlando,FL,USA"
+                    android:textSize="@dimen/_10ssp" />
 
             </LinearLayout>
 
@@ -171,7 +170,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:alpha=".2"
             android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
     </LinearLayout>

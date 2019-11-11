@@ -1,337 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     android:fillViewport="true"
     tools:context=".ui.dashboard.settings.SettingsFragment">
 
 
-    <LinearLayout
+    <ImageView
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_240sdp"
+        android:layout_alignParentEnd="true"
+        android:alpha=".6"
+        android:background="@drawable/cr" />
+
+
+    <RelativeLayout
+        android:id="@+id/actionBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/ic_settings_black_24dp"
+                android:tint="@color/white"
+                android:visibility="invisible" />
 
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/_16sdp"
-                    android:src="@drawable/ic_settings_black_24dp"
-                    android:tint="@color/white"
-                    android:visibility="invisible" />
-
-                <TextView
-                    fontPath="fonts/poppins_bold.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/_16sdp"
-                    android:text="SETTINGS"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14sdp" />
-
-            </RelativeLayout>
+            <TextView
+                fontPath="fonts/poppins_bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
+                android:text="SETTINGS"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp" />
 
         </RelativeLayout>
 
+    </RelativeLayout>
 
-        <android.support.v7.widget.CardView
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionBar"
+        android:background="@color/bg_gray_color">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
-            app:cardElevation="@dimen/_2sdp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <TextView
+                fontPath="fonts/poppins_light.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:text="My Profile"
+                android:textSize="@dimen/_14ssp" />
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16sdp">
-
-
-                    <ImageView
-                        android:id="@+id/noti_img"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        app:srcCompat="@drawable/ic_notifications_black_24dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toLeftOf="@+id/soundSwitch"
-                        android:layout_toEndOf="@+id/noti_img"
-                        android:layout_toRightOf="@+id/noti_img"
-                        android:paddingRight="@dimen/_16sdp"
-                        android:text="Push Notification "
-                        android:textSize="@dimen/_12sdp" />
-
-
-                    <android.support.v7.widget.SwitchCompat
-                        android:id="@+id/soundSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:checked="true"
-                        android:theme="@style/SwitchCompatTheme" />
-
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_2sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_16sdp">
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        app:srcCompat="@drawable/ic_file_download_black_24dp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_weight="1"
-                        android:text="Auto Image Download"
-                        android:textSize="@dimen/_12sdp" />
-
-
-                    <android.support.v7.widget.SwitchCompat
-                        android:id="@+id/downloadimageSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:theme="@style/SwitchCompatTheme" />
-
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
-
-                <RelativeLayout
-                    android:id="@+id/profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16sdp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_img"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        android:src="@drawable/person"
-                        android:transitionName="@string/transition_image" />
-
-
-                    <TextView
+                    <RelativeLayout
+                        android:id="@+id/profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/profile_img"
-                        android:layout_toRightOf="@+id/profile_img"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:gravity="center|start"
-                        android:text="Profile"
-                        android:textSize="@dimen/_12sdp" />
+                        android:padding="@dimen/_16sdp">
 
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/profile_img"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_profile" />
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="Profile Details"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
 
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </RelativeLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+
+                    <LinearLayout
+                        android:id="@+id/create_creditcard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_credit_card_change" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="Change Credit Card"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+                    <LinearLayout
+                        android:id="@+id/addsubaccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_add_sub_account" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="Add Sub Account"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+                    <LinearLayout
+                        android:id="@+id/contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_contact_us" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="Contact"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <TextView
+                fontPath="fonts/poppins_light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:text="Settings"
+                android:textSize="@dimen/_14ssp" />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_2sdp">
 
                 <LinearLayout
-                    android:id="@+id/create_creditcard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/_16sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        android:transitionName="@string/transition_image"
-                        app:srcCompat="@drawable/ic_information" />
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/profile_img"
-                        android:layout_toRightOf="@+id/profile_img"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:gravity="center|start"
-                        android:text="Change Credit Card"
-                        android:textSize="@dimen/_12sdp" />
+                        android:padding="@dimen/_16sdp">
 
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
+
+                        <ImageView
+                            android:id="@+id/noti_img"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            app:srcCompat="@drawable/ic_icon_push_notification" />
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toLeftOf="@+id/soundSwitch"
+                            android:layout_toEndOf="@+id/noti_img"
+                            android:layout_toRightOf="@+id/noti_img"
+                            android:paddingRight="@dimen/_16sdp"
+                            android:text="Push Notification "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/soundSwitch"
+                            android:layout_width="@dimen/_44sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            app:sb_background="#f4f4f4"
+                            app:sb_button_color="@color/white"
+                            app:sb_checked="true"
+                            app:sb_checked_color="@color/fab_color"
+                            app:sb_shadow_radius="@dimen/_6sdp"
+                            app:sb_show_indicator="false" />
+
+                        <!--<android.support.v7.widget.SwitchCompat-->
+                        <!--android:id="@+id/soundSwitch"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:checked="true"-->
+                        <!--android:theme="@style/SwitchCompatTheme" />-->
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_16sdp">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            app:srcCompat="@drawable/ic_icon_auto_download" />
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_weight="1"
+                            android:text="Auto Image Download"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/downloadimageSwitch"
+                            android:layout_width="@dimen/_44sdp"
+                            android:layout_height="wrap_content"
+                            app:sb_background="#f4f4f4"
+                            app:sb_button_color="@color/white"
+                            app:sb_checked="true"
+                            app:sb_checked_color="@color/fab_color"
+                            app:sb_shadow_radius="@dimen/_6sdp"
+                            app:sb_show_indicator="false" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:id="@+id/logout_img"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            app:srcCompat="@drawable/ic_icon_logout" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/logout_img"
+                            android:layout_toRightOf="@+id/logout_img"
+                            android:paddingRight="@dimen/_16sdp"
+                            android:text="Logout"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </RelativeLayout>
+
+
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/_1sdp"-->
+                    <!--android:background="@color/line2" />-->
+
+
                 </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
-
-                <LinearLayout
-                    android:id="@+id/addsubaccount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/_16sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        android:transitionName="@string/transition_image"
-                        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/profile_img"
-                        android:layout_toRightOf="@+id/profile_img"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:gravity="center|start"
-                        android:text="Add Sub Account"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
-
-                <LinearLayout
-                    android:id="@+id/contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/_16sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        android:transitionName="@string/transition_image"
-                        app:srcCompat="@drawable/ic_contract" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/profile_img"
-                        android:layout_toRightOf="@+id/profile_img"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:gravity="center|start"
-                        android:text="Contact"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
-
-
-                <RelativeLayout
-                    android:id="@+id/logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_16sdp">
-
-                    <ImageView
-                        android:id="@+id/logout_img"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:alpha=".5"
-                        app:srcCompat="@drawable/ic_logout" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_toEndOf="@+id/logout_img"
-                        android:layout_toRightOf="@+id/logout_img"
-                        android:paddingRight="@dimen/_16sdp"
-                        android:text="Logout"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <!--android:thumb="@drawable/switch_thumb"-->
-                    <!--android:track="@drawable/switch_track"-->
-                </RelativeLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/line2" />
-
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

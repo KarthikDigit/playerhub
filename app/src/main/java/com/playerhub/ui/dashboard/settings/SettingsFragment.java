@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.playerhub.R;
@@ -21,6 +22,7 @@ import com.playerhub.ui.dashboard.changecreditcard.ChangeCreditCardActivity;
 import com.playerhub.ui.dashboard.contact.ContactActivity;
 import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
 import com.playerhub.ui.login.LoginActivity;
+import com.suke.widget.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,9 +40,9 @@ public class SettingsFragment extends BaseFragment {
     RelativeLayout logout;
     Unbinder unbinder;
     @BindView(R.id.profile_img)
-    CircleImageView profileImg;
+    ImageView profileImg;
     @BindView(R.id.downloadimageSwitch)
-    SwitchCompat downloadimageSwitch;
+    SwitchButton downloadimageSwitch;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -57,9 +59,10 @@ public class SettingsFragment extends BaseFragment {
 
         downloadimageSwitch.setChecked(Preferences.INSTANCE.getAutoImageDownload());
 
-        downloadimageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        downloadimageSwitch.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(SwitchButton buttonView, boolean isChecked) {
 
                 Preferences.INSTANCE.putAutoImageDownload(isChecked);
             }

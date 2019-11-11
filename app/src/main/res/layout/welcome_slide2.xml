@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6852D9">
+    android:background="@color/colorPrimary_welcome_alpha">
 
 
     <RelativeLayout
@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <TextView
-                fontPath="fonts/Barlow-Bold.ttf"
+                fontPath="fonts/poppins_bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Events"
@@ -41,7 +41,7 @@
                 android:textSize="@dimen/_24sdp" />
 
             <TextView
-                fontPath="fonts/Barlow-Regular.ttf"
+                fontPath="fonts/poppins_light.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"

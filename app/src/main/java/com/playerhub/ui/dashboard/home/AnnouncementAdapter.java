@@ -1,6 +1,7 @@
 package com.playerhub.ui.dashboard.home;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -64,7 +65,9 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
 
 
         eventsRow.title.setText(events.getTitle());
+        eventsRow.title.setBackgroundColor(Color.WHITE);
         eventsRow.description.setText(events.getMessage());
+        eventsRow.description.setBackgroundColor(Color.WHITE);
 
         eventsRow.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,7 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
                 if (onItemClickListener != null) {
 
                     onItemClickListener.OnAnnouncemnetClick(v, events, i);
+
                 }
 
             }
@@ -102,5 +106,6 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     public interface OnItemClickListener<T> {
 
         void OnAnnouncemnetClick(View view, T t, int position);
+
     }
 }

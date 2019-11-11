@@ -61,8 +61,15 @@ public class TextInputUtil {
 
     public static void setEnable(TextInputLayout inputLayout, boolean isEnable) {
 
-        if (inputLayout != null && inputLayout.getEditText() != null)
+        if (inputLayout != null && inputLayout.getEditText() != null) {
             inputLayout.getEditText().setEnabled(isEnable);
+
+//            if (isEnable) {
+//
+//                inputLayout.getEditText().setHintTextColor(Color.RED);
+//
+//            }
+        }
     }
 
     public static void setFocusable(TextInputLayout inputLayout, boolean isFocus) {

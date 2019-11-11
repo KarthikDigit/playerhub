@@ -201,7 +201,7 @@
         <!--<item name="errorTextAppearance">@style/ErrorText</item>-->
         <!--<item name="android:textColor">@color/user_input_color</item>-->
         <!--<item name="android:textColorHint">@color/unfocused_color</item>-->
-        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlNormal">@color/line</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
         <!--<item name="hintTextAppearance">@style/HintTextInputLayout</item>-->
@@ -260,6 +260,21 @@
         <!--<item name="android:textColor">@color/mcv_text_date_light1</item>-->
         <!--&lt;!&ndash;<item name="fontFamily">@font/shirkhand</item>&ndash;&gt;-->
     <!--</style>-->
+
+
+
+    <style name="Theme_Dialog" parent="@style/Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+    <style name="Theme_Dialog1" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
 
 
 </resources>

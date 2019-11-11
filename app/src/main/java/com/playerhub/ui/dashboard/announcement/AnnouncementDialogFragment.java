@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -51,9 +52,8 @@ public class AnnouncementDialogFragment extends DialogFragment {
     @BindView(R.id.description)
     TextView description;
     @BindView(R.id.btn_close)
-    Button btnClose;
-    @BindView(R.id.close)
-    ImageView close;
+    ImageView btnClose;
+
     Unbinder unbinder;
 
     public AnnouncementDialogFragment() {
@@ -171,13 +171,6 @@ public class AnnouncementDialogFragment extends DialogFragment {
 
         }
 
-        binding.close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dismiss();
-            }
-        });
 
         unbinder = ButterKnife.bind(this, binding.getRoot());
         return binding.getRoot();

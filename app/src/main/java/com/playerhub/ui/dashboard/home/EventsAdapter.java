@@ -169,10 +169,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
                 }
             });
 
-            AnimUtils.setFadeAnimation(eventsRow.itemView);
+//            AnimUtils.setFadeAnimation(eventsRow.itemView);
         } else {
 
-            eventsRow.rootView.setVisibility(View.INVISIBLE);
+//            eventsRow.rootView.setVisibility(View.INVISIBLE);
         }
 
 //        FromRightToLeft(eventsRow.itemView, i);

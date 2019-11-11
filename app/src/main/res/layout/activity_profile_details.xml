@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
     <com.playerhub.customview.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:background="@color/colorPrimary"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:msv_animateViewChanges="true"
@@ -24,11 +25,16 @@
         app:msv_loadingView="@layout/loading_view"
         app:msv_viewState="content">
 
+        <ImageView
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:background="@drawable/event_top" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical"
             tools:context=".ui.dashboard.profile.ProfileActivity">
 
@@ -38,7 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.4"
-                android:background="@color/bg_color"
                 android:orientation="vertical">
 
                 <ImageView
@@ -49,6 +54,7 @@
                     android:alpha=".25"
                     android:scaleType="centerCrop"
                     android:transitionName="@string/transition_image"
+                    android:visibility="gone"
                     tools:src="@drawable/profile" />
 
 
@@ -58,25 +64,64 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_image"
-                        android:layout_width="@dimen/_78sdp"
-                        android:layout_height="@dimen/_78sdp"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:transitionName="@string/transition_image"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="@dimen/_4sdp"
-                        tools:src="@drawable/profile" />
-
-                    <TextView
-                        android:id="@+id/name"
-                        fontPath="fonts/Barlow-Bold.ttf"
-                        android:layout_width="wrap_content"
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_16sdp"
-                        tools:text="DAVID ANSAH" />
+                        android:background="@android:color/transparent">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="@dimen/_72sdp"
+                            android:layout_height="@dimen/_72sdp"
+                            android:transitionName="@string/transition_image"
+                            app:civ_border_color="@color/bg_color_white_alpha1"
+                            app:civ_border_width="@dimen/_6sdp"
+                            app:civ_fill_color="@color/bg_color_white_alpha1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.00999999"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:src="@drawable/profile" />
+
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="@dimen/_28sdp"
+                            android:layout_height="@dimen/_28sdp"
+                            android:src="@drawable/avatar_mini"
+                            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                            app:layout_constraintEnd_toEndOf="@+id/profile_image"
+                            app:layout_constraintStart_toStartOf="@+id/profile_image"
+                            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
+
+                        <TextView
+                            android:id="@+id/name"
+                            fontPath="fonts/poppins_bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profile_image"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.502"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+                            app:layout_constraintVertical_bias="0.0"
+                            tools:text="DAVID ANSAH" />
+
+                    </android.support.constraint.ConstraintLayout>
 
                 </LinearLayout>
             </RelativeLayout>
@@ -86,7 +131,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fillViewport="true">
+                android:background="@color/white"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:padding="@dimen/_16sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,77 +142,92 @@
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.CardView
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/_8sdp"-->
+                    <!--android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--android:layout_marginRight="@dimen/_8sdp"-->
+                    <!--app:cardElevation="@dimen/_2sdp"-->
+                    <!--app:contentPadding="@dimen/_8sdp">-->
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_2sdp"
-                        app:contentPadding="@dimen/_8sdp">
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:text="Email"
+                            android:textSize="@dimen/_10ssp" />
 
-                            <TextView
-                                fontPath="fonts/Barlow-Bold.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Email"
-                                android:textSize="@dimen/_10ssp" />
+                        <TextView
+                            android:id="@+id/email"
+                            fontPath="fonts/poppins_bold.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="Email"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp" />
 
-                            <TextView
-                                android:id="@+id/email"
-                                fontPath="fonts/Barlow-Regular.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:text="Email"
-                                android:textSize="@dimen/_14ssp" />
+                    </LinearLayout>
 
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/line" />
+
+                    <!--</android.support.v7.widget.CardView>-->
 
                     <!--<View-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="@dimen/_1sdp"-->
                     <!--android:background="@color/line" />-->
 
-                    <android.support.v7.widget.CardView
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/_8sdp"-->
+                    <!--android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--android:layout_marginRight="@dimen/_8sdp"-->
+                    <!--app:cardElevation="@dimen/_2sdp"-->
+                    <!--app:contentPadding="@dimen/_8sdp">-->
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        app:cardElevation="@dimen/_2sdp"
-                        app:contentPadding="@dimen/_8sdp">
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:text="Phone Number"
+                            android:textSize="@dimen/_10ssp" />
 
-                            <TextView
-                                fontPath="fonts/Barlow-Bold.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Phone Number"
-                                android:textSize="@dimen/_10ssp" />
+                        <TextView
+                            android:id="@+id/phone_number"
+                            fontPath="fonts/poppins_bold.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="Phone Number"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp" />
 
-                            <TextView
-                                android:id="@+id/phone_number"
-                                fontPath="fonts/Barlow-Regular.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:text="Phone Number"
-                                android:textSize="@dimen/_14ssp" />
+                    </LinearLayout>
 
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/line" />
+                    <!--</android.support.v7.widget.CardView>-->
 
                     <!--<View-->
                     <!--android:layout_width="match_parent"-->

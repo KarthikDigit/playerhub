@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
@@ -27,10 +27,10 @@
                 android:visibility="gone" />
 
             <TextView
+                fontPath="fonts/poppins_bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_16sdp"
-                fontPath="fonts/poppins_bold.ttf"
                 android:text="@string/announcement"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
@@ -67,6 +67,38 @@
         app:msv_errorView="@layout/error_view"
         app:msv_loadingView="@layout/loading_view"
         app:msv_viewState="content">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            shimmer:duration="800">
+
+            <!-- Adding 3 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+                <include layout="@layout/home_announcement_row_shimmer" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipetoReferesh"

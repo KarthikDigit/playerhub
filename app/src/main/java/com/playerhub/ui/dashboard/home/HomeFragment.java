@@ -1,11 +1,16 @@
 package com.playerhub.ui.dashboard.home;
 
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
@@ -22,6 +27,7 @@ import android.renderscript.Allocation;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -32,16 +38,18 @@ import android.transition.ChangeBounds;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.github.ag.floatingactionmenu.OptionsFabLayout;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.playerhub.R;
 import com.playerhub.common.ConnectivityHelper;
 import com.playerhub.common.OnPageChangeListener;
@@ -51,12 +59,13 @@ import com.playerhub.network.response.Coach;
 import com.playerhub.network.response.Kid;
 import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
+import com.playerhub.ui.RunTestActivity;
 import com.playerhub.ui.base.BaseNetworkCheck;
 import com.playerhub.ui.dashboard.DashBoardActivity;
-import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
 import com.playerhub.ui.dashboard.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.announcement.MoreAnnouncementFragment;
 import com.playerhub.ui.dashboard.announcement.PostAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.addevent.AddEventActivity;
 import com.playerhub.ui.dashboard.notification.NotificationActivity;
 import com.playerhub.ui.dashboard.profile.CoachProfileFragment;
 import com.playerhub.ui.dashboard.profile.MaterialProfileActivity;
@@ -64,6 +73,7 @@ import com.playerhub.ui.dashboard.profile.ProfileDetailsActivity;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,14 +85,18 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-//import jp.wasabeef.blurry.Blurry;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
+
+//import jp.wasabeef.blurry.Blurry;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAdapter.OnItemClicklistener, CardPagerAdapter.OnItemClickListener {
 
+    private static final int REQUEST_CODE = 123;
     @BindView(R.id.noti_img)
     ConstraintLayout notiImg;
     @BindView(R.id.textView2)
@@ -94,8 +108,8 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //    @BindView(R.id.fullImage)
 //    ImageView mFullImage;
 
-    @BindView(R.id.fab_l)
-    OptionsFabLayout mFloatingMenu;
+//    @BindView(R.id.fab_l)
+//    OptionsFabLayout mFloatingMenu;
 
     @BindView(R.id.viewPager)
     ViewPager profileViewPager;
@@ -111,7 +125,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     Unbinder unbinder1;
     @BindView(R.id.myView)
     View myView;
-//    @BindView(R.id.myrView)
+    //    @BindView(R.id.myrView)
 //    View myrView;
     //    @BindView(R.id.blurimage)
 //    ImageView mBlurImage;
@@ -121,6 +135,13 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     RelativeLayout rootview;
     @BindView(R.id.btn_announcement)
     FrameLayout btnAnnouncement;
+    @BindView(R.id.fab_circle_view)
+    ImageView fabCircleView;
+    @BindView(R.id.fab_fullView)
+    View fabFullView;
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton floatingActionButton;
+    private FloatingActionMenu actionMenu;
     //    @BindView(R.id.testView)
 //    RealtimeBlurView testView;
     private ParentChildPagerAdapter parentChildPagerAdapter;
@@ -140,6 +161,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     }
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void initViews() {
 
@@ -148,7 +170,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //        profileViewPager.setClipToPadding(false);
 //        profileViewPager.setPadding(60, 10, 60, 10);
 //        profileViewPager.setPageMargin(50);
-        parentChildPagerAdapter = new ParentChildPagerAdapter(getContext());
+        parentChildPagerAdapter = new ParentChildPagerAdapter(getContext(), new ArrayList<ParentChild>());
 
         profileViewPager.setAdapter(parentChildPagerAdapter);
 
@@ -198,47 +220,47 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //        addParentProfile();
 
 
-        mFloatingMenu.setMainFabOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (mFloatingMenu.isOptionsMenuOpened()) {
-                    mFloatingMenu.closeOptionsMenu();
-                }
-            }
-        });
-
-        mFloatingMenu.setMiniFabsColors(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
-
-        mFloatingMenu.setMiniFabSelectedListener(new OptionsFabLayout.OnMiniFabSelectedListener() {
-            @Override
-            public void onMiniFabSelected(MenuItem fabItem) {
-
-                switch (fabItem.getItemId()) {
-
-
-                    case R.id.fab_add_event:
-
-                        addEvent();
-
-                        break;
-
-//                    case R.id.fab_add_paid_event:
+//        mFloatingMenu.setMainFabOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (mFloatingMenu.isOptionsMenuOpened()) {
+//                    mFloatingMenu.closeOptionsMenu();
+//                }
+//            }
+//        });
+//
+//        mFloatingMenu.setMiniFabsColors(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
+//
+//        mFloatingMenu.setMiniFabSelectedListener(new OptionsFabLayout.OnMiniFabSelectedListener() {
+//            @Override
+//            public void onMiniFabSelected(MenuItem fabItem) {
+//
+//                switch (fabItem.getItemId()) {
+//
+//
+//                    case R.id.fab_add_event:
+//
 //                        addEvent();
+//
 //                        break;
-
-                    case R.id.fab_add_announcement:
-
-                        addAnnouncement();
-
-                        break;
-
-
-                }
-
-
-            }
-        });
+//
+////                    case R.id.fab_add_paid_event:
+////                        addEvent();
+////                        break;
+//
+//                    case R.id.fab_add_announcement:
+//
+//                        addAnnouncement();
+//
+//                        break;
+//
+//
+//                }
+//
+//
+//            }
+//        });
 
 
         try {
@@ -247,9 +269,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
                 addParentProfile();
 
-                mFloatingMenu.setVisibility(View.VISIBLE);
+                floatingActionButton.setVisibility(View.VISIBLE);
             } else {
-                mFloatingMenu.setVisibility(View.GONE);
+                floatingActionButton.setVisibility(View.GONE);
             }
 
         } catch (NullPointerException e) {
@@ -321,6 +343,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 //        Bitmap image = BlurBuilder.blur(rootview);
 //        myView.setBackgroundDrawable(new BitmapDrawable(getResources(), image));
 
+        setFabCircleView();
     }
 
 
@@ -536,7 +559,11 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
                                 List<Kid> kid = value.getData().getKids();
 
+                                List<ParentChild> parentChildList = new ArrayList<>();
+//                                showToast("item "+kid.size());
                                 if (kid != null && !kid.isEmpty()) {
+//                                    parentChildPagerAdapter.clearAll();
+
                                     for (Kid kid1 : kid
                                             ) {
 
@@ -554,13 +581,22 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
                                         parentChild.setCoachName(coach.getFirstname() + " " + coach.getLastname());
                                         parentChild.setCoachImage(coach.getAvatarImage());
                                         parentChild.setTeamName(kid1.getTeamName());
-
-                                        parentChildPagerAdapter.add(parentChild);
+                                        parentChildList.add(parentChild);
+//                                        parentChildPagerAdapter.add(parentChild);
 
                                     }
 
+                                    parentChildPagerAdapter = new ParentChildPagerAdapter(getContext(), parentChildList);
 
-                                    profileViewPager.setOffscreenPageLimit(parentChildPagerAdapter.getCount());
+                                    profileViewPager.setAdapter(parentChildPagerAdapter);
+
+                                    profileViewPager.setOffscreenPageLimit(parentChildList.size());
+                                    parentChildPagerAdapter.setOnItemClicklistener(HomeFragment.this);
+
+
+//                                    profileViewPager.setOffscreenPageLimit(parentChildPagerAdapter.getCount());
+
+
                                 }
 
                             }
@@ -591,9 +627,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addEvent() {
 
-        if (mFloatingMenu.isOptionsMenuOpened()) {
-            mFloatingMenu.closeOptionsMenu();
-        }
+//        if (mFloatingMenu.isOptionsMenuOpened()) {
+//            mFloatingMenu.closeOptionsMenu();
+//        }
 //        AddEventFragment addEventFragment = new AddEventFragment();
 ////        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
 //        addEventFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
@@ -609,9 +645,9 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addAnnouncement() {
-        if (mFloatingMenu.isOptionsMenuOpened()) {
-            mFloatingMenu.closeOptionsMenu();
-        }
+//        if (mFloatingMenu.isOptionsMenuOpened()) {
+//            mFloatingMenu.closeOptionsMenu();
+//        }
 
         PostAnnouncementFragment addEventFragment = new PostAnnouncementFragment();
         addEventFragment.setSharedElementEnterTransition(new ChangeBounds());
@@ -766,6 +802,7 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
     public void onResume() {
         super.onResume();
         setNotificationCount();
+//        getKids();
 
     }
 
@@ -811,10 +848,10 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity());//ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
 
-                startActivity(i, transitionActivityOptions.toBundle());
+                startActivityForResult(i, REQUEST_CODE, transitionActivityOptions.toBundle());
             } else {
 
-                startActivity(i);
+                startActivityForResult(i, REQUEST_CODE);
 
             }
 
@@ -889,6 +926,26 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
         return rootView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        Log.e(TAG, "onActivityResult: " + requestCode + " " + resultCode + " " );
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
+            showToast("Called");
+
+//            Log.e(TAG, "onActivityResult: called ");
+
+            getKids();
+
+        }
+
+    }
+
+
     @OnClick(R.id.btn_announcement)
     public void onViewClicked() {
 
@@ -920,5 +977,164 @@ public class HomeFragment extends BaseNetworkCheck implements ParentChildPagerAd
 
         }
     }
+
+
+    private void setFabCircleView() {
+
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(getActivity());
+// repeat many times:
+        ImageView itemIcon = new ImageView(getActivity());
+        itemIcon.setBackgroundColor(Color.TRANSPARENT);
+        itemIcon.setBackgroundResource(R.drawable.ic_iconfinder_announcement_2742787);
+        itemIcon.setColorFilter(ContextCompat.getColor(getActivity(), R.color.white), PorterDuff.Mode.SRC_IN);
+
+        ImageView itemIcon1 = new ImageView(getActivity());
+        itemIcon1.setBackgroundColor(Color.TRANSPARENT);
+        itemIcon1.setBackgroundResource(R.drawable.ic_small_calendar1);
+//        itemIcon1.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+        itemIcon1.setColorFilter(ContextCompat.getColor(getActivity(), R.color.white), PorterDuff.Mode.SRC_IN);
+
+
+        SubActionButton button1 = itemBuilder.setContentView(itemIcon).build();
+        SubActionButton button2 = itemBuilder.setContentView(itemIcon1).build();
+        button1.setBackgroundColor(Color.TRANSPARENT);
+        button2.setBackgroundColor(Color.TRANSPARENT);
+
+
+        actionMenu = new FloatingActionMenu.Builder(getActivity())
+                .addSubActionView(button1)
+                .addSubActionView(button2)
+                .attachTo(floatingActionButton)
+                .setRadius(180)
+                .build();
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addEvent();
+//                Toast.makeText(v.getContext(), "Button2", Toast.LENGTH_SHORT).show();
+                actionMenu.close(true);
+            }
+        });
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addAnnouncement();
+
+//                Toast.makeText(v.getContext(), "Button2", Toast.LENGTH_SHORT).show();
+                actionMenu.close(true);
+
+            }
+        });
+
+
+        actionMenu.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
+            @Override
+            public void onMenuOpened(FloatingActionMenu floatingActionMenu) {
+                fabCircleView.setVisibility(View.VISIBLE);
+                fabFullView.setVisibility(View.VISIBLE);
+                fabCircleView.animate().alpha(0).start();
+//                fabCircleView.setAlpha(0);
+                floatingActionButton.setRotation(0);
+                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45);
+                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(floatingActionButton, pvhR);
+                animation.start();
+
+
+                PropertyValuesHolder pvhR1 = PropertyValuesHolder.ofFloat(View.ALPHA, .8f);
+                ObjectAnimator animation1 = ObjectAnimator.ofPropertyValuesHolder(fabCircleView, pvhR1);
+                animation1.start();
+
+
+//                int x = fabCircleView.getRight();
+//                int y = fabCircleView.getBottom();
+//
+//                int startRadius = 0;
+//                int endRadius = (int) Math.hypot(fabCircleView.getWidth(), fabCircleView.getHeight());
+//
+//                Animator anim = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                    anim = ViewAnimationUtils.createCircularReveal(fabCircleView, x, y, startRadius, endRadius);
+//                    anim.start();
+//                }
+
+//                fabCircleView.setVisibility(View.VISIBLE);
+
+
+//                animation1.addListener(new Animator.AnimatorListener() {
+//                    @Override
+//                    public void onAnimationStart(Animator animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationCancel(Animator animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animator animation) {
+//
+//                    }
+//                });
+
+            }
+
+            @Override
+            public void onMenuClosed(FloatingActionMenu floatingActionMenu) {
+                fabFullView.setVisibility(View.GONE);
+                floatingActionButton.setRotation(45);
+                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 0);
+                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(floatingActionButton, pvhR);
+                animation.start();
+
+                PropertyValuesHolder pvhR1 = PropertyValuesHolder.ofFloat(View.ALPHA, 0);
+                ObjectAnimator animation1 = ObjectAnimator.ofPropertyValuesHolder(fabCircleView, pvhR1);
+                animation1.start();
+                animation1.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        fabCircleView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+            }
+        });
+
+
+        fabFullView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (actionMenu.isOpen()) actionMenu.close(true);
+
+            }
+        });
+
+    }
+
 
 }

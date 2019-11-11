@@ -34,6 +34,13 @@ public class ParentChildPagerAdapter extends PagerAdapter {
         this.mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public ParentChildPagerAdapter(Context context, List<ParentChild> mList) {
+        this.mContext = context;
+        this.mList = new ArrayList<>();
+        this.mList.addAll(mList);
+        this.mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
     public void addAll(List<ParentChild> mList) {
         this.mList = new ArrayList<>();
         this.mList.addAll(mList);
@@ -137,6 +144,13 @@ public class ParentChildPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((RelativeLayout) object);
+    }
+
+    public void clearAll() {
+
+        mList.clear();
+        notifyDataSetChanged();
+
     }
 
 

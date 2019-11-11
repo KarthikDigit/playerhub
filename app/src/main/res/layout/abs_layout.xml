@@ -6,13 +6,12 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvTitle"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:layout_width="wrap_content"
+        fontPath="fonts/poppins_bold.ttf"
+         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center"
         android:text="NOTIFICATION"
         android:textColor="#FFFFFF"
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/_14ssp" />
 
 </LinearLayout>

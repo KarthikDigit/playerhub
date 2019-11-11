@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -56,6 +57,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,7 +93,8 @@ public class ContactListFragment extends MessageBaseFragment implements GenreAda
     TextView mErrorMsg;
     @BindView(R.id.create_group)
     FloatingActionButton floatingActionButton;
-
+    @BindView(R.id.shimmer_view_container)
+    ShimmerFrameLayout mShimmerViewContainer;
     Unbinder unbinder;
 
     private String contactName = "recent";
@@ -223,6 +226,18 @@ public class ContactListFragment extends MessageBaseFragment implements GenreAda
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+    }
+
 
     public void updateAdapter() {
 
@@ -243,8 +258,12 @@ public class ContactListFragment extends MessageBaseFragment implements GenreAda
 //        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
 
-        RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MyCallBack<ContactListApi>(getContext(), this, true, false) {
+        mShimmerViewContainer.startShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.VISIBLE);
+        messageView.setVisibility(View.GONE);
+
+        RetrofitAdapter.getNetworkApiServiceClient().fetchContactList(Preferences.INSTANCE.getAuthendicate()).delay(500, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MyCallBack<ContactListApi>(getContext(), this, false, false) {
                     @Override
                     public void onSuccess(ContactListApi value) {
 
@@ -261,6 +280,9 @@ public class ContactListFragment extends MessageBaseFragment implements GenreAda
 
                         showViewContent();
 
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
+                        messageView.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -371,7 +393,6 @@ public class ContactListFragment extends MessageBaseFragment implements GenreAda
             messageView.setAdapter(genreAdapter);
 
             genreAdapter.setOnItemClickListener(this);
-
 
 
         }

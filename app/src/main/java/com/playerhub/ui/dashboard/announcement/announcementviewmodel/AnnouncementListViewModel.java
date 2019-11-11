@@ -8,6 +8,8 @@ import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.AnnouncementApi;
 import com.playerhub.preference.Preferences;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -39,7 +41,7 @@ public class AnnouncementListViewModel extends ViewModel {
         isLoading.setValue(true);
 
         RetrofitAdapter.getNetworkApiServiceClient().fetchAnnouncements(Preferences.INSTANCE.getAuthendicate())
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .delay(2000,TimeUnit.MILLISECONDS).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<AnnouncementApi>() {
                     @Override
                     public void accept(AnnouncementApi announcementApi) throws Exception {

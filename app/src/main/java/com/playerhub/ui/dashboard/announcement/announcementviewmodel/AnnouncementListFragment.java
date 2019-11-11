@@ -10,11 +10,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.playerhub.R;
 import com.playerhub.network.response.AnnouncementApi;
+import com.playerhub.recyclerHelper.SimpleDividerItemDecorationFullLine;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.announcement.AnnouncementDialogFragment;
 import com.playerhub.ui.dashboard.home.AnnouncementAdapter;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Response;
@@ -38,6 +43,9 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
     ImageView back;
     @BindView(R.id.swipetoReferesh)
     SwipeRefreshLayout swipetoReferesh;
+    @BindView(R.id.shimmer_view_container)
+    ShimmerFrameLayout mShimmerViewContainer;
+    Unbinder unbinder1;
 
     private AnnouncementAdapter announcementAdapter;
 
@@ -85,7 +93,7 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
 
         announcementView.setAdapter(announcementAdapter);
 
-        announcementView.addItemDecoration(new com.playerhub.recyclerHelper.DividerItemDecoration(getContext()));
+        announcementView.addItemDecoration(new SimpleDividerItemDecorationFullLine(getContext()));
 
 
         if (getArguments() != null) {
@@ -98,7 +106,18 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
         swipetoReferesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                // start animating Shimmer and hide the layout
+//                mShimmerViewContainer.setVisibility(View.VISIBLE);
+//                mShimmerViewContainer.startShimmerAnimation();
+//                announcementView.setVisibility(View.GONE);
+//
+//                swipetoReferesh.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
                 callEventListApi();
+//                    }
+//                }, 2000);
+
             }
         });
 
@@ -116,11 +135,22 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
 
+
                 if (aBoolean != null && aBoolean) {
-                    showLoading();
+//                    showLoading();
                     swipetoReferesh.setRefreshing(true);
+
+                    mShimmerViewContainer.setVisibility(View.VISIBLE);
+                    mShimmerViewContainer.startShimmerAnimation();
+                    announcementView.setVisibility(View.GONE);
+
+
                 } else {
-                    hideLoading();
+                    // stop animating Shimmer and hide the layout
+                    mShimmerViewContainer.stopShimmerAnimation();
+                    mShimmerViewContainer.setVisibility(View.GONE);
+                    announcementView.setVisibility(View.VISIBLE);
+//                    hideLoading();
                     swipetoReferesh.setRefreshing(false);
                 }
 
@@ -135,6 +165,19 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
     }
 
     @Override
@@ -156,6 +199,7 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder1.unbind();
     }
 
 
@@ -187,5 +231,13 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
         if (getActivity() != null)
             getActivity().onBackPressed();
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

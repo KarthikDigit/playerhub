@@ -43,6 +43,7 @@ import com.playerhub.utils.AnimUtils;
 import com.rd.PageIndicatorView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,7 +115,7 @@ public class HomeFragment_newanimation_backup extends BaseNetworkCheck implement
 //        profileViewPager.setClipToPadding(false);
 //        profileViewPager.setPadding(60, 10, 60, 10);
 //        profileViewPager.setPageMargin(50);
-        parentChildPagerAdapter = new ParentChildPagerAdapter(getContext());
+        parentChildPagerAdapter = new ParentChildPagerAdapter(getContext(),new ArrayList<ParentChild>());
 
         profileViewPager.setAdapter(parentChildPagerAdapter);
 

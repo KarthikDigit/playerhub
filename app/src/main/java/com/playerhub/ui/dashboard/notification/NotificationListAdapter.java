@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,11 +50,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.description)
         TextView description;
+        @BindView(R.id.icon)
+        ImageView icon;
         public RelativeLayout viewBackground, viewForeground;
 
         public MyViewHolder(View view) {
             super(view);
             description = view.findViewById(R.id.description);
+            icon = view.findViewById(R.id.icon);
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
         }
@@ -106,6 +110,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         if (item.getSeen() != 0) {
 
             holder.description.setAlpha(.25f);
+            holder.icon.setAlpha(.25f);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

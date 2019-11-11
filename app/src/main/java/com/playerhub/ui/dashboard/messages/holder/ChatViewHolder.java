@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.playerhub.R;
 import com.playerhub.network.response.ContactListApi;
 import com.playerhub.utils.CommonUtil;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
@@ -36,6 +38,8 @@ public class ChatViewHolder extends ChildViewHolder {
     RelativeLayout root;
     @BindView(R.id.useris_online)
     View userIsOnline;
+    @BindView(R.id.spin_kit)
+    SpinKitView spinKitView;
 
     public ChatViewHolder(View itemView) {
         super(itemView);
@@ -62,7 +66,23 @@ public class ChatViewHolder extends ChildViewHolder {
             @Override
             public void run() {
                 if (item.getAvatar() != null && item.getAvatar().length() > 0)
-                    Picasso.get().load(item.getAvatar()).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).resize(120, 120).into(icon);
+                    Picasso.get().load(item.getAvatar()).error(R.drawable.avatar_mini).resize(120, 120).into(icon, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                            icon.setVisibility(View.VISIBLE);
+                            spinKitView.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                            icon.setVisibility(View.VISIBLE);
+                            spinKitView.setVisibility(View.GONE);
+
+                        }
+                    });
 
             }
         });

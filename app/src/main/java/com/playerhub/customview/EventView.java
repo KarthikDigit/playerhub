@@ -2,6 +2,7 @@ package com.playerhub.customview;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.playerhub.R;
 import com.playerhub.network.response.EventListApi.UpcommingEvent;
 import com.playerhub.recyclerHelper.EqualSpacingItemDecoration;
@@ -39,6 +41,9 @@ public class EventView extends FrameLayout {
     TextView errorMsgEvent;
     @BindView(R.id.today_event_content)
     RelativeLayout todayEventContent;
+
+    @BindView(R.id.shimmer_view_container)
+    ShimmerFrameLayout mShimmerViewContainer;
 
     private OnClickListener onClickListener;
     private EventsAdapter.OnItemClickListener onItemClickListener;
@@ -99,6 +104,31 @@ public class EventView extends FrameLayout {
             setErrorMsg(error_msg);
         }
 
+
+    }
+
+    public void stopShimmerAnimation() {
+
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                mShimmerViewContainer.stopShimmerAnimation();
+                mShimmerViewContainer.setVisibility(GONE);
+            }
+        });
+
+
+    }
+
+    public void onResume() {
+
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    public void onPause() {
+
+        mShimmerViewContainer.stopShimmerAnimation();
 
     }
 

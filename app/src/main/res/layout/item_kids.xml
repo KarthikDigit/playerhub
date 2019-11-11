@@ -9,14 +9,13 @@
 
     <TextView
         android:id="@+id/kid_name"
-        fontPath="fonts/poppins_medium.ttf"
+        fontPath="fonts/poppins_light.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:minWidth="@dimen/_100sdp"
         android:text="Ligori Mani "
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp" />
+        android:textSize="@dimen/_11ssp" />
 
     <RadioGroup
         android:id="@+id/kid_yes_no"
@@ -27,12 +26,12 @@
         android:background="@drawable/btn_select_bg"
         android:elevation="@dimen/_4sdp"
         android:orientation="horizontal"
-        android:padding="@dimen/_2sdp">
+        android:padding="@dimen/_1sdp">
 
         <RadioButton
             android:id="@+id/kid_yes"
             fontPath="fonts/poppins_medium.ttf"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_48sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_track1"
             android:button="@null"
@@ -45,7 +44,7 @@
         <RadioButton
             android:id="@+id/kid_no"
             fontPath="fonts/poppins_medium.ttf"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_48sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_track"
             android:button="@null"

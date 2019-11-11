@@ -55,6 +55,30 @@ public class CameraAndGallary {
     }
 
 
+    public void selectImageProfileUpadte() {
+
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+
+        Context context = getCurrentContext();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                } else {
+                    userChoosenTask = items[item].toString();
+                    callCameraOrGallery();
+                }
+            }
+        });
+        builder.show();
+    }
+
+
     public void selectImage() {
 
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Video", "Cancel"};
@@ -81,7 +105,7 @@ public class CameraAndGallary {
     }
 
 
-    private void callVideo() {
+    public void callVideo() {
 
         Intent takeVideoIntent = new Intent();
         takeVideoIntent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
@@ -121,7 +145,7 @@ public class CameraAndGallary {
     }
 
 
-    private void galleryIntent() {
+    public void galleryIntent() {
 
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -139,7 +163,7 @@ public class CameraAndGallary {
 
     }
 
-    private void cameraIntent() {
+    public void cameraIntent() {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         File pictureDictionary = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);

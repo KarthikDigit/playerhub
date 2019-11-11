@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.playerhub.R;
 import com.playerhub.common.CallbackWrapper;
 import com.playerhub.network.RetrofitAdapter;
@@ -35,11 +36,14 @@ import com.playerhub.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class NotificationActivity extends BaseActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
@@ -49,6 +53,9 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
     RecyclerView mNotificationView;
     @BindView(R.id.msg)
     TextView msg;
+    @BindView(R.id.shimmer_view_container)
+    ShimmerFrameLayout mShimmerViewContainer;
+
     private NotificationListAdapter fastAdapter;
 
     private List<NotificationApi.Data.Notification> list;
@@ -103,6 +110,18 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
         loadData();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+    }
 
     private void setAllToRead() {
 
@@ -238,10 +257,18 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
 
         RetrofitAdapter.getNetworkApiServiceClient()
                 .getAllNotification(Preferences.INSTANCE.getAuthendicate())
+                .delay(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CallbackWrapper<NotificationApi>(this) {
+                .subscribe(new Observer<NotificationApi>() {
                     @Override
-                    protected void onSuccess(NotificationApi notificationApi) {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(NotificationApi notificationApi) {
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
 
                         if (notificationApi.getSuccess()) {
 
@@ -250,6 +277,18 @@ public class NotificationActivity extends BaseActivity implements RecyclerItemTo
 
                             showToast(notificationApi.getMessage());
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

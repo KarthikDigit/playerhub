@@ -61,7 +61,7 @@
             <TextView
                 android:id="@+id/description"
                 style="@style/TextAppearance.AppCompat.Small"
-                fontPath="fonts/Barlow-Regular.ttf"
+                fontPath="fonts/poppins_light.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

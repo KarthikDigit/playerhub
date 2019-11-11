@@ -1,10 +1,16 @@
 package com.playerhub.ui.dashboard.chat;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -16,13 +22,20 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -440,7 +453,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
             case R.id.attachment:
 
                 addAttachment();
-
+//                showPopupwindow();
                 break;
         }
     }
@@ -459,7 +472,8 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         if (EasyPermissions.hasPermissions(this, CAMERA_PERMISSION)) {
 //            // Already have permission, do the thing
 
-            cameraAndGallary.selectImage();
+//            cameraAndGallary.selectImage();
+            showPopupwindow();
 //            // ...
         } else {
             // Do not have permissions, request them now
@@ -468,6 +482,139 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         }
     }
 
+    private PopupWindow popupWindow;
+
+    private void showPopupwindow() {
+
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_window, null);
+
+        CircleImageView uploadCamera = popupView.findViewById(R.id.upload_camera);
+        CircleImageView uploadGallery = popupView.findViewById(R.id.upload_gallery);
+        CircleImageView uploadVideo = popupView.findViewById(R.id.upload_video);
+
+        uploadCamera.setOnClickListener(onUploadViewClickListener);
+        uploadGallery.setOnClickListener(onUploadViewClickListener);
+        uploadVideo.setOnClickListener(onUploadViewClickListener);
+//        popupView.setPadding(16, 0, 16, 0);
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+//        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        View view = findViewById(R.id.msgsentview);
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+//        popupWindow.showAtLocation(findViewById(R.id.attachment), Gravity.BOTTOM, 0, -findViewById(R.id.attachment).getHeight() + popupView.getHeight());
+//        popupWindow.showAsDropDown(findViewById(R.id.attachment),0, -findViewById(R.id.attachment).getHeight() + popupView.getHeight());
+//        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, -(view.getHeight() + popupView.getHeight() + 300));
+        popupWindow.showAsDropDown(view, (int) convertDpToPixel(20, this), -(view.getHeight() + popupView.getHeight() + 300));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            popupWindow.setElevation(8);
+        }
+
+//        revealShow(popupView, true, popupWindow);
+        //
+//        popupWindow.update(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindow.showAsDropDown(view);
+//        // dismiss the popup window when touched
+//        popupView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                popupWindow.dismiss();
+//                return true;
+//            }
+//        });
+
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void revealShow(final View view, boolean b, final PopupWindow dialog) {
+
+//        final View view = dialogView.findViewById(R.id.dialog);
+
+        int w = view.getWidth();
+        int h = view.getHeight();
+
+        int endRadius = (int) Math.hypot(w, h);
+
+        final View fab = findViewById(R.id.attachment);
+
+        int cx = (int) (fab.getX() + (fab.getWidth() / 2));
+        int cy = (int) (fab.getY()) + fab.getHeight() + 56;
+
+
+        if (b) {
+            Animator revealAnimator = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, endRadius);
+
+//            view.setVisibility(View.VISIBLE);
+            revealAnimator.setDuration(700);
+            revealAnimator.start();
+
+        } else {
+
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(view, cx, cy, endRadius, 0);
+
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    dialog.dismiss();
+//                    view.setVisibility(View.INVISIBLE);
+
+                }
+            });
+            anim.setDuration(700);
+            anim.start();
+        }
+
+    }
+
+
+    private View.OnClickListener onUploadViewClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (popupWindow != null) popupWindow.dismiss();
+
+            switch (v.getId()) {
+
+
+                case R.id.upload_camera:
+
+                    cameraAndGallary.cameraIntent();
+
+                    break;
+
+                case R.id.upload_gallery:
+
+                    cameraAndGallary.galleryIntent();
+
+                    break;
+
+                case R.id.upload_video:
+
+                    cameraAndGallary.callVideo();
+
+                    break;
+
+            }
+
+        }
+    };
+
+
+    public static float convertDpToPixel(float dp, Context context) {
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -493,6 +640,11 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
             } else {
                 messages.setImg_url(imageUrl);
             }
+
+        } else if (TextUtils.isEmpty(msg)) {
+
+
+            return;
 
         }
 

@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,12 @@ import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.playerhub.R;
 import com.playerhub.ui.dashboard.messages.ConversationsLayout;
 import com.playerhub.ui.dashboard.messages.User;
 import com.playerhub.utils.CommonUtil;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.playerhub.common.AppSignatureHelper.TAG;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
@@ -227,6 +232,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         RelativeLayout root;
         @BindView(R.id.useris_online)
         View userIsOnline;
+        @BindView(R.id.spin_kit)
+        SpinKitView spinKitView;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -247,13 +254,42 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 countLay.setVisibility(View.INVISIBLE);
             }
 
+//            if (item.icon == null) {
+//                icon.setImageResource(R.drawable.avatar_mini);
+//                icon.setVisibility(View.VISIBLE);
+//                spinKitView.setVisibility(View.GONE);
+//            }
+
+//            Log.e(TAG, "run: " + item.icon);
 //            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).child(Preferences.INSTANCE.getMsgUserId()).getRef();
             Handler uiHandler = new Handler(Looper.getMainLooper());
             uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (item.icon != null && item.icon.length() > 0)
-                        Picasso.get().load(item.icon).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).resize(120, 120).into(icon);
+                    if (item.icon != null && item.icon.length() > 0) {
+
+
+                        Picasso.get().load(item.icon).error(R.drawable.avatar_mini).resize(120, 120).into(icon
+                                , new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                        icon.setVisibility(View.VISIBLE);
+                                        spinKitView.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+
+                                        icon.setVisibility(View.VISIBLE);
+                                        spinKitView.setVisibility(View.GONE);
+                                    }
+                                });
+
+                    } else {
+                        icon.setVisibility(View.VISIBLE);
+                        spinKitView.setVisibility(View.GONE);
+                    }
 
                 }
             });
@@ -307,6 +343,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         RelativeLayout root;
         @BindView(R.id.useris_online)
         View userIsOnline;
+        @BindView(R.id.spin_kit)
+        SpinKitView spinKitView;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -337,7 +375,21 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             countLay.setVisibility(View.INVISIBLE);
 
-            Picasso.get().load(R.mipmap.ic_launcher).resize(120, 120).into(icon);
+            Picasso.get().load(R.drawable.avatar_mini).resize(120, 120).into(icon, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                    icon.setVisibility(View.VISIBLE);
+                    spinKitView.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                    icon.setVisibility(View.VISIBLE);
+                    spinKitView.setVisibility(View.GONE);
+                }
+            });
 
 
             CommonUtil.getGroupMessageCount(item.getMessage_id(), new CommonUtil.CallBackCount() {

@@ -48,13 +48,12 @@
                 android:layout_width="24dp"
                 android:layout_height="27dp"
                 android:layout_centerInParent="true"
-                android:rotation="20"
-                android:src="@drawable/ic_notification_alert_01"
                 android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_group_834" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -104,17 +103,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_8sdp" />
 
                 <!--android:background="@drawable/round_test"-->
 
                 <FrameLayout
                     android:id="@+id/myrootView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_190sdp"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_height="@dimen/_152sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:elevation="@dimen/_14sdp">
 
 
@@ -137,7 +135,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_190sdp"
+                        android:layout_height="@dimen/_152sdp"
                         android:layout_centerInParent="true"
                         android:clipToPadding="false" />
 
@@ -168,7 +166,8 @@
                     android:background="@drawable/round_ann"
                     android:clickable="true"
                     android:elevation="@dimen/_12sdp"
-                    android:padding="@dimen/_12sdp">
+                    android:padding="@dimen/_12sdp"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -213,14 +212,43 @@
     </com.playerhub.customview.MultiStateView>
 
 
-    <com.github.ag.floatingactionmenu.OptionsFabLayout
-        android:id="@+id/fab_l"
+    <View
+        android:id="@+id/fab_fullView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/fab_circle_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:background_color="@color/light_gray3"
-        app:color="@color/colorPrimaryDark"
-        app:options_color="@color/colorPrimary"
-        app:options_menu="@menu/menu_floating"
-        app:src="@drawable/ic_add_black_24dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:alpha="0"
+        android:src="@drawable/fab_circle"
+        android:visibility="gone" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_24sdp"
+        app:backgroundTint="@color/fab_color"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <!--<com.github.ag.floatingactionmenu.OptionsFabLayout-->
+    <!--android:id="@+id/fab_l"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:background_color="@color/light_gray3"-->
+    <!--app:color="@color/colorPrimaryDark"-->
+    <!--app:options_color="@color/colorPrimary"-->
+    <!--app:options_menu="@menu/menu_floating"-->
+    <!--app:src="@drawable/ic_add_black_24dp" />-->
 
 </RelativeLayout>

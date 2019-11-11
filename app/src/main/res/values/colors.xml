@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/bg_color</color>
+    <color name="colorPrimary_welcome_alpha">#f216104b</color>
     <!--<color name="colorPrimary">#614ccb</color>-->
     <color name="colorPrimaryDark">#000046</color>
     <!--<color name="colorPrimaryDark">#000024</color>-->
@@ -10,7 +11,9 @@
     <color name="white">#ffffff</color>
     <color name="whitealpha">#90ffffff</color>
     <color name="whitealpha1">#80ffffff</color>
+    <color name="bg_gray_color">#f4f4f4</color>
     <color name="black">#000000</color>
+    <color name="black5">#80000000</color>
     <color name="light_gray">#80000000</color>
     <color name="light_gray3">#60000000</color>
     <color name="line">#25000000</color>
@@ -352,6 +355,9 @@
     <color name="bg_color_white_alpha3">#95171A5D</color>
     <color name="eventSelectionColor">#F50057</color>
     <color name="bg_color_dull">#F4F4F4</color>
+    <color name="fab_color">#DE3073</color>
+    <color name="fab_color_alpha">#DE3073</color>
+    <color name="shimmer_bg_color">#dddddd</color>
 
 
 </resources>

@@ -67,7 +67,7 @@ import retrofit2.Response;
 
 public class MaterialProfileActivity extends MultiStateViewActivity implements CameraAndGallary.CameraAndGallaryCallBack {
 
-
+    private static final int REQUEST_CODE = 123;
     private static final String EXTRA_ID = "id";
     public static final String EXTRA_LOGO = "logo";
 
@@ -121,6 +121,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 //
     private boolean isSave = false;
     private boolean isShow = false;
+
+    private boolean isUpdated = false;
 
     private CameraAndGallary cameraAndGallary;
 
@@ -375,24 +377,31 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     private void editMode() {
 
 
+        String fName = TextInputUtil.getText(firstName);
+        String lName = TextInputUtil.getText(lastName);
+
+        Intent intent = UpdateProfileActivity.getInstance(this, getKidId(), fName, lName);
+
+        startActivityForResult(intent, REQUEST_CODE);
+
 //        int drawabelId = isSave ? R.drawable.ic_check_black_24dp : R.drawable.ic_edit_black_24dp;
 //        saveEdit.setImageResource(drawabelId);
 
-        invalidateOptionsMenu();
-
-        TextInputUtil.setEnable(firstName, isSave);
-        TextInputUtil.setEnable(lastName, isSave);
-
-        if (isSave) {
-            TextInputUtil.setFocusable(firstName, true);
-            KeyboardUtils.requestFocus(getWindow(), firstName);
-            KeyboardUtils.openKeyboard(this, firstName.getEditText());
-        } else {
-            KeyboardUtils.closeKeyboard(this);
-            updateKidDetails();
-        }
-
-        setStatusBarTransparent(this, !isSave);
+//        invalidateOptionsMenu();
+//
+//        TextInputUtil.setEnable(firstName, isSave);
+//        TextInputUtil.setEnable(lastName, isSave);
+//
+//        if (isSave) {
+//            TextInputUtil.setFocusable(firstName, true);
+//            KeyboardUtils.requestFocus(getWindow(), firstName);
+//            KeyboardUtils.openKeyboard(this, firstName.getEditText());
+//        } else {
+//            KeyboardUtils.closeKeyboard(this);
+//            updateKidDetails();
+//        }
+//
+//        setStatusBarTransparent(this, !isSave);
 
     }
 
@@ -401,6 +410,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     public void onKidImageUpload(View view) {
 
         requestCameraPermission();
+
     }
 
 
@@ -410,7 +420,7 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Already have permission, do the thing
             // ...
-            cameraAndGallary.selectImage();
+            cameraAndGallary.selectImageProfileUpadte();
 
         } else {
             // Do not have permissions, request them now
@@ -421,9 +431,30 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     }
 
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        onBack(null);
+    }
+
     public void onBack(View view) {
 
-        onBackPressed();
+
+        if (isUpdated) {
+
+
+            setResult(RESULT_OK, new Intent());
+
+            finish();
+
+
+        } else {
+
+            finish();
+//            onBackPressed();
+        }
+
+
     }
 
     @Override
@@ -431,6 +462,18 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         super.onActivityResult(requestCode, resultCode, data);
 
         cameraAndGallary.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
+            String fName = data.getStringExtra(UpdateProfileActivity.EXTRA_FIRSTNAME);
+            String lName = data.getStringExtra(UpdateProfileActivity.EXTRA_LASTNAME);
+
+            name.setText(String.format("%s %s", fName, lName));
+            TextInputUtil.setText(firstName, fName);
+            TextInputUtil.setText(lastName, lName);
+            isUpdated = true;
+
+        }
 
     }
 

@@ -1,33 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.messages.ContactListFragment">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp"
+        shimmer:duration="800">
 
+        <!-- Adding 3 rows of placeholders -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/message_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingLeft="@dimen/offset"
-                android:paddingTop="@dimen/offset"
-                android:paddingRight="@dimen/offset"
+            <include layout="@layout/message_item_view" />
 
-                />
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+            <include layout="@layout/message_item_view" />
+
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/message_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/offset"
+        android:paddingTop="@dimen/offset"
+        android:paddingRight="@dimen/offset"
+
+        />
+    <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
 
     <android.support.design.widget.FloatingActionButton
@@ -40,8 +91,8 @@
         android:layout_margin="@dimen/_16sdp"
         android:src="@drawable/ic_add_black_24dp"
         android:tint="@color/white"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorPrimary"
+        android:visibility="visible"
+        app:backgroundTint="@color/fab_color"
         app:fabSize="normal" />
 
 </RelativeLayout>

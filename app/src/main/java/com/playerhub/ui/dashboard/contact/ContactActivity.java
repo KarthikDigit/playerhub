@@ -3,8 +3,11 @@ package com.playerhub.ui.dashboard.contact;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.playerhub.R;
 import com.playerhub.customview.CustomEditTextViewSpinner;
@@ -30,7 +33,14 @@ public class ContactActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+//        Window window = getWindow();
+//        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
         setContentView(R.layout.activity_contact);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         ButterKnife.bind(this);
         setBackButtonEnabledAndTitleBold("Contact Us");
 
@@ -40,6 +50,9 @@ public class ContactActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cancel:
+
+                finish();
+
                 break;
             case R.id.create_subaccount:
                 break;

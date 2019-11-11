@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.StephenVinouze:ShapeView-1.1.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ShapeView-1.1.1.aar/9ed2a88f98834d384f9dc0e52aeb9012/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ShapeView-1.1.1.aar/9ed2a88f98834d384f9dc0e52aeb9012/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.StephenVinouze/ShapeView/1.1.1/3f30977c622e71d02adcc775902b0b0023b2bfa3/ShapeView-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -61,7 +61,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_weight="1"
                     app:custom_hint=""
-                    app:custom_title="FirstName" />
+                    app:custom_title="First Name" />
 
                 <Space
                     android:layout_width="@dimen/_8sdp"
@@ -73,7 +73,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_weight="1"
                     app:custom_hint=""
-                    app:custom_title="LastName" />
+                    app:custom_title="Last Name" />
 
             </LinearLayout>
 
