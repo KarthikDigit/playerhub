@@ -2,15 +2,25 @@ package com.playerhub.ui.dashboard.chat;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.dmitrymalkovich.android.ProgressFloatingActionButton;
+import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnStartOrResumeListener;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
+import com.downloader.Status;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -20,21 +30,99 @@ import com.google.firebase.storage.UploadTask;
 import com.playerhub.R;
 import com.playerhub.Util;
 import com.playerhub.ui.base.BaseActivity;
+import com.playerhub.utils.ProgressUtils;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class VideoUploadTestActivity extends BaseActivity {
 
     private static final String TAG = "VideoUploadTestActivity";
     private static final int REQUEST_TAKE_VIDEO = 200;
 
+    @BindView(R.id.progressBar1)
+    ProgressBar progressBar1;
+
+    private int downloadId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_upload_test);
+        ButterKnife.bind(this);
+    }
+
+
+    public void fileDownload(View view) {
+
+        String url = "https://firebasestorage.googleapis.com/v0/b/playerhub-prod.appspot.com/o/videos%2F20191811113621476779898270778?alt=media&token=d070c742-c368-4d8d-9924-4bf7fce0cce7";
+
+        String filename = url.substring(73, 111);
+
+        Log.e(TAG, "fileDownload: " + filename);
+
+
+        File file = getExternalCacheDir();
+
+
+        if (Status.PAUSED == PRDownloader.getStatus(downloadId)) {
+            PRDownloader.resume(downloadId);
+            return;
+        }
+
+
+        if (file != null) {
+            downloadId = PRDownloader.download(url, file.getPath() + "/Playerhub/videos", "play.mp4")
+                    .build()
+                    .setOnProgressListener(new com.downloader.OnProgressListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onProgress(Progress progress) {
+
+                            progressBar1.setMax((int) progress.totalBytes);
+                            progressBar1.setProgress((int) progress.currentBytes, true);
+                            Log.e(TAG, "onProgress: " + progress.currentBytes + " " + progress.totalBytes);
+
+                        }
+                    })
+                    .start(new OnDownloadListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onDownloadComplete() {
+                            progressBar1.setProgress(0, true);
+                            ProgressUtils.hideProgress();
+                        }
+
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onError(Error error) {
+                            progressBar1.setProgress(0, true);
+                        }
+
+                    });
+        }
+
+
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (downloadId != -1)
+            PRDownloader.pause(downloadId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ProgressUtils.hideProgress();
+        super.onDestroy();
+
     }
 
     public void onUpload(View view) {

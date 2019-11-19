@@ -154,5 +154,24 @@
 
         <include layout="@layout/content_material_profile" />
 
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:transitionName="@string/transition_dialog"
+            android:visibility="visible"
+            app:backgroundTint="@color/fab_color"
+            app:fabSize="normal"
+            app:layout_anchor="@id/appbar"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+
     </android.support.design.widget.CoordinatorLayout>
+
+
 </com.commit451.elasticdragdismisslayout.ElasticDragDismissFrameLayout>

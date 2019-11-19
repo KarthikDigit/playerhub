@@ -27,24 +27,29 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     private OnItemClickListener onItemClickListener;
 
     public AnnouncementAdapter(Context context, List<AnnouncementApi.Datum> list, OnItemClickListener onItemClickListener) {
+
         this.context = context;
         this.list = list;
         this.onItemClickListener = onItemClickListener;
+
     }
 
     public AnnouncementAdapter(Context context, List<AnnouncementApi.Datum> list) {
+
         this.context = context;
         this.list = list;
 
     }
 
     public void updateList(List<AnnouncementApi.Datum> list) {
+
         this.list = new ArrayList<>();
         this.list.addAll(list);
         notifyDataSetChanged();
 
 
-        Log.e(TAG, "updateList: " + new Gson().toJson(list));
+//        Log.e(TAG, "updateList: " + new Gson().toJson(list));
+
     }
 
     @NonNull
@@ -56,6 +61,7 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
 
 
         return new EventsRow(view);
+
     }
 
     @Override

@@ -51,7 +51,11 @@ public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
 
             APIError apiError = APIErrorUtil.parseError(((HttpException) e).response());
 
-            msg = apiError.getMessage();
+            if (apiError != null) {
+                msg = apiError.getMessage();
+            } else {
+                msg = "Something went wrong, Please try again later";
+            }
 
 
         } else if (e instanceof SocketTimeoutException) {
@@ -63,7 +67,7 @@ public abstract class CallbackWrapper<T> extends DisposableObserver<T> {
 //            view.onNetworkError();
 //        }
         else {
-            APIError apiError =  APIErrorUtil.getDefaultError(null);
+            APIError apiError = APIErrorUtil.getDefaultError(null);
 
             msg = apiError.getMessage();
 //            view.onUnknownError(e.getMessage());

@@ -4,21 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SyncRequest;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,33 +22,21 @@ import com.playerhub.network.APIErrorUtil;
 import com.playerhub.network.LoginAPIError;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.request.UpdateKidDetail;
-import com.playerhub.network.request.UploadKidProfile;
 import com.playerhub.network.response.KidDetailsUpdatedResponse;
 import com.playerhub.network.response.KidInfoResponse;
-import com.playerhub.network.response.KidsAndCoaches;
 import com.playerhub.preference.Preferences;
-import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.base.MultiStateViewActivity;
-import com.playerhub.ui.base.MyBaseActivity;
 import com.playerhub.utils.ImageUtility;
 import com.playerhub.utils.ImageUtils;
 import com.playerhub.utils.KeyboardUtils;
-import com.playerhub.utils.ProgressUtils;
 import com.playerhub.utils.TextInputUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -275,8 +256,8 @@ public class KidsProfile extends MultiStateViewActivity implements CameraAndGall
         TextInputUtil.setText(parentName, data.getParentName());
         TextInputUtil.setText(joinDate, data.getJoinedOn());
 
-        ImageUtility.loadImage(profileImage, data.getAvatar_image());
-        ImageUtility.loadImage(fullImage, data.getAvatar_image());
+        ImageUtility.loadImage(profileImage, profileImage, data.getAvatar_image());
+        ImageUtility.loadImage(profileImage, fullImage, data.getAvatar_image());
         camera.setVisibility(View.VISIBLE);
 
     }

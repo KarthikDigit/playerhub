@@ -329,40 +329,48 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
                     if (users != null && !users.isEmpty()) {
 
-                        String userId = "";
 
-                        if (!Utils.check(users.get(0), Preferences.INSTANCE.getMsgUserId())) {
+                        try {
 
-                            userId = users.get(0);
 
-                        } else {
+                            String userId = "";
 
-                            userId = users.get(1);
-                        }
+                            if (!Utils.check(users.get(0), Preferences.INSTANCE.getMsgUserId())) {
 
-                        final int finalI = i;
-                        FirebaseDatabase.getInstance()
-                                .getReference()
-                                .child(Constants.ARG_USERS)
-                                .child(userId)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        try {
-                                            User value = dataSnapshot.getValue(User.class);
+                                userId = users.get(0);
+
+                            } else {
+
+                                userId = users.get(1);
+                            }
+
+                            final int finalI = i;
+                            FirebaseDatabase.getInstance()
+                                    .getReference()
+                                    .child(Constants.ARG_USERS)
+                                    .child(userId)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            try {
+                                                User value = dataSnapshot.getValue(User.class);
 //                                            recentAdapter.add(value);
 //                                            if (value == null) {
 //
 //                                                recentAdapter.remove(finalI);
 //                                            } else {
 ////                                            value.setTimestamp(conversations.getTimestamp());
-                                            recentAdapter.update(finalI, value);
+                                                recentAdapter.update(finalI, value);
 //                                            }
-                                        } catch (DatabaseException | IndexOutOfBoundsException | NullPointerException e) {
-                                            Log.e(TAG, "onDataChange: " + e.getMessage());
+                                            } catch (DatabaseException | IndexOutOfBoundsException | NullPointerException e) {
+                                                Log.e(TAG, "onDataChange: " + e.getMessage());
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                        } catch (NullPointerException e) {
+
+                            Log.e(TAG, "getUserList: " + e.getMessage());
+                        }
                     }
                 } else {
 

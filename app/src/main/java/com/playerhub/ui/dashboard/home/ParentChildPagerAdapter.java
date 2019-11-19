@@ -9,9 +9,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.playerhub.R;
 import com.playerhub.utils.ImageUtility;
 
@@ -98,14 +100,17 @@ public class ParentChildPagerAdapter extends PagerAdapter {
 
         final ParentChild parentChild = mList.get(position);
 
+        SpinKitView spinKitView = itemView.findViewById(R.id.spin_kit);
+
         final CircleImageView profileImage = itemView.findViewById(R.id.profile_image);
+        final ImageView dummyImage = itemView.findViewById(R.id.imageView7);
 //        CircleImageView coachProfileImage = itemView.findViewById(R.id.profile_coach_image);
         TextView name = itemView.findViewById(R.id.name);
 //        TextView coach_name = itemView.findViewById(R.id.coach_name);
 //        TextView teeam_name = itemView.findViewById(R.id.team_name);
 //        TextView whois = itemView.findViewById(R.id.whois);
 
-        ImageUtility.loadImage(profileImage, parentChild.getImgUrl());
+        ImageUtility.loadImage(profileImage,dummyImage, spinKitView, parentChild.getImgUrl());
 
 //        if (!TextUtils.isEmpty(parentChild.getCoachImage())) {
 //            coachProfileImage.setVisibility(View.VISIBLE);

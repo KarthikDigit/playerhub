@@ -12,6 +12,10 @@ import java.util.List;
 public class Utils {
 
 
+    public static boolean compareString(String s, String s1) {
+        return s.toLowerCase().equalsIgnoreCase(s1.toLowerCase());
+    }
+
 //    public static Date StringToDate(String strDate, String format) throws ModuleException {
 //        Date dtReturn = null;
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
@@ -96,7 +100,7 @@ public class Utils {
 
     public static String Capitalize(String str) {
 
-        if(str == null) return str;
+        if (str == null) return str;
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

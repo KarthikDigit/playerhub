@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.transition.Slide;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.playerhub.ui.base.MultiStateViewActivity;
 import com.playerhub.utils.ImageUtility;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
@@ -70,7 +68,7 @@ public class PaidEventDetailsActivity extends MultiStateViewActivity {
 
         onRetryOrCallApi();
 
-        ImageUtility.loadImage(image, "https://www.playerhub.io/image/event/180/180/55d21b111ecd1bc1e6fe33b190492dc535_1567057692.jpg");
+        ImageUtility.loadImage( image,  "https://www.playerhub.io/image/event/180/180/55d21b111ecd1bc1e6fe33b190492dc535_1567057692.jpg");
 
     }
 

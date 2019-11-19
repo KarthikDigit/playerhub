@@ -257,6 +257,7 @@ public class HomeEventListFragment extends BaseNetworkCheck implements EventsAda
         } else {
 
             showErrorMsg("There is no event");
+
         }
 
     }

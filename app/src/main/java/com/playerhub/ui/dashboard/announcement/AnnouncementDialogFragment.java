@@ -49,6 +49,8 @@ public class AnnouncementDialogFragment extends DialogFragment {
     FragmentAnnouncementDialogBinding binding;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.line_view)
+    View lineView;
     @BindView(R.id.description)
     TextView description;
     @BindView(R.id.btn_close)
@@ -173,6 +175,23 @@ public class AnnouncementDialogFragment extends DialogFragment {
 
 
         unbinder = ButterKnife.bind(this, binding.getRoot());
+
+        title.setTranslationY(100);
+        title.setAlpha(0);
+        title.animate().translationY(0).alpha(1).setStartDelay(500).start();
+
+        lineView.setTranslationY(100);
+        lineView.setAlpha(0);
+        lineView.animate().translationY(0).alpha(1).setStartDelay(500).start();
+
+        description.setTranslationY(100);
+        description.setAlpha(0);
+        description.animate().translationY(0).alpha(1).setStartDelay(500).start();
+
+
+        btnClose.animate().scaleX(1).scaleY(1).setStartDelay(700).start();
+
+
         return binding.getRoot();
 
     }

@@ -40,6 +40,7 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.playerhub.R;
+import com.playerhub.customview.CustomSpinnerEditText;
 import com.playerhub.customview.CustomSpinnerInputLayout;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.EventTypesResponse;
@@ -97,19 +98,19 @@ public class AddEventFragment extends BaseFragment {
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.select_team)
-    CustomSpinnerInputLayout selectTeam;
+    CustomSpinnerEditText selectTeam;
     @BindView(R.id.select_eventtype)
-    CustomSpinnerInputLayout selectEventtype;
+    CustomSpinnerEditText selectEventtype;
     @BindView(R.id.event_name)
-    TextInputLayout eventName;
+    EditText eventName;
     @BindView(R.id.start_date)
-    TextInputLayout startDate;
+    EditText startDate;
     @BindView(R.id.start_time)
-    TextInputLayout startTime;
+    EditText startTime;
     @BindView(R.id.end_date)
-    TextInputLayout endDate;
+    EditText endDate;
     @BindView(R.id.end_time)
-    TextInputLayout endTime;
+    EditText endTime;
     @BindView(R.id.all_day)
     CheckBox allDay;
     @BindView(R.id.repeat_on)
@@ -131,20 +132,20 @@ public class AddEventFragment extends BaseFragment {
     @BindView(R.id.repeat_on_layout)
     FlexboxLayout repeatOnLayout;
     @BindView(R.id.location)
-    TextInputLayout location;
+    EditText location;
     @BindView(R.id.description)
-    TextInputLayout description;
+    EditText description;
     @BindView(R.id.footerline)
     View footerline;
     @BindView(R.id.close)
     AppCompatButton close;
+    @BindView(R.id.cancel)
+    AppCompatButton cancel;
     @BindView(R.id.create_event)
     AppCompatButton createEvent;
     @BindView(R.id.footer)
     LinearLayout footer;
     Unbinder unbinder;
-    @BindView(R.id.selected_team)
-    TextView selectedTeam;
     @BindView(R.id.create_event_card)
     CardView createEventCard;
     @BindView(R.id.rootview)
@@ -253,7 +254,7 @@ public class AddEventFragment extends BaseFragment {
 //        final String[] teamList = {"Demo Team ", "2001 Boys Pro", "2005 Boys Pro"};
 
 
-        selectTeam.getEditText().setOnClickListener(new View.OnClickListener() {
+        selectTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -272,7 +273,7 @@ public class AddEventFragment extends BaseFragment {
 
 //        final String[] eventType = {"Tournament", "Trainning session", "Scrimmage", "Game", "Other"};
 
-        selectEventtype.getEditText().setOnClickListener(new View.OnClickListener() {
+        selectEventtype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -291,69 +292,65 @@ public class AddEventFragment extends BaseFragment {
         });
 
 
-        selectTeam.setItemSelectedListener(new CustomSpinnerInputLayout.ItemSelectedListener() {
+//        selectTeam.setItemSelectedListener(new CustomSpinnerEditText.ItemSelectedListener() {
+//            @Override
+//            public void onItemChanged(Object o) {
+//                selectTeam.setText(o.toString() + " vs");
+//            }
+//        });
+
+        selectEventtype.setItemSelectedListener(new CustomSpinnerEditText.ItemSelectedListener() {
             @Override
             public void onItemChanged(Object o) {
-
-                selectedTeam.setText(o.toString() + " vs");
-            }
-        });
-
-        selectEventtype.setItemSelectedListener(new CustomSpinnerInputLayout.ItemSelectedListener() {
-            @Override
-            public void onItemChanged(Object o) {
-
                 String s = o.toString();
 
                 String[] compare = {"Tournament", "Game"};
 
                 if (Arrays.asList(compare).contains(s)) {
 
-                    selectedTeam.setVisibility(View.VISIBLE);
+//                    selectedTeam.setVisibility(View.VISIBLE);
                     eventName.setHint("Opponent Team Name");
-                    eventName.getEditText().setText("");
+                    eventName.setText("");
 
                 } else {
                     eventName.setHint("Event Name");
-                    eventName.getEditText().setText("");
-                    selectedTeam.setVisibility(View.GONE);
+                    eventName.setText("");
+//                    selectedTeam.setVisibility(View.GONE);
                 }
-
-
             }
         });
 
 
-        startDate.getEditText().setOnClickListener(new View.OnClickListener() {
+        startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                datePicker(startDate.getEditText(), endDate.getEditText());
+                datePicker(startDate, endDate);
             }
         });
 
-        endDate.getEditText().setOnClickListener(new View.OnClickListener() {
+        endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                datePicker(endDate.getEditText());
+                datePicker(endDate);
             }
         });
 
 
-        startTime.getEditText().setOnClickListener(new View.OnClickListener() {
+        startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                timePicker(startTime.getEditText(), endTime.getEditText());
+                timePicker(startTime, endTime);
             }
         });
 
-        endTime.getEditText().setOnClickListener(new View.OnClickListener() {
+        endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                timePicker(endTime.getEditText());
+                timePicker(endTime);
 
             }
         });
@@ -363,8 +360,8 @@ public class AddEventFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                startTime.getEditText().setText("9:00 AM");
-                endTime.getEditText().setText("6:00 PM");
+                startTime.setText("9:00 AM");
+                endTime.setText("6:00 PM");
 
             }
         });
@@ -389,7 +386,7 @@ public class AddEventFragment extends BaseFragment {
         });
 
 
-        location.getEditText().setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -423,12 +420,13 @@ public class AddEventFragment extends BaseFragment {
             }
         });
 
-        close.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+
 
 //
 //        Transition transition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.changebounds_with_arcmotion);
@@ -513,16 +511,16 @@ public class AddEventFragment extends BaseFragment {
         TeamResponse.Data.Team team1 = (TeamResponse.Data.Team) selectTeam.getItem();
         EventTypesResponse.Data.EventType eventType1 = (EventTypesResponse.Data.EventType) selectEventtype.getItem();
 
-        String eventN = eventName.getEditText().getText().toString();
+        String eventN = eventName.getText().toString();
 
-        String sd = startDate.getEditText().getText().toString();
-        String ed = endDate.getEditText().getText().toString();
+        String sd = startDate.getText().toString();
+        String ed = endDate.getText().toString();
 
-        String st = startTime.getEditText().getText().toString();
-        String et = endTime.getEditText().getText().toString();
+        String st = startTime.getText().toString();
+        String et = endTime.getText().toString();
 
-        String loc = location.getEditText().getText().toString();
-        String des = location.getEditText().getText().toString();
+        String loc = location.getText().toString();
+        String des = location.getText().toString();
 
         boolean isallday = allDay.isChecked();
         boolean isrepeat = repeatOn.isChecked();
@@ -658,7 +656,7 @@ public class AddEventFragment extends BaseFragment {
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
 
 
-                location.getEditText().setText(place.getName());
+                location.setText(place.getName());
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
@@ -673,8 +671,8 @@ public class AddEventFragment extends BaseFragment {
 
     private void checkAWeek(boolean isToast, boolean isEnable) {
 
-        String st = startDate.getEditText().getText().toString();
-        String et = endDate.getEditText().getText().toString();
+        String st = startDate.getText().toString();
+        String et = endDate.getText().toString();
 
         if (st != null && st.length() > 0 && et != null && et.length() > 0) {
 

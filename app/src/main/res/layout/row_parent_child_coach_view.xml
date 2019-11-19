@@ -14,12 +14,26 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent">
 
+        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Small.CubeGrid"
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_34sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:SpinKit_Color="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image"
+            app:layout_constraintStart_toStartOf="@+id/profile_image"
+            app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="@dimen/_72sdp"
             android:layout_height="@dimen/_72sdp"
             android:transitionName="@string/transition_image"
+            android:visibility="invisible"
             app:civ_border_color="@color/bg_color_white_alpha1"
             app:civ_border_width="@dimen/_6sdp"
             app:civ_fill_color="@color/bg_color_white_alpha1"
@@ -38,6 +52,7 @@
             android:layout_width="@dimen/_28sdp"
             android:layout_height="@dimen/_28sdp"
             android:src="@drawable/avatar_mini"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toEndOf="@+id/profile_image"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
@@ -55,7 +70,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            tools:text="DAVID ANSAH"
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
@@ -64,7 +78,8 @@
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView7"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="DAVID ANSAH" />
 
     </android.support.constraint.ConstraintLayout>
 

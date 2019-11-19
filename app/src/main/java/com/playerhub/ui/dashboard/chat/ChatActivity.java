@@ -622,6 +622,19 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
         cameraAndGallary.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    @Override
+    public void updateDownloadID(String msgID, String downloadID) {
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference
+                .child(Constants.ARG_MESSAGES)
+                .child(conversations.getMessage_id())
+                .child(msgID).child("downloadId").setValue(downloadID);
+
+    }
+
     private void sendMessages(String imageUrl) {
         messageCount++;
 //        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).keepSynced(true);
@@ -656,7 +669,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         final String id = databaseReference.push().getKey();
 
-
+        messages.setMsgId(id);
         messages.setName(Preferences.INSTANCE.getUserName());
 
         messages.setSender(Preferences.INSTANCE.getMsgUserId());
@@ -914,18 +927,18 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     @Override
     public void onVideo(File file) {
 
-        long maxLength = 20000000;
-
-        if (file.length() > maxLength) {
-            //failed length validation
-
-            showToast("Too big file, Please select less than 10MB Video file...");
-
-        } else {
-            //continue
-//            uploadVideo(file);
-            compressVideo(file);
-        }
+//        long maxLength = 20000000;
+//
+//        if (file.length() > maxLength) {
+//            //failed length validation
+//
+//            showToast("Too big file, Please select less than 10MB Video file...");
+//
+//        } else {
+        //continue
+        uploadVideo(file);
+//        compressVideo(file);
+//        }
 
 
     }

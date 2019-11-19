@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -87,6 +88,8 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
     @BindView(R.id.location_layout)
     CardView locationLayout;
 
+    private String mLocation;
+
     @BindView(R.id.actionBar)
     RelativeLayout mActionBar;
     Unbinder unbinder;
@@ -94,6 +97,8 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
     ImageView shareButton;
     @BindView(R.id.kidsView)
     RecyclerView kidsView;
+
+    private LatLng mLatLng;
 
     private KidsViewAdapter kidsViewAdapter;
 
@@ -140,6 +145,31 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
 //        kidsView.addItemDecoration(new ItemOffsetDecoration(18));
 
         callEventDetailsApi();
+
+
+        locationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!TextUtils.isEmpty(mLocation)) {
+
+                    Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + mLocation);
+//                    Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + mLocation);
+//                    Uri gmmIntentUri = Uri.parse("geo:" + mLatLng.latitude + "," + mLatLng.longitude + "?q=" + Uri.encode(mLocation));
+//                    Uri gmmIntentUri = Uri.parse("geo:" + mLatLng.latitude + "," + mLatLng.longitude);
+
+
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                        startActivity(mapIntent);
+                    }
+
+                }
+
+            }
+        });
+
 
     }
 
@@ -288,6 +318,7 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
                             if (!TextUtils.isEmpty(data.getLocation())) {
                                 locationLayout.setVisibility(View.VISIBLE);
                                 location.setText(getString(data.getLocation()));
+                                mLocation = data.getLocation();
                             } else {
                                 locationLayout.setVisibility(View.GONE);
                             }
@@ -430,6 +461,8 @@ public class EventDetailsFragment extends MultiStateViewFragment implements OnMa
                     LatLng latLng = new LatLng(lat, lng);
 //                            loadMap(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()), data.getName());
                     loadMap(latLng.latitude, latLng.longitude, name);
+
+                    mLatLng = latLng;
 
                     break;
                 default:

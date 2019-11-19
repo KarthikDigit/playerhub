@@ -1,22 +1,32 @@
 package com.playerhub.ui.dashboard.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
+import android.transition.ArcMotion;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.playerhub.R;
+import com.playerhub.morpdialog.MorphDialogToFab;
+import com.playerhub.morpdialog.MorphFabToDialog;
+import com.playerhub.morpdialog.MorphTransition;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.request.UpdateKidDetail;
 import com.playerhub.network.response.KidDetailsUpdatedResponse;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.ui.base.BaseView;
-import com.playerhub.utils.ProgressUtils;
 import com.playerhub.utils.TextInputUtil;
 
 import butterknife.BindView;
@@ -38,6 +48,8 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
     TextInputLayout mLastName;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.container)
+    RelativeLayout container;
 //    @BindView(R.id.cancel)
 //    Button cancel;
 //    @BindView(R.id.update_profile)
@@ -64,6 +76,7 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +92,8 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
         setBackButtonEnabledAndTitleBold("Update Profile");
 
 
+//        setupSharedEelementTransitions1();
+
         Intent intent = getIntent();
 
         if (intent != null && intent.hasExtra(EXTRA_FIRSTNAME) && intent.hasExtra(EXTRA_LASTNAME)) {
@@ -91,8 +106,64 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
 
             mFirstName.setFocusable(true);
             mFirstName.getEditText().setFocusable(true);
+
         }
 
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupSharedEelementTransitions1() {
+
+        ArcMotion arcMotion = new ArcMotion();
+        arcMotion.setMinimumHorizontalAngle(50f);
+        arcMotion.setMinimumVerticalAngle(50f);
+
+        Interpolator easeInOut = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
+
+        MorphFabToDialog sharedEnter = new MorphFabToDialog();
+        sharedEnter.setPathMotion(arcMotion);
+        sharedEnter.setInterpolator(easeInOut);
+
+        MorphDialogToFab sharedReturn = new MorphDialogToFab();
+        sharedReturn.setPathMotion(arcMotion);
+        sharedReturn.setInterpolator(easeInOut);
+
+        if (container != null) {
+            sharedEnter.addTarget(container);
+            sharedReturn.addTarget(container);
+        }
+        getWindow().setSharedElementEnterTransition(sharedEnter);
+        getWindow().setSharedElementReturnTransition(sharedReturn);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupSharedEelementTransitions2() {
+
+        ArcMotion arcMotion = new ArcMotion();
+        arcMotion.setMinimumHorizontalAngle(50f);
+        arcMotion.setMinimumVerticalAngle(50f);
+
+        Interpolator easeInOut = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
+
+        //hujiawei 100是随意给的一个数字，可以修改，需要注意的是这里调用container.getHeight()结果为0
+        MorphTransition sharedEnter = new MorphTransition(ContextCompat.getColor(this, R.color.fab_color),
+                ContextCompat.getColor(this, R.color.dialog_background_color), 100, getResources().getDimensionPixelSize(R.dimen.dialog_corners), true);
+        sharedEnter.setPathMotion(arcMotion);
+        sharedEnter.setInterpolator(easeInOut);
+
+        MorphTransition sharedReturn = new MorphTransition(ContextCompat.getColor(this, R.color.dialog_background_color),
+                ContextCompat.getColor(this, R.color.fab_color), getResources().getDimensionPixelSize(R.dimen.dialog_corners), 100, false);
+        sharedReturn.setPathMotion(arcMotion);
+        sharedReturn.setInterpolator(easeInOut);
+
+        if (container != null) {
+            sharedEnter.addTarget(container);
+            sharedReturn.addTarget(container);
+        }
+        getWindow().setSharedElementEnterTransition(sharedEnter);
+        getWindow().setSharedElementReturnTransition(sharedReturn);
 
     }
 
@@ -101,7 +172,7 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
         switch (view.getId()) {
             case R.id.cancel:
 
-                finish();
+                onBackPressed();
 
                 break;
             case R.id.update_profile:
@@ -110,6 +181,20 @@ public class UpdateProfileActivity extends BaseActivity implements BaseView {
 
                 break;
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        setResult(Activity.RESULT_CANCELED);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else {
+
+            finish();
+        }
+
     }
 
     private void updateKidDetails() {

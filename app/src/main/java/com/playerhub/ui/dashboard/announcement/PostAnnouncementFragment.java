@@ -8,11 +8,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -62,15 +64,19 @@ public class PostAnnouncementFragment extends DialogFragment {
     @BindView(R.id.select_team)
     CustomMultiSpinnerInputLayout selectTeam;
     @BindView(R.id.title)
-    TextInputLayout title;
+    EditText title;
     @BindView(R.id.messages)
-    TextInputLayout messages;
+    EditText messages;
     @BindView(R.id.footerline)
     View footerline;
     @BindView(R.id.close)
     AppCompatButton close;
+    @BindView(R.id.cancel)
+    AppCompatButton cancel;
     @BindView(R.id.send)
     AppCompatButton send;
+    @BindView(R.id.create_event_card)
+    CardView sendCardView;
     Unbinder unbinder;
 
 
@@ -96,7 +102,7 @@ public class PostAnnouncementFragment extends DialogFragment {
 
 //        // the content
         final RelativeLayout root = new RelativeLayout(getActivity());
-        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
 
         // creating the fullscreen dialog
@@ -107,7 +113,7 @@ public class PostAnnouncementFragment extends DialogFragment {
         dialog.setContentView(root);
         dialog.setCancelable(false);
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         return dialog;
     }
@@ -157,7 +163,7 @@ public class PostAnnouncementFragment extends DialogFragment {
 //        final String[] teamList = {"Demo Team ", "2001 Boys Pro", "2005 Boys Pro"};
 
 
-        selectTeam.getEditText().setOnClickListener(new View.OnClickListener() {
+        selectTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -170,20 +176,24 @@ public class PostAnnouncementFragment extends DialogFragment {
             }
         });
 
-        close.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
 //                getActivity().finish();
             }
         });
-        send.setOnClickListener(new View.OnClickListener() {
+        sendCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postAnnouncements();
             }
         });
 
+        sendCardView.setAlpha(0);
+        cancel.setAlpha(0);
+        sendCardView.animate().alpha(1).scaleY(1).scaleX(1).setStartDelay(500).start();
+        cancel.animate().alpha(1).scaleY(1).scaleX(1).setStartDelay(500).start();
 
         return view;
     }
@@ -198,8 +208,8 @@ public class PostAnnouncementFragment extends DialogFragment {
     private void postAnnouncements() {
 
 
-        String title_txt = title.getEditText().getText().toString();
-        String message_txt = messages.getEditText().getText().toString();
+        String title_txt = title.getText().toString();
+        String message_txt = messages.getText().toString();
 
         List<TeamResponse.Data.Team> teamList = selectTeam.getSelectedTeam();
         List<Integer> teamIds = new ArrayList<>();

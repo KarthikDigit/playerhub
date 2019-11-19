@@ -646,6 +646,11 @@ public class ChatActivity_latest extends ChatBaseActivity implements ChatRecycle
     }
 
     @Override
+    public void updateDownloadID(String msgID, String downloadID) {
+
+    }
+
+    @Override
     public void onSelectFromGalleryResult(Bitmap bitmap) {
 
 

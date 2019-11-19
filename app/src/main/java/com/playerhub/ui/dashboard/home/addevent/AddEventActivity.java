@@ -41,6 +41,7 @@ public class AddEventActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setBackButtonEnabledAndTitle("Add Event");
+        setBackButtonEnabledAndTitleBold("Add Event");
         setAnimation();
 
         Fragment fragment = new AddEventFragment();

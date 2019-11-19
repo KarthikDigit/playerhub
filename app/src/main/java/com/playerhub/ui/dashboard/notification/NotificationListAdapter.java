@@ -111,6 +111,9 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
             holder.description.setAlpha(.25f);
             holder.icon.setAlpha(.25f);
+        }else {
+            holder.description.setAlpha(1f);
+            holder.icon.setAlpha(1f);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

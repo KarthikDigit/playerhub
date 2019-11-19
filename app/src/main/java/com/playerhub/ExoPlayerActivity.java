@@ -39,6 +39,8 @@ import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +48,7 @@ import butterknife.OnClick;
 public class ExoPlayerActivity extends AppCompatActivity implements Player.EventListener {
 
     private static final String EXTRA_VIDEO_URL = "video_url";
+    private static final String EXTRA_PLAY_FROM_LOCAL = "playfromlocal";
 
     //Minimum Video you want to buffer while Playing
     public static final int MIN_BUFFER_DURATION = 3000;
@@ -63,6 +66,7 @@ public class ExoPlayerActivity extends AppCompatActivity implements Player.Event
     Button imageViewExit;
 
     String videoUri;
+    private boolean isPlayFromLocal = false;
     SimpleExoPlayer player;
     Handler mHandler;
     Runnable mRunnable;
@@ -73,12 +77,13 @@ public class ExoPlayerActivity extends AppCompatActivity implements Player.Event
     private boolean isShowing = true;
     private GestureDetector mDetector;
 
-    public static void startActivity(Context context, String videoUrl) {
+    public static void startActivity(Context context, String videoUrl, boolean playFromLocal) {
 
 
         Intent intent = new Intent(context, ExoPlayerActivity.class);
 
         intent.putExtra(EXTRA_VIDEO_URL, videoUrl);
+        intent.putExtra(EXTRA_PLAY_FROM_LOCAL, playFromLocal);
 
         context.startActivity(intent);
 
@@ -102,6 +107,7 @@ public class ExoPlayerActivity extends AppCompatActivity implements Player.Event
             //            Uri uri = Uri.parse(url);
 
             videoUri = intent.getStringExtra(EXTRA_VIDEO_URL);
+            isPlayFromLocal = intent.getBooleanExtra(EXTRA_PLAY_FROM_LOCAL, false);
 
             setUp();
         }
@@ -203,7 +209,16 @@ public class ExoPlayerActivity extends AppCompatActivity implements Player.Event
         if (videoUri == null) {
             return;
         }
-        buildMediaSource(Uri.parse(videoUri));
+
+        if (isPlayFromLocal) {
+
+            buildMediaSource(Uri.fromFile(new File(videoUri)));
+
+        } else {
+
+            buildMediaSource(Uri.parse(videoUri));
+
+        }
     }
 
     @OnClick(R.id.imageViewExit)

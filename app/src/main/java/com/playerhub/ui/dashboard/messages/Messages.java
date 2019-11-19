@@ -3,6 +3,8 @@ package com.playerhub.ui.dashboard.messages;
 public class Messages {
 
 
+    private String downloadId;
+    private String msgId;
     private String img_url;
     private String video_url;
     private String msg;
@@ -11,6 +13,22 @@ public class Messages {
     private String status;
     private long timestamp;
     private long upload_status;
+
+    public String getDownloadId() {
+        return downloadId;
+    }
+
+    public void setDownloadId(String downloadId) {
+        this.downloadId = downloadId;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
 
     public String getVideo_url() {
         return video_url;

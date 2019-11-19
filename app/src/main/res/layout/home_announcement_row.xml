@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/_16sdp">
+    android:layout_marginLeft="@dimen/_12sdp"
+    android:layout_marginRight="@dimen/_12sdp"
+    android:layout_marginBottom="@dimen/_12sdp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:cardElevation="@dimen/_2sdp"
+    app:contentPadding="@dimen/_12sdp">
 
-    <TextView
-        android:id="@+id/title"
-        fontPath="fonts/poppins_medium.ttf"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp"
-        tools:text="Euro Beach Soccer league 2018" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/description"
-        fontPath="fonts/poppins_light.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:minWidth="@dimen/_120sdp"
-        android:textSize="@dimen/_10ssp"
-        tools:text="Disney trip" />
+        <TextView
+            android:id="@+id/title"
+            android:transitionName="@string/title"
+            fontPath="fonts/poppins_medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            tools:text="Euro Beach Soccer league 2018" />
 
+        <TextView
+            android:id="@+id/description"
+            android:transitionName="@string/description"
+            fontPath="fonts/poppins_light.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minWidth="@dimen/_120sdp"
+            android:textSize="@dimen/_11ssp"
+            tools:text="Disney trip" />
+    </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

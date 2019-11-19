@@ -3,12 +3,12 @@ package com.playerhub.network.service;
 
 import com.playerhub.network.request.BasePostEvents;
 import com.playerhub.network.request.Deviceinfo;
-import com.playerhub.network.request.PostEvents;
-import com.playerhub.network.request.RegistrationRequest;
+import com.playerhub.network.request.Feedback;
 import com.playerhub.network.request.UpdateKidDetail;
 import com.playerhub.network.request.UploadKidProfile;
 import com.playerhub.network.response.AnnouncementApi;
 import com.playerhub.network.response.ContactListApi;
+import com.playerhub.network.response.ContactUsApi;
 import com.playerhub.network.response.EventDetailsApi;
 import com.playerhub.network.response.EventListApi.EventListResponseApi;
 import com.playerhub.network.response.EventTypesResponse;
@@ -20,10 +20,7 @@ import com.playerhub.network.response.OTPValidateApi;
 import com.playerhub.network.response.ProfileDetails;
 import com.playerhub.network.response.ReadNotification;
 import com.playerhub.network.response.TeamResponse;
-import com.playerhub.ui.dashboard.notification.testmodel.NotificatinOr;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -31,7 +28,6 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -52,7 +48,6 @@ public interface NetworkApiService {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("event-attendence")
     Observable<String> postKidsEvent(@HeaderMap Map<String, String> headermap, @Body KidsRequest json);
-
 
 
     //
@@ -150,6 +145,11 @@ public interface NetworkApiService {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("announcements")
     Observable<String> postAnnouncements(@HeaderMap Map<String, String> headermap, @Body Map<String, Object> json);
+
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("contact")
+    Observable<ContactUsApi> postFeedback(@HeaderMap Map<String, String> headermap, @Body Feedback feedback);
 
 
 //    @Headers({"Content-Type: application/json;charset=UTF-8"})

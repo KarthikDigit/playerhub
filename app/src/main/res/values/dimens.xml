@@ -56,6 +56,7 @@
     <dimen name="text_size_large">16dp</dimen>
     <dimen name="rounded_corner">20dp</dimen>
     <dimen name="default_item_padding">16dp</dimen>
+    <dimen name="dialog_corners">16dp</dimen>
 
     <!--<dimen name="design_navigation_icon_size" tools:override="true">@dimen/_12sdp</dimen>-->
     <!--<dimen name="design_bottom_navigation_text_size" tools:override="true">@dimen/_6ssp</dimen>-->

@@ -3,13 +3,18 @@ package com.playerhub.ui.dashboard.announcement.announcementviewmodel;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,8 @@ import android.widget.ImageView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.playerhub.R;
 import com.playerhub.network.response.AnnouncementApi;
+import com.playerhub.recyclerHelper.EqualSpacingItemDecoration;
+import com.playerhub.recyclerHelper.ItemOffsetDecoration;
 import com.playerhub.recyclerHelper.SimpleDividerItemDecorationFullLine;
 import com.playerhub.ui.base.MultiStateViewFragment;
 import com.playerhub.ui.dashboard.announcement.AnnouncementDialogFragment;
@@ -93,8 +100,9 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
 
         announcementView.setAdapter(announcementAdapter);
 
-        announcementView.addItemDecoration(new SimpleDividerItemDecorationFullLine(getContext()));
+//        announcementView.addItemDecoration(new EqualSpacingItemDecoration(48, EqualSpacingItemDecoration.VERTICAL));
 
+//        announcementView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.offset));
 
         if (getArguments() != null) {
             boolean b = getArguments().getBoolean(isBackEnable, false);
@@ -211,9 +219,19 @@ public class AnnouncementListFragment extends MultiStateViewFragment implements 
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void OnAnnouncemnetClick(View view, AnnouncementApi.Datum datum, int position) {
-        AnnouncementDialogFragment.getInstance(datum, false).show(getChildFragmentManager(), "Announcement");
+
+        View title = view.findViewById(R.id.title);
+        View des = view.findViewById(R.id.description);
+
+
+        AnnouncementDialogFragment fragment = AnnouncementDialogFragment.getInstance(datum, false);
+        fragment.setEnterTransition(new Slide());
+        fragment.setExitTransition(new Slide());
+        fragment.show(getChildFragmentManager(), "Announcement");
+
     }
 
 

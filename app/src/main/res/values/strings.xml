@@ -108,6 +108,10 @@
     <string name="add_announcement">Add Announcement</string>
     <string name="update">Update</string>
     <string name="create_sub_account">Create Account</string>
+    <string name="transition_dialog">Update Profile</string>
+    <string name="title">title</string>
+    <string name="description">description</string>
+    <string name="my_receipt_title">My Receipt</string>
 
 
 </resources>

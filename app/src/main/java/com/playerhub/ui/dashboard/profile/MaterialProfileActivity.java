@@ -2,28 +2,24 @@ package com.playerhub.ui.dashboard.profile;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.TextPaint;
-import android.text.style.MetricAffectingSpan;
-import android.text.style.TypefaceSpan;
 import android.transition.Fade;
 import android.transition.Slide;
+import android.transition.Transition;
 import android.transition.Visibility;
-import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +42,6 @@ import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.MultiStateViewActivity;
 import com.playerhub.utils.ImageUtility;
 import com.playerhub.utils.ImageUtils;
-import com.playerhub.utils.KeyboardUtils;
 import com.playerhub.utils.TextInputUtil;
 import com.squareup.picasso.Picasso;
 
@@ -115,6 +110,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     RelativeLayout mActionBarLayout;
     @BindView(R.id.rootview)
     ElasticDragDismissFrameLayout rootview;
+    @BindView(R.id.edit)
+    FloatingActionButton mEditButton;
 
     //    @BindView(R.id.collapsing_toolbar)
 //    CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -178,10 +175,38 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     private void setupWindowAnimation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Slide fade = new Slide();
+            Transition fade = new Slide();
 //            fade.setMode(Visibility.MODE_IN);
             fade.setDuration(500);
             getWindow().setEnterTransition(fade);
+
+            fade.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+
+                    mEditButton.animate().scaleY(1).scaleX(1).start();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
 
             Fade fadeOut = new Fade();
             fadeOut.setMode(Visibility.MODE_OUT);
@@ -364,8 +389,8 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         TextInputUtil.setText(joinDate, data.getJoinedOn());
 
         if (finalLogo == null) {
-            ImageUtility.loadImage(profileImage, data.getAvatar_image());
-            ImageUtility.loadImage(fullImage, data.getAvatar_image());
+            ImageUtility.loadImage(profileImage, profileImage, data.getAvatar_image());
+            ImageUtility.loadImage(profileImage, fullImage, data.getAvatar_image());
         }
 
         camera.setVisibility(View.VISIBLE);
@@ -374,8 +399,10 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void editMode() {
 
+        FloatingActionButton fab = findViewById(R.id.edit);
 
         String fName = TextInputUtil.getText(firstName);
         String lName = TextInputUtil.getText(lastName);
@@ -383,6 +410,12 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
         Intent intent = UpdateProfileActivity.getInstance(this, getKidId(), fName, lName);
 
         startActivityForResult(intent, REQUEST_CODE);
+
+
+//        Intent intent = new Intent(MainActivity.this, DialogActivity.class);
+//        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab, getString(R.string.transition_dialog));
+//        startActivityForResult(intent, REQUEST_CODE, options.toBundle());
+
 
 //        int drawabelId = isSave ? R.drawable.ic_check_black_24dp : R.drawable.ic_edit_black_24dp;
 //        saveEdit.setImageResource(drawabelId);
@@ -530,37 +563,48 @@ public class MaterialProfileActivity extends MultiStateViewActivity implements C
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit, menu);
-        return true;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @OnClick(R.id.edit)
+    public void onFabEditClick(View view) {
+
+        isSave = !isSave;
+
+        editMode();
+
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.edit, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//
+//
+//        int drawabelId = isSave ? R.drawable.ic_check_black_24dp : R.drawable.ic_edit_black_24dp;
+//
+//        menu.findItem(R.id.save_edit).setIcon(drawabelId);
+//
+//        menu.findItem(R.id.save_edit).setVisible(isShow);
+//
+//        return super.onPrepareOptionsMenu(menu);
+//    }
 
-
-        int drawabelId = isSave ? R.drawable.ic_check_black_24dp : R.drawable.ic_edit_black_24dp;
-
-        menu.findItem(R.id.save_edit).setIcon(drawabelId);
-
-        menu.findItem(R.id.save_edit).setVisible(isShow);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.save_edit) {
-
-            isSave = !isSave;
-
-            editMode();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == R.id.save_edit) {
+//
+//            isSave = !isSave;
+//
+//            editMode();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     private AppBarLayout.OnOffsetChangedListener onOffsetChangedListener = new AppBarLayout.OnOffsetChangedListener() {

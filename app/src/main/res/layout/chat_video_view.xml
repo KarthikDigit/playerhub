@@ -43,4 +43,36 @@
         app:SpinKit_Color="@color/white" />
 
 
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/_8sdp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:tint="@color/fab_color"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_file_download_black_24dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress_bar" />
+
+
+    </RelativeLayout>
+
+
 </merge>

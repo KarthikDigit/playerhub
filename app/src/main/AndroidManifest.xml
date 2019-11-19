@@ -306,20 +306,37 @@
         </activity>
         <activity
             android:name=".VideoPlayerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ExoPlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity android:name=".ui.RunTestActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".ui.dashboard.changecreditcard.ChangeCreditCardWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dashboard.stats.StatsWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dashboard.myreceipt.MyReceiptActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.dashboard.profile.PlayerProfileWebViewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

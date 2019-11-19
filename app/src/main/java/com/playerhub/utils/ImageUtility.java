@@ -16,18 +16,14 @@ import android.widget.ProgressBar;
 
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.playerhub.R;
-import com.playerhub.common.GlideApp;
-import com.playerhub.common.MyAppGlideModule;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -36,12 +32,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Cache;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -312,11 +306,94 @@ public class ImageUtility {
     }
 
 
-    public static void loadImage(ImageView imageView, String url) {
+    public static void loadImage(final CircleImageView profileImage, final ImageView imageView, final SpinKitView spinKitView, String url) {
+        if (url != null && !TextUtils.isEmpty(url))
+
+            Picasso.get().load(url).error(R.drawable.avatar_mini).into(profileImage, new Callback() {
+                @Override
+                public void onSuccess() {
+                    profileImage.setVisibility(View.VISIBLE);
+                    spinKitView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    profileImage.setVisibility(View.VISIBLE);
+                    spinKitView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            });
+
+        else {
+            imageView.setVisibility(View.VISIBLE);
+            Picasso.get().load(R.drawable.avatar_mini).error(R.drawable.avatar_mini).into(imageView);
+
+        }
+
+    }
+
+    public static void loadImage(CircleImageView profileImage, final ImageView imageView, String url) {
 
         if (url != null && !TextUtils.isEmpty(url))
 
-            Picasso.get().load(url).placeholder(R.drawable.progress_animation).error(R.drawable.avatar_mini).into(imageView);
+            Picasso.get().load(url).error(R.drawable.avatar_mini).into(imageView);
+
+        else {
+
+            Picasso.get().load(R.drawable.avatar_mini).error(R.drawable.avatar_mini).into(imageView);
+
+        }
+
+    }
+
+    public static void loadImage(ImageView profileImage,  String url) {
+
+        if (url != null && !TextUtils.isEmpty(url))
+
+            Picasso.get().load(url).error(R.drawable.avatar_mini).into(profileImage);
+
+        else {
+
+            Picasso.get().load(R.drawable.avatar_mini).error(R.drawable.avatar_mini).into(profileImage);
+
+        }
+
+    }
+
+    public static void loadImage(CircleImageView profileImage,  String url) {
+
+        if (url != null && !TextUtils.isEmpty(url))
+
+            Picasso.get().load(url).error(R.drawable.avatar_mini).into(profileImage);
+
+        else {
+
+            Picasso.get().load(R.drawable.avatar_mini).error(R.drawable.avatar_mini).into(profileImage);
+
+        }
+
+    }
+
+
+    public static void loadImage(final ImageView imageView, final SpinKitView spinKitView, String url) {
+
+        if (url != null && !TextUtils.isEmpty(url))
+
+            Picasso.get().load(url).error(R.drawable.avatar_mini).into(imageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    spinKitView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                    spinKitView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            });
 
         else {
 

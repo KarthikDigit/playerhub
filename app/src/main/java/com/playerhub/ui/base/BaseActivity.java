@@ -119,6 +119,8 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
 
     }
 
+
+
     public void showToast(String msg) {
 
 

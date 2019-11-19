@@ -3,7 +3,9 @@ package com.playerhub.customview;
 import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import com.playerhub.network.response.TeamResponse;
 import com.playerhub.ui.dashboard.announcement.MultiSelectFragment;
@@ -11,7 +13,7 @@ import com.playerhub.ui.dashboard.announcement.MultiSelectFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomMultiSpinnerInputLayout extends TextInputLayout implements MultiSelectFragment.OnMultiSelectListener {
+public class CustomMultiSpinnerInputLayout extends AppCompatEditText implements MultiSelectFragment.OnMultiSelectListener {
 
     private List<TeamResponse.Data.Team> teams;
     private List<TeamResponse.Data.Team> selectedTeam;
@@ -37,8 +39,6 @@ public class CustomMultiSpinnerInputLayout extends TextInputLayout implements Mu
 
         setFocusable(false);
 
-        if (getEditText() != null) getEditText().setFocusable(false);
-
 
     }
 
@@ -46,10 +46,8 @@ public class CustomMultiSpinnerInputLayout extends TextInputLayout implements Mu
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-
         setFocusable(false);
 
-        if (getEditText() != null) getEditText().setFocusable(false);
     }
 
     public void showPopUp(final List<TeamResponse.Data.Team> teams, FragmentManager fragmentManager) {
@@ -75,10 +73,10 @@ public class CustomMultiSpinnerInputLayout extends TextInputLayout implements Mu
 
             selectedTeam = teamList;
 
-            getEditText().setText(s);
+            setText(s);
 
         } else {
-            getEditText().setText("Select a team");
+            setText("Select a team");
             selectedTeam = null;
         }
     }

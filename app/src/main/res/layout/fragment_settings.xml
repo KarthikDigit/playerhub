@@ -121,6 +121,7 @@
 
 
                     <View
+                        android:id="@+id/create_creditcard_view"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:background="@color/line2" />
@@ -196,11 +197,91 @@
                         <!--android:track="@drawable/switch_track"-->
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+                    <LinearLayout
+                        android:id="@+id/myreceipt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_add_sub_account" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="My Receipt"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:background="@color/line2" />
+
+                    <LinearLayout
+                        android:id="@+id/stats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_16sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:transitionName="@string/transition_image"
+                            app:srcCompat="@drawable/ic_icon_add_sub_account" />
+
+
+                        <TextView
+                            fontPath="fonts/poppins_medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:layout_toEndOf="@+id/profile_img"
+                            android:layout_toRightOf="@+id/profile_img"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                            android:gravity="center|start"
+                            android:text="Stats"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <!--android:thumb="@drawable/switch_thumb"-->
+                        <!--android:track="@drawable/switch_track"-->
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/line2" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/playerprofileListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
 
                     <LinearLayout
                         android:id="@+id/contact"

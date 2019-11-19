@@ -7,6 +7,8 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.downloader.PRDownloader;
+import com.downloader.PRDownloaderConfig;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,6 +31,21 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Enabling database for resume support even after the application is killed:
+        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+                .setDatabaseEnabled(true)
+                .setReadTimeout(30_000)
+                .setConnectTimeout(30_000)
+                .build();
+        PRDownloader.initialize(getApplicationContext(), config);
+
+//// Setting timeout globally for the download network requests:
+//        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+//                .setReadTimeout(30_000)
+//                .setConnectTimeout(30_000)
+//                .build();
+//        PRDownloader.initialize(getApplicationContext(), config);
 
         // Initialize Places.
         Places.initialize(getApplicationContext(), getString(R.string.place_apikey));

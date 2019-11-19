@@ -28,8 +28,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -103,144 +103,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="NotificationActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/notification/NotificationActivity.java">
+      <file leaf-file-name="ChatRecyclerAdapter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatRecyclerAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="65" column="49" selection-start-line="65" selection-start-column="49" selection-end-line="65" selection-end-column="49" />
+            <state relative-caret-position="241">
+              <caret line="453" column="9" selection-start-line="453" selection-start-column="9" selection-end-line="453" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnnouncementListFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListFragment.java">
+      <file leaf-file-name="chat_video_view.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/chat_video_view.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
+            <state relative-caret-position="392">
+              <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="62" selection-end-column="41" />
               <folding>
-                <element signature="e#3348#3971#0" expanded="true" />
-                <element signature="e#3970#3971#0" expanded="true" />
-                <element signature="e#4030#4257#0" expanded="true" />
-                <element signature="e#4256#4257#0" expanded="true" />
-                <element signature="e#4303#5442#0" expanded="true" />
-                <element signature="e#5441#5442#0" expanded="true" />
-                <element signature="e#5665#5666#0" expanded="true" />
-                <element signature="e#5518#5519#0" expanded="true" />
-                <element signature="e#5552#5553#0" expanded="true" />
-                <element signature="e#5738#5739#0" expanded="true" />
-                <element signature="e#5804#5805#0" expanded="true" />
+                <element signature="e#1986#2001#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnnouncementListViewModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListViewModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_more_announcement.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_more_announcement.xml">
+      <file leaf-file-name="item_chat_other.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_chat_other.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="431">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+            <state relative-caret-position="90">
+              <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatVideoView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/ChatVideoView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="207" column="19" selection-start-line="207" selection-start-column="19" selection-end-line="207" selection-end-column="19" />
               <folding>
-                <element signature="e#926#941#0" expanded="true" />
-                <element signature="e#1306#1321#0" expanded="true" />
-                <element signature="e#1351#1373#0" expanded="true" />
-                <element signature="e#1456#1471#0" expanded="true" />
-                <element signature="e#1835#1850#0" expanded="true" />
-                <element signature="e#1894#1909#0" expanded="true" />
-                <element signature="e#2506#2546#0" expanded="true" />
+                <element signature="e#4896#5318#0" expanded="true" />
+                <element signature="e#5317#5318#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_announcement_row_shimmer.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row_shimmer.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
+      <file leaf-file-name="VideoUploadTestActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/VideoUploadTestActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="94">
+              <caret line="99" selection-start-line="99" selection-end-line="99" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="633" selection-start-line="633" selection-end-line="633" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerProfileListAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/PlayerProfileListAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-126">
+              <caret line="70" column="5" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
               <folding>
-                <element signature="e#355#370#0" expanded="true" />
-                <element signature="e#458#473#0" expanded="true" />
-                <element signature="e#558#574#0" expanded="true" />
-                <element signature="e#603#618#0" expanded="true" />
-                <element signature="e#652#666#0" expanded="true" />
-                <element signature="e#598#614#0" expanded="true" />
+                <element signature="e#2570#2720#0" expanded="true" />
+                <element signature="e#2719#2720#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_announcement_row.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding>
-                <element signature="e#854#869#0" expanded="true" />
-                <element signature="e#1101#1117#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_notification.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_notification.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
+      <file leaf-file-name="PlayerProfileWebViewActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/profile/PlayerProfileWebViewActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="25" column="54" selection-start-line="25" selection-start-column="54" selection-end-line="25" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="notification_item_view.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/notification_item_view.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="52" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="notification_item.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/notification_item.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NotificationListAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/notification/NotificationListAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+              <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -261,21 +208,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>myView</find>
-      <find>myrView</find>
-      <find>name</find>
-      <find>FDC</find>
-      <find>months</find>
-      <find>onVideo</find>
-      <find>isVideo</find>
-      <find>extensions</find>
-      <find>viewmodel</find>
-      <find>mFloatingMenu</find>
-      <find>profile_img</find>
-      <find>onA</find>
-      <find>OnItemClick</find>
-      <find>onresu</find>
-      <find>pageIndicatorView</find>
       <find>indicatorView</find>
       <find>parentChildPagerAdapter</find>
       <find>getKids</find>
@@ -291,6 +223,21 @@
       <find>onResume</find>
       <find>onRetryOrCallApi</find>
       <find>callEventListApi</find>
+      <find>getOnlyFiveInTheList</find>
+      <find>floatingActionButton</find>
+      <find>se</find>
+      <find>OnItemClick</find>
+      <find>Deta</find>
+      <find>onresu</find>
+      <find>viewToParallax</find>
+      <find>pageLayerType</find>
+      <find>mPageTransformerLayerType</find>
+      <find>setupWindowAnimation</find>
+      <find>create_subaccount</find>
+      <find>edi</find>
+      <find>unbinder</find>
+      <find>locationLayout</find>
+      <find>NotificationApi.Data.Notification</find>
     </findStrings>
     <replaceStrings>
       <replace>Event</replace>
@@ -298,6 +245,7 @@
       <replace>itemAdapter</replace>
       <replace>itemAdapter.</replace>
       <replace>TabCustomView</replace>
+      <replace>Kid</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app/src/main/res/anim</dir>
@@ -5603,57 +5551,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment_newanimation_backup.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/ParentChildPagerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/profile/MaterialProfileActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/line_view_announcement.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_fab_close.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/AnnouncementDialogFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_announcement_dialog.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_material_profile.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_profile_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_change_credit_card.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_sub_account.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/eventdetails/EventDetailsFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home_event_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_events_updated.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/recent/RecentAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/holder/ChatViewHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_chat.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_window.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/cameraorgallery/CameraAndGallary.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/round_rect_edittext.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_keyboard_arrow_down_black_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_ionic_ios_send.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/addevent/AddEventActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_update_profile.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_contact.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/myreceipt/MyReceipt.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/myreceipt/MyReceiptListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_my_receipt.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/my_receipt_item_view.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/assets/webpage/index.html" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/MultiSelectFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_multi_select.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/CustomMultiSpinnerInputLayout.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rounded_stroke.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/PostAnnouncementFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/addevent/AddEventFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_event.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_announcement.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/my_receipt_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/myreceipt/MyReceiptActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/stats/StatsWebViewActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/app/App.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/home_events_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/EventsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/home_event_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/EventView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeEventListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/home_events_row_placeholder.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/message_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_video_upload_test.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ExoPlayerActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/Messages.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivityBackup.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/GroupChatActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivityPerfectWorkingCode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity_latest.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/changecreditcard/ChangeCreditCardWebViewActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/network/response/EventDetailsApi.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/base/BaseFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/eventdetails/EventDetailsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/RecentFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/message_item_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/ContactListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_list_recent.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/generic_item_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/notification/NotificationActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/notification_item_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_notification.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/round_circle.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/welcome_slide1.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/welcome_slide2.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/welcome_slide3.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/AnnouncementAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_more_announcement.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row_shimmer.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/ChatVideoView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/PlayerProfileListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/profile/PlayerProfileWebViewActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/SettingsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/player_profile_view_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/VideoUploadTestActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/circle_shape.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/circular_progress_bar.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatRecyclerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/chat_video_view.xml" />
       </list>
     </option>
   </component>
@@ -5668,6 +5616,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -5677,71 +5627,45 @@
             </path>
             <path>
               <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="announcement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="announcement" type="462c0819:PsiDirectoryNode" />
-              <item name="announcementviewmodel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="playerhub" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="playerhub" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
+            <path>
+              <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="playerhub" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="playerhub" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="playerhub" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="playerhub" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="playerhub" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
             <path>
               <item name="playerhub" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
@@ -5758,46 +5682,46 @@
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="ExportApk.SignV2" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/res/layout/fragment_events.xml&#10;eventsha&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/addevent/EventSharingActivity.java&#10;wel&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/welcome/WelcomeActivity.java&#10;welcom&#9;PSI&#9;JAVA://com.playerhub.ui.welcome.WelcomeActivity&#10;Lo&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/login/LoginActivity.java&#10;HomeFra&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java&#10;ParentChildPagerAdapter&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/ParentChildPagerAdapter.java&#10;Welcome&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/welcome/WelcomeActivity.java&#10;Prefe&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/preference/Preferences.java&#10;BaseA&#9;PSI&#9;JAVA://com.playerhub.ui.base.BaseActivity&#10;Image&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/utils/ImageUtility.java&#10;BaseView&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseView.java&#10;ki&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;Kids&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;Kid&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;kid&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;profileDe&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/ProfileDetailsActivity.java&#10;AnnouncementD&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/announcement/AnnouncementDialogFragment.java&#10;Cha&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java&#10;Bas&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseActivity.java&#10;Base&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseActivity.java" />
+    <property name="SearchEverywhereHistoryKey" value="EventAdapter&#9;PSI&#9;JAVA://com.playerhub.ui.dashboard.home.EventsAdapter&#10;eventsha&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/addevent/EventSharingActivity.java&#10;wel&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/welcome/WelcomeActivity.java&#10;welcom&#9;PSI&#9;JAVA://com.playerhub.ui.welcome.WelcomeActivity&#10;Lo&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/login/LoginActivity.java&#10;HomeFra&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java&#10;ParentChildPagerAdapter&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/ParentChildPagerAdapter.java&#10;Welcome&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/welcome/WelcomeActivity.java&#10;Prefe&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/preference/Preferences.java&#10;BaseA&#9;PSI&#9;JAVA://com.playerhub.ui.base.BaseActivity&#10;Image&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/utils/ImageUtility.java&#10;BaseView&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseView.java&#10;ki&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;Kids&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;Kid&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;kid&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java&#10;profileDe&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/profile/ProfileDetailsActivity.java&#10;AnnouncementD&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/home/announcement/AnnouncementDialogFragment.java&#10;Cha&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java&#10;Bas&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseActivity.java&#10;Base&#9;FILE&#9;file:///home/df1/WorkArea/playerhub/app/src/main/java/com/playerhub/ui/base/BaseActivity.java" />
     <property name="android.project.structure.last.selected" value="loaderrorcontent" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="device.picker.selection" value="949e9b3e0504" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Documents/CircularFloatingActionMenu-master" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/RxDownloader-master" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.playerhub.ui.dashboard.home" />
       <recent name="com.playerhub.network.service" />
+      <recent name="com.playerhub.ui.dashboard.home" />
       <recent name="com.playerhub.ui.dashboard.notification.testmodel" />
       <recent name="com.playerhub.network.request" />
     </key>
     <key name="android.template.packageName">
+      <recent name="com.playerhub.ui.dashboard.myreceipt" />
+      <recent name="com.playerhub.ui.dashboard.changecreditcard" />
+      <recent name="com.playerhub.ui.dashboard.home.homemvvm" />
       <recent name="com.playerhub.ui" />
       <recent name="com.playerhub" />
-      <recent name="com.playerhub.ui.dashboard.chat" />
-      <recent name="com.playerhub.ui.dashboard.contact" />
-      <recent name="com.playerhub.ui.dashboard.addsubaccount" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.playerhub.ui.dashboard.home.announcement" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/color" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/playerhub/morpdialog" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/values-w820dp" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/playerhub" />
-      <recent name="$PROJECT_DIR$/app/src/main/assets/fonts" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.playerhub.ui.dashboard.profile" />
-      <recent name="com.playerhub.ui.dashboard.announcement.announcementviewmodel" />
-      <recent name="com.playerhub" />
-      <recent name="com.playerhub.widget" />
+      <recent name="com.playerhub.ui.dashboard.settings" />
+      <recent name="com.playerhub.ui.dashboard.stats" />
+      <recent name="com.playerhub.ui.dashboard.myreceipt" />
       <recent name="com.playerhub.customview" />
     </key>
     <key name="android.template.parentActivityClass">
@@ -5887,7 +5811,7 @@
         <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
-      <option name="ACTIVITY_CLASS" value="com.playerhub.ui.RunTestActivity" />
+      <option name="ACTIVITY_CLASS" value="com.playerhub.ui.dashboard.chat.VideoUploadTestActivity" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -6029,32 +5953,32 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
-    <editor active="true" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" weight="0.7718447" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32847896" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
       <window_info id="Build Variants" order="2" sideWeight="0.37846154" side_tool="true" weight="0.121115535" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5043825" side_tool="true" weight="0.056634303" />
-      <window_info anchor="right" id="Preview" order="8" sideWeight="0.49838188" visible="true" weight="0.30996016" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.79288024" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.5275081" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="7" sideWeight="0.49561754" visible="true" weight="0.122977346" />
-      <window_info id="Captures" order="2" weight="0.24940239" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50278884" side_tool="true" weight="0.6278317" />
+      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.49561754" visible="true" weight="0.0776699" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.62153846" visible="true" weight="0.07649402" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.6132686" />
-      <window_info anchor="right" id="Android WiFi ADB" order="9" weight="0.34023905" />
-      <window_info anchor="right" id="Gradle" order="7" weight="0.32988048" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49721116" weight="0.55501616" />
       <window_info id="Structure" order="1" sideWeight="0.37005162" side_tool="true" weight="0.14900398" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.30582523" />
       <window_info anchor="right" id="Device File Explorer" order="11" sideWeight="0.50161815" side_tool="true" weight="0.30438247" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32847896" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Preview" order="8" sideWeight="0.49838188" weight="0.30996016" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.79288024" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.0" />
+      <window_info id="Captures" order="2" weight="0.24940239" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.62153846" visible="true" weight="0.1561753" />
+      <window_info anchor="right" id="Android WiFi ADB" order="9" weight="0.34023905" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.6682848" />
+      <window_info anchor="right" id="Gradle" order="7" weight="0.32988048" />
+      <window_info anchor="right" id="Theme Preview" order="6" weight="0.32988048" />
       <window_info id="Favorites" order="2" sideWeight="0.37025318" side_tool="true" weight="0.187251" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.3450199" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -6064,7 +5988,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.6682848" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Build" order="7" weight="0.6699029" />
@@ -6126,362 +6049,266 @@
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java</url>
+          <line>812</line>
+          <properties />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="29" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-28/android/widget/PopupWindow.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/PostAnnouncementFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="1238" column="52" selection-start-line="1238" selection-start-column="48" selection-end-line="1238" selection-end-column="52" />
+        <state relative-caret-position="313">
+          <caret line="127" column="64" selection-start-line="127" selection-start-column="64" selection-end-line="127" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/debug/com/playerhub/ui/dashboard/chat/ChatActivity_ViewBinding.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="496" column="11" selection-start-line="496" selection-start-column="11" selection-end-line="496" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/cameraorgallery/CameraAndGallary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_window.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_chat.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="71" column="22" selection-start-line="71" selection-start-column="22" selection-end-line="71" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="342" column="50" selection-start-line="342" selection-start-column="50" selection-end-line="342" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/SettingsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="55" column="56" selection-start-line="55" selection-start-column="56" selection-end-line="55" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_events_row.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="36" selection-end-line="175" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/base/MultiStateViewFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home_event_list.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="51" column="44" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_events_row_placeholder.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
-          <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_event_list.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="90" column="61" lean-forward="true" selection-start-line="90" selection-start-column="61" selection-end-line="90" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/EventView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="78" column="28" lean-forward="true" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeEventListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
-          <folding>
-            <element signature="e#5956#6337#0" expanded="true" />
-            <element signature="e#6336#6337#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="190" column="38" selection-start-line="190" selection-start-column="38" selection-end-line="190" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="761" selection-start-line="761" selection-end-line="761" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/EventsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="175" column="9" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/recent/RecentAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="109" column="90" selection-start-line="109" selection-start-column="90" selection-end-line="109" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/holder/GenreAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="23" column="88" selection-start-line="23" selection-start-column="88" selection-end-line="23" selection-end-column="88" />
-          <folding>
-            <element signature="e#609#610#0" expanded="true" />
-            <element signature="e#638#639#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_genre.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="32" lean-forward="true" selection-end-line="34" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_half.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/message_item_view.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/message_item.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/RecentFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2196">
-          <caret line="181" column="68" selection-start-line="181" selection-start-column="68" selection-end-line="181" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/ContactListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1314">
-          <caret line="150" column="36" selection-start-line="150" selection-start-column="36" selection-end-line="150" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/generic_item_view.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="47" lean-forward="true" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_list_recent.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/easypermissions-1.2.0.aar/ad4d95c3f678f8eabe9de406478b71d8/res/values/values.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/round_circle.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/CustomMultiSpinnerInputLayout.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_notification_alert_01.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/PostAnnouncementActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state />
+        <state relative-caret-position="216">
+          <caret line="18" column="91" selection-start-line="18" selection-start-column="91" selection-end-line="18" selection-end-column="91" />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/welcome_slide1.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/addevent/AddEventFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="421" selection-start-line="421" selection-end-line="421" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_event.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+        <state relative-caret-position="305">
+          <caret line="366" column="42" selection-start-line="366" selection-start-column="42" selection-end-line="366" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/welcome_slide2.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/webpage/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
+        <state relative-caret-position="126">
+          <caret line="7" selection-start-line="7" selection-end-line="23" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/welcome_slide3.xml">
+    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-28/android/util/Base64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1118">
+          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/stats/StatsWebViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="64" column="71" lean-forward="true" selection-start-line="64" selection-start-column="71" selection-end-line="64" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/app/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_video_upload_test.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+          <caret line="18" column="69" selection-start-line="8" selection-start-column="4" selection-end-line="18" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="46" lean-forward="true" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
+        <state relative-caret-position="188">
+          <caret line="160" selection-start-line="160" selection-end-line="160" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mindorks.android/prdownloader/0.5.0/b5695dd01b9da353e4a387bae3b22af8ab4abd/prdownloader-0.5.0-sources.jar!/com/downloader/Error.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="24" column="34" lean-forward="true" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/Messages.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ExoPlayerActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="211" selection-start-line="211" selection-end-line="211" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mindorks.android/prdownloader/0.5.0/b5695dd01b9da353e4a387bae3b22af8ab4abd/prdownloader-0.5.0-sources.jar!/com/downloader/internal/DownloadRequestQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mindorks.android/prdownloader/0.5.0/b5695dd01b9da353e4a387bae3b22af8ab4abd/prdownloader-0.5.0-sources.jar!/com/downloader/PRDownloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivityBackup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="667" column="8" selection-start-line="667" selection-start-column="8" selection-end-line="667" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity_latest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="649" column="8" selection-start-line="649" selection-start-column="8" selection-end-line="649" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivityPerfectWorkingCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="542" column="8" selection-start-line="542" selection-start-column="8" selection-end-line="542" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/GroupChatActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="554" column="8" selection-start-line="554" selection-start-column="8" selection-end-line="554" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/network/response/EventDetailsApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+          <folding>
+            <element signature="e#3922#3923#0" expanded="true" />
+            <element signature="e#3961#3962#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_details.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="319" column="55" selection-start-line="319" selection-start-column="55" selection-end-line="319" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/71b5d56ef501b7a0e54eb5e89b1856c0/jars/classes.jar!/com/google/android/gms/maps/model/LatLng.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="43" column="61" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/eventdetails/GeocodingLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="47" column="76" lean-forward="true" selection-start-line="47" selection-start-column="76" selection-end-line="47" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/base/BaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1584">
+          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/eventdetails/EventDetailsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7">
+          <caret line="86" column="7" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
+          <folding>
+            <element signature="e#4485#4652#0" expanded="true" />
+            <element signature="e#4651#4652#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/messages/RecentFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1084">
+          <caret line="388" column="9" lean-forward="true" selection-start-line="388" selection-start-column="9" selection-end-line="388" selection-end-column="9" />
+          <folding>
+            <element signature="e#12328#12329#0" expanded="true" />
+            <element signature="e#12359#12360#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/utils/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/changecreditcard/ChangeCreditCardWebViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="85" column="58" selection-start-line="85" selection-start-column="58" selection-end-line="85" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/25146f5fe2feed8351de5de0b9544212/jars/classes.jar!/android/support/v7/widget/RecyclerView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5420">
+          <caret line="4279" column="33" selection-start-line="4279" selection-start-column="33" selection-end-line="4279" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/profile/KidsProfile.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_list.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/ParentChild.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        <state relative-caret-position="-36">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/welcome/WelcomeActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/HomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="73" column="56" lean-forward="true" selection-start-line="73" selection-start-column="56" selection-end-line="73" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/home/AnnouncementAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/notification/NotificationListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+        <state relative-caret-position="15">
+          <caret line="621" column="21" lean-forward="true" selection-start-line="621" selection-start-column="21" selection-end-line="621" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -6490,113 +6317,171 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+        <state relative-caret-position="270">
+          <caret line="15" column="45" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListViewModel.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/base/OnItemClickListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
-          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/announcement/announcementviewmodel/AnnouncementListFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
+        <state relative-caret-position="392">
+          <caret line="337" column="76" selection-start-line="337" selection-start-column="76" selection-end-line="337" selection-end-column="76" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-192">
+          <caret line="100" column="68" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/network/response/KidsAndCoaches.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/network/response/Kid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/SettingsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="79" column="31" selection-start-line="79" selection-start-column="31" selection-end-line="79" selection-end-column="31" />
           <folding>
-            <element signature="e#3348#3971#0" expanded="true" />
-            <element signature="e#3970#3971#0" expanded="true" />
-            <element signature="e#4030#4257#0" expanded="true" />
-            <element signature="e#4256#4257#0" expanded="true" />
-            <element signature="e#4303#5442#0" expanded="true" />
-            <element signature="e#5441#5442#0" expanded="true" />
-            <element signature="e#5665#5666#0" expanded="true" />
-            <element signature="e#5518#5519#0" expanded="true" />
-            <element signature="e#5552#5553#0" expanded="true" />
-            <element signature="e#5738#5739#0" expanded="true" />
-            <element signature="e#5804#5805#0" expanded="true" />
+            <element signature="e#5966#6135#0" expanded="true" />
+            <element signature="e#6134#6135#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/notification/NotificationActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/player_profile_view_item.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="65" column="49" selection-start-line="65" selection-start-column="49" selection-end-line="65" selection-end-column="49" />
+        <state relative-caret-position="54">
+          <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+          <folding>
+            <element signature="e#349#364#0" expanded="true" />
+            <element signature="e#442#457#0" expanded="true" />
+            <element signature="e#488#503#0" expanded="true" />
+            <element signature="e#535#561#0" expanded="true" />
+            <element signature="e#829#844#0" expanded="true" />
+            <element signature="e#1027#1042#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_notification.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/profile/PlayerProfileWebViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/settings/PlayerProfileListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-126">
+          <caret line="70" column="5" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+          <folding>
+            <element signature="e#2570#2720#0" expanded="true" />
+            <element signature="e#2719#2720#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/VideoUploadTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="633" selection-start-line="633" selection-end-line="633" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_chat_other.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/circular_progress_bar.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
-          <caret line="25" column="54" selection-start-line="25" selection-start-column="54" selection-end-line="25" selection-end-column="54" />
+          <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/notification_item_view.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/circle_shape.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="52" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="52" />
+        <state relative-caret-position="126">
+          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/customview/ChatVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="243">
+          <caret line="207" column="19" selection-start-line="207" selection-start-column="19" selection-end-line="207" selection-end-column="19" />
           <folding>
-            <element signature="e#854#869#0" expanded="true" />
-            <element signature="e#1101#1117#0" expanded="true" />
+            <element signature="e#4896#5318#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/home_announcement_row_shimmer.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/chat_video_view.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="392">
+          <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="62" selection-end-column="41" />
           <folding>
-            <element signature="e#355#370#0" expanded="true" />
-            <element signature="e#458#473#0" expanded="true" />
-            <element signature="e#558#574#0" expanded="true" />
-            <element signature="e#603#618#0" expanded="true" />
-            <element signature="e#652#666#0" expanded="true" />
-            <element signature="e#598#614#0" expanded="true" />
+            <element signature="e#1986#2001#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_more_announcement.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/playerhub/ui/dashboard/chat/ChatRecyclerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-          <folding>
-            <element signature="e#926#941#0" expanded="true" />
-            <element signature="e#1306#1321#0" expanded="true" />
-            <element signature="e#1351#1373#0" expanded="true" />
-            <element signature="e#1456#1471#0" expanded="true" />
-            <element signature="e#1835#1850#0" expanded="true" />
-            <element signature="e#1894#1909#0" expanded="true" />
-            <element signature="e#2506#2546#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="241">
+          <caret line="453" column="9" selection-start-line="453" selection-start-column="9" selection-end-line="453" selection-end-column="9" />
         </state>
       </provider>
     </entry>

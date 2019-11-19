@@ -168,4 +168,9 @@ dependencies {
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
+    //File Download
+    implementation 'com.mindorks.android:prdownloader:0.5.0'
+
+    implementation 'com.dmitrymalkovich.android:progress-fab:1.6'
+
 }

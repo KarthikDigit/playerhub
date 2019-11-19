@@ -17,6 +17,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/event_top" />
+
+            <ImageView
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,8 +35,9 @@
 
             <TextView
                 fontPath="fonts/poppins_bold.ttf"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:padding="@dimen/_16sdp"
                 android:text="@string/announcement"
                 android:textColor="@color/white"
@@ -60,7 +68,7 @@
         android:id="@+id/multiStateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="#f4f4f4"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:msv_animateViewChanges="true"
         app:msv_emptyView="@layout/empty_view"
@@ -109,7 +117,8 @@
                 android:id="@+id/announcementView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false" />
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/_12sdp" />
 
 
         </android.support.v4.widget.SwipeRefreshLayout>

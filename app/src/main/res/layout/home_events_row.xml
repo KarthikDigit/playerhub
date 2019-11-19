@@ -8,6 +8,7 @@
     android:layout_marginTop="@dimen/_8sdp"
     android:layout_marginRight="@dimen/_16sdp"
     android:background="@drawable/bg_test"
+    android:clickable="true"
     android:elevation="@dimen/_2sdp"
     android:orientation="horizontal"
     android:padding="@dimen/_8sdp">
@@ -75,10 +76,10 @@
                 fontPath="fonts/poppins_medium.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="18 SEP"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                tools:text="18 SEP" />
 
             <TextView
                 android:id="@+id/txt_time"
@@ -86,10 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                tools:text="09:30 AM"
                 android:textAllCaps="true"
                 android:textFontWeight="600"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="09:30 AM" />
 
 
         </LinearLayout>
@@ -109,11 +110,11 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                tools:text="Euro Beach Soccer league 2018"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
-                android:transitionName="@string/transition_name" />
+                android:transitionName="@string/transition_name"
+                tools:text="Euro Beach Soccer league 2018" />
 
             <TextView
                 android:id="@+id/team_name"
@@ -134,9 +135,9 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:lines="1"
-                tools:text="Disney trip"
                 android:textSize="@dimen/_10ssp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:text="Disney trip" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,8 +160,8 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    tools:text="Orlando,FL,USA"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    tools:text="Orlando,FL,USA" />
 
             </LinearLayout>
 

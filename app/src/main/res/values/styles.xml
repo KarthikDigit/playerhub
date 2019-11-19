@@ -167,8 +167,8 @@
     </style>
 
     <style name="Button" parent="@style/Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/colorPrimary</item>
-        <!--<item name="cornerRadius">@dimen/_8sdp</item>-->
+        <item name="backgroundTint">@color/fab_color</item>
+        <item name="cornerRadius">@dimen/_8sdp</item>
     </style>
 
     <style name="textInputLayout1" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
@@ -256,17 +256,17 @@
     </style>
 
     <!--<style name="CustomTextAppearance" parent="TextAppearance.AppCompat.Medium">-->
-        <!--&lt;!&ndash;<item name="android:textColor">@color/yellow_500</item>&ndash;&gt;-->
-        <!--<item name="android:textColor">@color/mcv_text_date_light1</item>-->
-        <!--&lt;!&ndash;<item name="fontFamily">@font/shirkhand</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textColor">@color/yellow_500</item>&ndash;&gt;-->
+    <!--<item name="android:textColor">@color/mcv_text_date_light1</item>-->
+    <!--&lt;!&ndash;<item name="fontFamily">@font/shirkhand</item>&ndash;&gt;-->
     <!--</style>-->
-
 
 
     <style name="Theme_Dialog" parent="@style/Theme.AppCompat.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
+
     <style name="Theme_Dialog1" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -276,5 +276,12 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
+
+    <style name="AppTheme.Dialog" parent="AppTheme.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/dialog_background_scrim</item>
+        <!--<item name="android:windowAnimationStyle">@null</item>-->
+        <!--<item name="android:windowContentTransitions">true</item>-->
+    </style>
 
 </resources>

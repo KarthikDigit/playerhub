@@ -551,6 +551,11 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     }
 
     @Override
+    public void updateDownloadID(String msgID, String downloadID) {
+
+    }
+
+    @Override
     public void onSelectFromGalleryResult(Bitmap bitmap) {
 //        tempBitmap = bitmap;
 //

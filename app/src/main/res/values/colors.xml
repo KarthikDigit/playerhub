@@ -358,6 +358,12 @@
     <color name="fab_color">#DE3073</color>
     <color name="fab_color_alpha">#DE3073</color>
     <color name="shimmer_bg_color">#dddddd</color>
+    <color name="background_light">#fafafa</color>
+    <!--<color name="dialog_background_color">#ffffff</color>-->
+
+    <color name="fab_background_color">#FF4081</color>
+    <color name="dialog_background_color">#fafafa</color>
+    <color name="dialog_background_scrim">#99323232</color>
 
 
 </resources>

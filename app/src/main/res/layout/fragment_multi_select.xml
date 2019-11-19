@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f4f4f4"
     android:orientation="vertical"
     tools:context=".ui.dashboard.announcement.MultiSelectFragment">
 
@@ -20,6 +21,7 @@
 
             <Button
                 android:id="@+id/select_all"
+                fontPath="fonts/poppins_bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -34,6 +36,7 @@
 
             <Button
                 android:id="@+id/deselect_all"
+                fontPath="fonts/poppins_bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,12 +53,13 @@
             android:background="@color/line" />
 
         <TextView
+            fontPath="fonts/poppins_bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_16sdp"
+            android:padding="@dimen/_12sdp"
             android:text="Choose team"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
 
         <View
@@ -82,12 +86,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_4sdp"
         android:gravity="end"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/_4sdp">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/close"
@@ -97,6 +98,7 @@
             android:paddingTop="@dimen/_16sdp"
             android:paddingBottom="@dimen/_16sdp"
             android:text="@string/close"
+            android:textColor="@color/red_700"
             android:textSize="@dimen/_12sdp"
             android:visibility="visible" />
 

@@ -51,6 +51,7 @@
                     tools:text="Hello" />
 
                 <View
+                    android:id="@+id/line_view"
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -91,6 +92,8 @@
             android:layout_height="@dimen/_80sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:scaleX="0"
+            android:scaleY="0"
             app:backgroundTint="@color/fab_color"
             app:srcCompat="@drawable/ic_icon_fab_close" />
 

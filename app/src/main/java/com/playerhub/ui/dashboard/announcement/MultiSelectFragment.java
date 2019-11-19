@@ -1,8 +1,11 @@
 package com.playerhub.ui.dashboard.announcement;
 
 
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.playerhub.R;
@@ -67,6 +71,44 @@ public class MultiSelectFragment extends DialogFragment {
 
     }
 
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setStyle(DialogFragment.STYLE_NORMAL,
+//                android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+//    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        LayoutInflater inflater = getActivity().getLayoutInflater();
+//        View view = inflater.inflate(R.layout.fragment_add_event, null);
+//        builder.setView(view);
+//        Dialog dialog = builder.create();
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//        return dialog;
+
+//        // the content
+        final RelativeLayout root = new RelativeLayout(getActivity());
+        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
+        // creating the fullscreen dialog
+        final Dialog dialog = new Dialog(getActivity());
+
+//        dialog.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        dialog.setTitle("");
+        dialog.setContentView(root);
+        dialog.setCancelable(false);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        return dialog;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -194,9 +236,10 @@ public class MultiSelectFragment extends DialogFragment {
 
             if (team.isSelect) {
 
-                rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.colorPrimary));
+                rowViewHolder.name.setTextColor(Color.WHITE);
+                rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.fab_color));
             } else {
-
+                rowViewHolder.name.setTextColor(Color.GRAY);
                 rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.white));
 
             }
@@ -214,7 +257,7 @@ public class MultiSelectFragment extends DialogFragment {
 
                     if (team.isSelect) {
 
-                        rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.colorPrimary));
+                        rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.fab_color));
                     } else {
 
                         rowViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(rowViewHolder.itemView.getContext(), R.color.white));

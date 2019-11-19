@@ -537,4 +537,9 @@ public class ChatActivityPerfectWorkingCode extends BaseActivity implements Chat
 
 
     }
+
+    @Override
+    public void updateDownloadID(String msgID, String downloadID) {
+
+    }
 }

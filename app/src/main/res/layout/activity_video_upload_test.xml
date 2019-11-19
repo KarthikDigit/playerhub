@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.chat.VideoUploadTestActivity">
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/circle_shape"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular_progress_bar" />
+
 
     <Button
-
-        android:onClick="onUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_margin="@dimen/_68sdp"
+        android:onClick="fileDownload"
+        android:text="Download" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="onUpload"
+        android:text="Upload" />
 
 
 </RelativeLayout>

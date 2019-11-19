@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RunTestActivity extends AppCompatActivity {
+
+    private static final String TAG = "RunTestActivity";
 
     @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
@@ -64,11 +67,15 @@ public class RunTestActivity extends AppCompatActivity {
             }
         });
 
+        int redius= (int) getResources().getDimension(R.dimen._50sdp);
+
+        Log.e(TAG, "onCreate: "+redius );
+
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(button1)
                 .addSubActionView(button2)
                 .attachTo(floatingActionButton)
-                .setRadius(180)
+                .setRadius(redius)
                 .build();
 
 

@@ -113,7 +113,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
         final UpcommingEvent events = list.get(i);
 
+        eventsRow.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                if (onItemClickListener != null) {
+
+                    onItemClickListener.OnItemClick(view, events, i);
+                }
+
+            }
+        });
         if (!events.isEmptyView()) {
 
             eventsRow.rootView.setVisibility(View.VISIBLE);
@@ -157,17 +167,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsRow>
 
             eventsRow.name3.setText(events.getLocation());
 
-            eventsRow.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    if (onItemClickListener != null) {
-
-                        onItemClickListener.OnItemClick(view, events, i);
-                    }
-
-                }
-            });
 
 //            AnimUtils.setFadeAnimation(eventsRow.itemView);
         } else {

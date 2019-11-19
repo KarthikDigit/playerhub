@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,11 +21,21 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.downloader.Error;
+import com.downloader.OnDownloadListener;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
+import com.downloader.Status;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.playerhub.R;
+import com.playerhub.utils.ProgressUtils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class ChatVideoView extends FrameLayout {
 
@@ -32,10 +43,16 @@ public class ChatVideoView extends FrameLayout {
     ImageView videoView;
     @BindView(R.id.btn_play)
     ImageView btnPlay;
-//    @BindView(R.id.progress_bar)
+    //    @BindView(R.id.progress_bar)
 //    ProgressBar progressBar;
     @BindView(R.id.spin_kit)
     SpinKitView spinKitView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.progress_layout)
+    RelativeLayout progressLayout;
+
+    private String downloadID;
 
     public ChatVideoView(@NonNull Context context) {
         super(context);
@@ -104,10 +121,112 @@ public class ChatVideoView extends FrameLayout {
 
             btnPlay.setVisibility(GONE);
             spinKitView.setVisibility(VISIBLE);
+
         } else {
+
             btnPlay.setVisibility(VISIBLE);
             spinKitView.setVisibility(GONE);
+
         }
 
     }
+
+
+    public boolean checkFileAlreadyDownloaded(String url) {
+
+        String filename = url.substring(73, 111);
+        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + "video.mp4");
+
+        if (file.exists()) return true;
+
+        return false;
+    }
+
+    public String localVideoFilePath(String url) {
+
+        String filename = url.substring(73, 111);
+        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + "video.mp4");
+
+        return file.getPath();
+
+    }
+
+
+    public void setProgressBar(int progress) {
+
+        progressBar.setProgress(progress, true);
+        progressLayout.setVisibility(VISIBLE);
+        if (progress >= 100) progressLayout.setVisibility(GONE);
+
+    }
+
+    public void downloadFile(String url) {
+        String filename = url.substring(73, 111);
+        progressLayout.setVisibility(VISIBLE);
+        File file = progressLayout.getContext().getExternalCacheDir();
+        if (file != null) {
+            downloadID = String.valueOf(PRDownloader.download(url, file.getPath() + "/Playerhub/videos/", filename + "video.mp4")
+                    .build()
+                    .setOnProgressListener(new com.downloader.OnProgressListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onProgress(Progress progress) {
+
+                            progressBar.setMax((int) progress.totalBytes);
+                            progressBar.setProgress((int) progress.currentBytes, true);
+
+                        }
+                    })
+                    .start(new OnDownloadListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onDownloadComplete() {
+
+                            progressBar.setProgress(0, true);
+                            progressLayout.setVisibility(GONE);
+
+                        }
+
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onError(Error error) {
+
+                            Log.e(TAG, "onError: " + error.toString());
+
+                            progressBar.setProgress(0, true);
+                            progressLayout.setVisibility(GONE);
+
+                        }
+
+                    }));
+        }
+
+    }
+
+    public void pauseVideoDownload(String downloadID) {
+
+        PRDownloader.pause(Integer.parseInt(downloadID));
+
+    }
+
+    public void resumeVideoDownload(String downloadId, String url) {
+
+        Status status = PRDownloader.getStatus(Integer.parseInt(downloadId));
+        Log.e(TAG, "resumeVideoDownload: " + status.name());
+
+
+        if (Status.PAUSED == PRDownloader.getStatus(Integer.parseInt(downloadId))) {
+            PRDownloader.resume(Integer.parseInt(downloadId));
+            return;
+        }
+
+        downloadFile(url);
+
+        // PRDownloader.resume(Integer.parseInt(downloadId));
+    }
+
+    public String getDownloadID() {
+        return downloadID;
+    }
+
 }

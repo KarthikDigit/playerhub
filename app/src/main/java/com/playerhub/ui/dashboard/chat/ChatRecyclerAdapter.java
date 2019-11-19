@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -64,6 +65,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
@@ -76,17 +78,20 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder = new OtherChatViewHolder(viewChatOther);
                 break;
         }
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         if (TextUtils.equals(mChats.get(position).getSender(),
                 Preferences.INSTANCE.getMsgUserId())) {
             configureMyChatViewHolder((MyChatViewHolder) holder, position);
         } else {
             configureOtherChatViewHolder((OtherChatViewHolder) holder, position);
         }
+
     }
 
     private void configureMyChatViewHolder(final MyChatViewHolder myChatViewHolder, int position) {
@@ -138,7 +143,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View v) {
 
 
-                    ExoPlayerActivity.startActivity(v.getContext(), video_url);
+                    ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
 //                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
 
 //                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
@@ -199,7 +204,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void configureOtherChatViewHolder(final OtherChatViewHolder otherChatViewHolder, int position) {
-        Messages chat = mChats.get(position);
+        final Messages chat = mChats.get(position);
 
         String alphabet = chat.getName() != null && chat.getName().length() > 0 ? chat.getName().substring(0, 1) : "";
 
@@ -246,12 +251,57 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
             otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
 
+
+//            if (!TextUtils.isEmpty(chat.getDownloadId())) {
+//                boolean isAlreadyDownloaded = otherChatViewHolder.videoLayout.checkFileAlreadyDownloaded(video_url);
+//
+//                if (!isAlreadyDownloaded) {
+//
+//                    Log.e(TAG, "configureOtherChatViewHolder: called reuseme ");
+//
+//                    otherChatViewHolder.videoLayout.resumeVideoDownload(chat.getDownloadId(), video_url);
+//
+//
+//                }
+//            }
+
             otherChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    boolean isAlreadyDownloaded = otherChatViewHolder.videoLayout.checkFileAlreadyDownloaded(video_url);
+
+                    if (isAlreadyDownloaded) {
+
+                        ExoPlayerActivity.startActivity(v.getContext(), otherChatViewHolder.videoLayout.localVideoFilePath(video_url), true);
+
+                    } else {
+
+
+                        if (TextUtils.isEmpty(chat.getDownloadId())) {
+
+                            Log.e(TAG, "onClick: Downloading .....");
+
+
+                            otherChatViewHolder.videoLayout.downloadFile(video_url);
+                            ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
+
+                            String downloadId = otherChatViewHolder.videoLayout.getDownloadID();
+
+                            if (onImageClickListener != null)
+                                onImageClickListener.updateDownloadID(chat.getMsgId(), downloadId);
+
+                        } else {
+
+                            Log.e(TAG, "onClick: resume Called ");
+
+                            otherChatViewHolder.videoLayout.resumeVideoDownload(chat.getDownloadId(), video_url);
+                            ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
+
+                        }
+                    }
 //                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
-                    ExoPlayerActivity.startActivity(v.getContext(), video_url);
+//                    ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
 //                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
 //
 //                    VideoViewFragment viewFragment = VideoViewFragment.getInstance(video_url);
@@ -306,6 +356,36 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        if (holder instanceof OtherChatViewHolder) {
+
+            ((OtherChatViewHolder) holder).onViewAttachedToWindow();
+
+        } else if (holder instanceof MyChatViewHolder) {
+
+            ((MyChatViewHolder) holder).onViewAttachedToWindow();
+        }
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+
+        if (holder instanceof OtherChatViewHolder) {
+
+            ((OtherChatViewHolder) holder).onViewDetachedFromWindow();
+
+        } else if (holder instanceof MyChatViewHolder) {
+
+            ((MyChatViewHolder) holder).onViewDetachedFromWindow();
+        }
+    }
+
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
@@ -331,7 +411,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    private static class MyChatViewHolder extends RecyclerView.ViewHolder {
+    private class MyChatViewHolder extends RecyclerView.ViewHolder {
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
         private ImageView imageView;
         private ChatVideoView videoLayout;
@@ -344,9 +424,29 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             txtTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
         }
+
+        public void onViewDetachedFromWindow() {
+
+            if (!TextUtils.isEmpty(videoLayout.getDownloadID())) {
+                videoLayout.pauseVideoDownload(videoLayout.getDownloadID());
+            }
+
+        }
+
+
+        public void onViewAttachedToWindow() {
+
+            Messages messages = mChats.get(getAdapterPosition());
+
+            if (!TextUtils.isEmpty(videoLayout.getDownloadID())) {
+                videoLayout.resumeVideoDownload(videoLayout.getDownloadID(), messages.getVideo_url());
+            }
+
+        }
     }
 
-    private static class OtherChatViewHolder extends RecyclerView.ViewHolder {
+    private class OtherChatViewHolder extends RecyclerView.ViewHolder {
+
         private TextView txtChatMessage, txtUserAlphabet, txtTime;
         private ImageView imageView;
         private ChatVideoView videoLayout;
@@ -359,12 +459,33 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             txtChatMessage = (TextView) itemView.findViewById(R.id.text_view_chat_message);
             txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
         }
+
+
+        public void onViewDetachedFromWindow() {
+
+            if (!TextUtils.isEmpty(videoLayout.getDownloadID())) {
+                videoLayout.pauseVideoDownload(videoLayout.getDownloadID());
+            }
+
+        }
+
+
+        public void onViewAttachedToWindow() {
+            Messages messages = mChats.get(getAdapterPosition());
+            if (!TextUtils.isEmpty(videoLayout.getDownloadID())) {
+                videoLayout.resumeVideoDownload(videoLayout.getDownloadID(), messages.getVideo_url());
+            }
+        }
+
+
     }
 
 
     public interface OnImageClickListener {
 
         void onImageShow(String image_url);
+
+        void updateDownloadID(String msgID, String downloadID);
 
     }
 

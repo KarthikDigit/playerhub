@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.playerhub.customview.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/multiStateView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:msv_animateViewChanges="false"
+    app:msv_emptyView="@layout/empty_view"
+    app:msv_errorView="@layout/error_view"
+    app:msv_loadingView="@layout/loading_view"
+    app:msv_viewState="content"
+    tools:context=".ui.dashboard.myreceipt.MyReceiptActivity">
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp"
+        shimmer:duration="800">
+
+        <!-- Adding 3 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+            <include layout="@layout/my_receipt_item_view" />
+
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myReceiptListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</com.playerhub.customview.MultiStateView>

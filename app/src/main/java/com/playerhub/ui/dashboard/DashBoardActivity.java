@@ -49,6 +49,7 @@ import com.playerhub.ui.dashboard.home.HomeFragment;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsActivity;
 import com.playerhub.ui.dashboard.home.eventdetails.EventDetailsFragment;
 import com.playerhub.ui.dashboard.announcement.MoreAnnouncementFragment;
+import com.playerhub.ui.dashboard.home.homemvvm.HomeMVVMFragment;
 import com.playerhub.ui.dashboard.home.moreevent.EventsUpdatedFragment;
 import com.playerhub.ui.dashboard.home.moreevent.MoreEventsFragment;
 import com.playerhub.ui.dashboard.messages.Conversations;
@@ -313,7 +314,7 @@ public class DashBoardActivity extends BaseActivity implements Subject {
 
 
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new HomeFragment());
+        fragmentList.add(new HomeMVVMFragment());
 //        fragmentList.add(MoreEventsFragment.getInstance(true, true));
 //        fragmentList.add(new EventsFragment());
         fragmentList.add(new EventsUpdatedFragment());
