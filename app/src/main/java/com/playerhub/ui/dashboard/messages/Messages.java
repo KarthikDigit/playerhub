@@ -1,6 +1,8 @@
 package com.playerhub.ui.dashboard.messages;
 
-public class Messages {
+import java.io.Serializable;
+
+public class Messages implements Serializable {
 
 
     private String downloadId;
@@ -13,6 +15,9 @@ public class Messages {
     private String status;
     private long timestamp;
     private long upload_status;
+    private long percentage;
+    private String localFile;
+    private boolean isServerUpdated = false;
 
     public String getDownloadId() {
         return downloadId;
@@ -62,7 +67,6 @@ public class Messages {
         this.upload_status = upload_status;
     }
 
-
     public String getMsg() {
         return msg;
     }
@@ -93,5 +97,29 @@ public class Messages {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public long getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(long percentage) {
+        this.percentage = percentage;
+    }
+
+    public String getLocalFile() {
+        return localFile;
+    }
+
+    public void setLocalFile(String localFile) {
+        this.localFile = localFile;
+    }
+
+    public boolean isServerUpdated() {
+        return isServerUpdated;
+    }
+
+    public void setServerUpdated(boolean serverUpdated) {
+        isServerUpdated = serverUpdated;
     }
 }

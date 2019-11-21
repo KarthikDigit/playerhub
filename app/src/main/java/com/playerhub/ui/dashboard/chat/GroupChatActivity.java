@@ -1,13 +1,17 @@
 package com.playerhub.ui.dashboard.chat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +43,9 @@ import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.playerhub.R;
 import com.playerhub.cameraorgallery.CameraAndGallary;
+import com.playerhub.downloadservice.DownloadIntentService;
 import com.playerhub.network.RetrofitAdapter;
+import com.playerhub.network.response.ContactListApi;
 import com.playerhub.notification.Constants;
 import com.playerhub.preference.Preferences;
 import com.playerhub.ui.base.BaseActivity;
@@ -97,7 +103,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     private ChatRecyclerAdapter mChatRecyclerAdapter;
     private Conversations conversations = new Conversations();
     private static boolean isVideo = false;
-
+    private int chatUserPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +121,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         mRecyclerViewChat.setAdapter(mChatRecyclerAdapter);
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        chatUserPosition = getIntent().getIntExtra("position", -1);
         conversations = (Conversations) getIntent().getSerializableExtra("user");
 
         final List<String> users = new ArrayList<>(conversations.getUsers());
@@ -357,21 +363,21 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     }
 
 
-    private void sendMessages(String imageUrl) {
+    private void sendMessages(final String imageUrl) {
 
         String msg = comments.getText().toString();
 
 
         msg = TextUtils.isEmpty(msg) ? "" : msg;
 
-        Messages messages = new Messages();
+        final Messages messages = new Messages();
         messages.setMsg(msg);
 //        messages.setImg_url(imageUrl);
         if (!TextUtils.isEmpty(imageUrl)) {
 
 //            messages.setImg_url(imageUrl);
             if (isVideo) {
-                messages.setVideo_url(imageUrl);
+                messages.setLocalFile(imageUrl);
             } else {
                 messages.setImg_url(imageUrl);
             }
@@ -379,12 +385,13 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
         }
 
         showLoading();
-        isVideo = false;
+//        isVideo = false;
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         final String id = databaseReference.push().getKey();
 
 //        Messages messages = new Messages();
+        messages.setMsgId(id);
 
         messages.setName(Preferences.INSTANCE.getUserName());
 //        messages.setMsg(comments.getText().toString());
@@ -426,7 +433,9 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
                     comments.clearFocus();
 
                     KeyboardUtils.hideKeyboard(GroupChatActivity.this);
-                    sendPushNotificationToGroupUsers(finalMsg);
+
+                    if (!isVideo)
+                        sendPushNotificationToGroupUsers(finalMsg);
 
                 } else if (task.isCanceled()) {
 
@@ -436,6 +445,34 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
             }
         });
+
+
+        if (isVideo) {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    String token_Id = "";
+                    String userName = conversations.getTitle();
+
+                    int count = mChatRecyclerAdapter.getItemCount() - 1;
+                    Intent intent = new Intent(GroupChatActivity.this, UploadVideoService.class);
+                    intent.putExtra("tokenid", token_Id);
+                    intent.putExtra("name", userName);
+                    intent.putExtra("message", messages);
+                    intent.putExtra("isGroup", true);
+                    intent.putExtra("conversation", conversations);
+                    intent.putExtra("url", imageUrl);
+                    intent.putExtra("position", count);
+                    intent.putExtra("chatUserPosition", chatUserPosition);
+                    startService(intent);
+
+                }
+            }, 2000);
+
+
+        }
 
 
     }
@@ -556,6 +593,16 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     }
 
     @Override
+    public void downloadVideo(int position, String url) {
+
+        File file = getExternalCacheDir();
+        startService(DownloadIntentService
+                .getDownloadService(this, url, file.getPath().concat("/Playerhub/videos/"), position, chatUserPosition));
+
+
+    }
+
+    @Override
     public void onSelectFromGalleryResult(Bitmap bitmap) {
 //        tempBitmap = bitmap;
 //
@@ -569,7 +616,7 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
     @Override
     public void onVideo(File file) {
 
-        long maxLength = 20000000;
+        long maxLength = 50000000;
 
         if (file.length() > maxLength) {
             //failed length validation
@@ -577,9 +624,13 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
             showToast("Too big file, Please select less than 10MB Video file...");
 
         } else {
+
+            isVideo = true;
+
+            sendMessages(file.getPath());
             //continue
 //            uploadVideo(file);
-            compressVideo(file);
+//            compressVideo(file);
         }
 
     }
@@ -684,63 +735,110 @@ public class GroupChatActivity extends BaseActivity implements ChatRecyclerAdapt
 
         isVideo = true;
 
-        String name = new SimpleDateFormat("yyyyddMMHHmmss").format(new Date()) + "" + System.nanoTime();
-
-
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        final StorageReference videoRef = storageRef.child("videos").child(name);//storageRef.child("FolderToCreate").child("NameYoWantToAdd");
-// add File/URI
-
-
-        showLoading();
-
-//        videoRef = storageRef.child(name);
-        videoRef.putFile(Uri.fromFile(file))
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Upload succeeded
-
-                        hideLoading();
-
-                        file.delete();
-
-                        videoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                hideLoading();
-                                Log.e(TAG, "onSuccess: url " + uri.toString());
-//                Log.e(TAG, "onSuccess: " + uri.getPath());
-
-                                sendMessages(uri.toString());
-                            }
-                        });
-
-//                        Log.e(TAG, "onSuccess: " + taskSnapshot.getUploadSessionUri().getPath());
-
-//                        Toast.makeText(getApplicationContext(), "Upload Success...", Toast.LENGTH_SHORT).show();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Upload failed
-                        hideLoading();
-//                        Toast.makeText(getApplicationContext(), "Upload failed...", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnProgressListener(
-                new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        //calculating progress percentage
-//                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                        //displaying percentage in progress dialog
-//                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                    }
-                });
+//        String name = new SimpleDateFormat("yyyyddMMHHmmss").format(new Date()) + "" + System.nanoTime();
+//
+//
+//        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+//        final StorageReference videoRef = storageRef.child("videos").child(name);//storageRef.child("FolderToCreate").child("NameYoWantToAdd");
+//// add File/URI
+//
+//
+//        showLoading();
+//
+////        videoRef = storageRef.child(name);
+//        videoRef.putFile(Uri.fromFile(file))
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        // Upload succeeded
+//
+//                        hideLoading();
+//
+//                        file.delete();
+//
+//                        videoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                hideLoading();
+//                                Log.e(TAG, "onSuccess: url " + uri.toString());
+////                Log.e(TAG, "onSuccess: " + uri.getPath());
+//
+//                                sendMessages(uri.toString());
+//                            }
+//                        });
+//
+////                        Log.e(TAG, "onSuccess: " + taskSnapshot.getUploadSessionUri().getPath());
+//
+////                        Toast.makeText(getApplicationContext(), "Upload Success...", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception exception) {
+//                        // Upload failed
+//                        hideLoading();
+////                        Toast.makeText(getApplicationContext(), "Upload failed...", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnProgressListener(
+//                new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                        //calculating progress percentage
+////                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+//
+//                        //displaying percentage in progress dialog
+////                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+//                    }
+//                });
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                progressReceiver, new IntentFilter("download_progress"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver);
+    }
+
+    private BroadcastReceiver progressReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            long percentage = intent.getLongExtra("percentage", 0);
+            final long position = intent.getLongExtra("position", -1);
+            final long chatUserPos = intent.getLongExtra("chatUserPosition", -1);
+
+//            Log.e(TAG, "onReceive: " + percentage + " pos " + position);
+
+//            System.out.format("%d%% done of element position %d\n", percentage, position);
+
+
+            if (chatUserPosition != -1 && chatUserPosition == chatUserPos) {
+
+                if (mChatRecyclerAdapter.getAllItems() != null && mChatRecyclerAdapter.getAllItems().size() > 0) {
+
+
+                    if (mChatRecyclerAdapter.isThere((int) position)) {
+
+                        mChatRecyclerAdapter.getAllItems().get((int) position).setPercentage(percentage);
+                        mChatRecyclerAdapter.notifyItemChanged((int) position);
+
+                    }
+
+                }
+            }
+
+        }
+    };
 }

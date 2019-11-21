@@ -337,6 +337,15 @@
         <activity
             android:name=".ui.dashboard.profile.PlayerProfileWebViewActivity"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".downloadservice.DownloadIntentService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".ui.dashboard.chat.UploadVideoService"
+            android:exported="false" />
     </application>
 
 </manifest>

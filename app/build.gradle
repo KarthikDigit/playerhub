@@ -173,4 +173,5 @@ dependencies {
 
     implementation 'com.dmitrymalkovich.android:progress-fab:1.6'
 
+    implementation "android.arch.work:work-runtime:1.0.1"
 }

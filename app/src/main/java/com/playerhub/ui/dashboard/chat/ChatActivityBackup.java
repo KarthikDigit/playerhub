@@ -667,4 +667,9 @@ public class ChatActivityBackup extends BaseActivity implements ChatRecyclerAdap
     public void updateDownloadID(String msgID, String downloadID) {
 
     }
+
+    @Override
+    public void downloadVideo(int position, String url) {
+
+    }
 }

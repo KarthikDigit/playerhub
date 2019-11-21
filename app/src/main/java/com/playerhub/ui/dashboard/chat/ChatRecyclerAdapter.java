@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.playerhub.DownloadVideoImage;
 import com.playerhub.ExoPlayerActivity;
 import com.playerhub.R;
@@ -47,6 +48,7 @@ import java.util.Locale;
 
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private static final int VIEW_TYPE_ME = 1;
     private static final int VIEW_TYPE_OTHER = 2;
 
@@ -61,6 +63,21 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void add(Messages chat) {
         mChats.add(chat);
         notifyItemInserted(mChats.size() - 1);
+    }
+
+
+    public boolean isThere(int position) {
+
+
+        int count = mChats.size();
+
+        return position < count;
+
+    }
+
+    public List<Messages> getAllItems() {
+
+        return mChats;
     }
 
     @Override
@@ -134,27 +151,66 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final String video_url = chat.getVideo_url();
 
 
-        if (!TextUtils.isEmpty(video_url)) {
-            myChatViewHolder.videoLayout.loadImage(video_url);
+        final String local_file = chat.getLocalFile();
+
+
+        if (!TextUtils.isEmpty(local_file)) {
+
+//            Log.e(TAG, "configureMyChatViewHolder: " + position + " " + new Gson().toJson(chat));
+            myChatViewHolder.videoLayout.loadImage(local_file, true);
             myChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
             myChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+
+            myChatViewHolder.videoLayout.setProgressBar(chat.getPercentage());
+
             myChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    File file = new File(local_file);
 
-                    ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
-//                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
+                    if (file.exists()) {
 
-//                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
-//
-//                    VideoViewFragment viewFragment = VideoViewFragment.getInstance(video_url);
-//
-//                    viewFragment.show(manager, "Video");
+                        ExoPlayerActivity.startActivity(v.getContext(), local_file, true);
 
+                    } else {
 
+                        Toast.makeText(myChatViewHolder.videoLayout.getContext(), "This video may be deleted...", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             });
+
+
+        } else {
+
+            myChatViewHolder.videoLayout.setVisibility(View.GONE);
+        }
+
+
+//        if (!TextUtils.isEmpty(video_url)) {
+//            myChatViewHolder.videoLayout.loadImage(video_url);
+//            myChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+//            myChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+//            myChatViewHolder.videoLayout.setProgressBar(chat.getPercentage());
+//
+//            myChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//
+//                    ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
+////                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
+//
+////                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
+////
+////                    VideoViewFragment viewFragment = VideoViewFragment.getInstance(video_url);
+////
+////                    viewFragment.show(manager, "Video");
+//
+//
+//                }
+//            });
 
 //            new DownloadVideoImage(new DownloadVideoImage.OnImageDownloadCallback() {
 //                @Override
@@ -182,10 +238,10 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //                Log.e(TAG, "configureOtherChatViewHolder: " + throwable.getMessage());
 //            }
 
-        } else {
-
-            myChatViewHolder.videoLayout.setVisibility(View.GONE);
-        }
+//        } else {
+//
+//            myChatViewHolder.videoLayout.setVisibility(View.GONE);
+//        }
 
 
         String msg = chat.getMsg();
@@ -200,10 +256,15 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             myChatViewHolder.txtChatMessage.setVisibility(View.VISIBLE);
         }
 
+//        if (TextUtils.isEmpty(local_file) && TextUtils.isEmpty(video_url) && TextUtils.isEmpty(chat.getMsg())) {
+//
+//            myChatViewHolder.itemView.setVisibility(View.GONE);
+//
+//        }
 
     }
 
-    private void configureOtherChatViewHolder(final OtherChatViewHolder otherChatViewHolder, int position) {
+    private void configureOtherChatViewHolder(final OtherChatViewHolder otherChatViewHolder, final int position) {
         final Messages chat = mChats.get(position);
 
         String alphabet = chat.getName() != null && chat.getName().length() > 0 ? chat.getName().substring(0, 1) : "";
@@ -243,14 +304,44 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         final String video_url = chat.getVideo_url();
-
+        final String local_file = chat.getLocalFile();
+//
+//        if (!TextUtils.isEmpty(local_file)) {
+//
+//            otherChatViewHolder.videoLayout.loadImage(video_url);
+//            otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
+//            otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
+//
+//            otherChatViewHolder.videoLayout.setProgressBar(chat.getPercentage());
+//
+//            otherChatViewHolder.videoLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    File file = new File(local_file);
+//
+//                    if (file.exists()) {
+//
+//                        ExoPlayerActivity.startActivity(v.getContext(), otherChatViewHolder.videoLayout.localVideoFilePath(local_file), true);
+//
+//                    } else {
+//
+//                        Toast.makeText(otherChatViewHolder.videoLayout.getContext(), "This video may be deleted...", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//            });
+//
+//
+//        }
 
         if (!TextUtils.isEmpty(video_url)) {
 
-            otherChatViewHolder.videoLayout.loadImage(video_url);
+            otherChatViewHolder.videoLayout.loadImage(video_url, false);
             otherChatViewHolder.videoLayout.setVisibility(View.VISIBLE);
             otherChatViewHolder.videoLayout.layout(0, 0, 0, 0);
 
+            otherChatViewHolder.videoLayout.setProgressBar(chat.getPercentage());
 
 //            if (!TextUtils.isEmpty(chat.getDownloadId())) {
 //                boolean isAlreadyDownloaded = otherChatViewHolder.videoLayout.checkFileAlreadyDownloaded(video_url);
@@ -277,29 +368,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     } else {
 
+                        if (onImageClickListener != null)
+                            onImageClickListener.downloadVideo(position, video_url);
 
-                        if (TextUtils.isEmpty(chat.getDownloadId())) {
+                        ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
 
-                            Log.e(TAG, "onClick: Downloading .....");
-
-
-                            otherChatViewHolder.videoLayout.downloadFile(video_url);
-                            ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
-
-                            String downloadId = otherChatViewHolder.videoLayout.getDownloadID();
-
-                            if (onImageClickListener != null)
-                                onImageClickListener.updateDownloadID(chat.getMsgId(), downloadId);
-
-                        } else {
-
-                            Log.e(TAG, "onClick: resume Called ");
-
-                            otherChatViewHolder.videoLayout.resumeVideoDownload(chat.getDownloadId(), video_url);
-                            ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
-
-                        }
                     }
+
 //                    VideoPlayerActivity.startActivity(v.getContext(), video_url);
 //                    ExoPlayerActivity.startActivity(v.getContext(), video_url, false);
 //                    FragmentManager manager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
@@ -354,6 +429,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             otherChatViewHolder.txtChatMessage.setVisibility(View.VISIBLE);
         }
+
+//
+//        if (TextUtils.isEmpty(video_url) && TextUtils.isEmpty(chat.getMsg())) {
+//
+//            otherChatViewHolder.itemView.setVisibility(View.GONE);
+//
+//        }
     }
 
     @Override
@@ -486,6 +568,8 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         void onImageShow(String image_url);
 
         void updateDownloadID(String msgID, String downloadID);
+
+        void downloadVideo(final int position, String url);
 
     }
 

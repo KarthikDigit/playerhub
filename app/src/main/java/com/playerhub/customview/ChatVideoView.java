@@ -1,7 +1,9 @@
 package com.playerhub.customview;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -87,10 +89,11 @@ public class ChatVideoView extends FrameLayout {
     }
 
 
-    public void loadImage(String url) {
+    public void loadImage(String url, boolean isLocal) {
 
+//        Uri uri = Uri.fromFile(new File(url));
         showHideLoading(true);
-        Glide.with(getContext()).asBitmap().load(url)
+        Glide.with(getContext()).asBitmap().load(isLocal ? Uri.fromFile(new File(url)) : url)
                 .thumbnail(0.3f).apply(new RequestOptions())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -135,7 +138,7 @@ public class ChatVideoView extends FrameLayout {
     public boolean checkFileAlreadyDownloaded(String url) {
 
         String filename = url.substring(73, 111);
-        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + "video.mp4");
+        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + ".mp4");
 
         if (file.exists()) return true;
 
@@ -145,18 +148,20 @@ public class ChatVideoView extends FrameLayout {
     public String localVideoFilePath(String url) {
 
         String filename = url.substring(73, 111);
-        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + "video.mp4");
+        File file = new File(getContext().getExternalCacheDir().getPath() + "/Playerhub/videos/" + filename + ".mp4");
 
         return file.getPath();
 
     }
 
 
-    public void setProgressBar(int progress) {
+    @TargetApi(Build.VERSION_CODES.N)
+    public void setProgressBar(long progress) {
 
-        progressBar.setProgress(progress, true);
+        Log.e(TAG, "onReceive: " + progress);
+        progressBar.setProgress((int) progress, true);
         progressLayout.setVisibility(VISIBLE);
-        if (progress >= 100) progressLayout.setVisibility(GONE);
+        if (progress <= 0 || progress >= 100) progressLayout.setVisibility(GONE);
 
     }
 

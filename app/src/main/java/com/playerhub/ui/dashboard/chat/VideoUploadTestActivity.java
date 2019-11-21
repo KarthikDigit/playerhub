@@ -1,6 +1,7 @@
 package com.playerhub.ui.dashboard.chat;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.playerhub.R;
 import com.playerhub.Util;
+import com.playerhub.cameraorgallery.CameraAndGallary;
 import com.playerhub.ui.base.BaseActivity;
 import com.playerhub.utils.ProgressUtils;
 
@@ -37,10 +39,13 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VideoUploadTestActivity extends BaseActivity {
+public class VideoUploadTestActivity extends BaseActivity implements CameraAndGallary.CameraAndGallaryCallBack {
 
     private static final String TAG = "VideoUploadTestActivity";
     private static final int REQUEST_TAKE_VIDEO = 200;
@@ -50,62 +55,82 @@ public class VideoUploadTestActivity extends BaseActivity {
 
     private int downloadId = -1;
 
+
+    private CameraAndGallary cameraAndGallary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_upload_test);
         ButterKnife.bind(this);
+
+        cameraAndGallary = new CameraAndGallary(this, this);
     }
 
+    private static int count = 0;
 
     public void fileDownload(View view) {
 
-        String url = "https://firebasestorage.googleapis.com/v0/b/playerhub-prod.appspot.com/o/videos%2F20191811113621476779898270778?alt=media&token=d070c742-c368-4d8d-9924-4bf7fce0cce7";
 
-        String filename = url.substring(73, 111);
+        cameraAndGallary.callVideo();
 
-        Log.e(TAG, "fileDownload: " + filename);
+//        count++;
+//
+//        Data data = new Data.Builder()
+//                .putString(MyWorker.TASK_DESC, count + " The task data passed from MainActivity")
+//                .build();
+//
+//        final OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
+//                .setInputData(data)
+//                .build();
+//        WorkManager.getInstance().enqueue(workRequest);
 
-
-        File file = getExternalCacheDir();
-
-
-        if (Status.PAUSED == PRDownloader.getStatus(downloadId)) {
-            PRDownloader.resume(downloadId);
-            return;
-        }
-
-
-        if (file != null) {
-            downloadId = PRDownloader.download(url, file.getPath() + "/Playerhub/videos", "play.mp4")
-                    .build()
-                    .setOnProgressListener(new com.downloader.OnProgressListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onProgress(Progress progress) {
-
-                            progressBar1.setMax((int) progress.totalBytes);
-                            progressBar1.setProgress((int) progress.currentBytes, true);
-                            Log.e(TAG, "onProgress: " + progress.currentBytes + " " + progress.totalBytes);
-
-                        }
-                    })
-                    .start(new OnDownloadListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onDownloadComplete() {
-                            progressBar1.setProgress(0, true);
-                            ProgressUtils.hideProgress();
-                        }
-
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onError(Error error) {
-                            progressBar1.setProgress(0, true);
-                        }
-
-                    });
-        }
+//        String url = "https://firebasestorage.googleapis.com/v0/b/playerhub-prod.appspot.com/o/videos%2F20191811113621476779898270778?alt=media&token=d070c742-c368-4d8d-9924-4bf7fce0cce7";
+//
+//        String filename = url.substring(73, 111);
+//
+//        Log.e(TAG, "fileDownload: " + filename);
+//
+//
+//        File file = getExternalCacheDir();
+//
+//
+//        if (Status.PAUSED == PRDownloader.getStatus(downloadId)) {
+//            PRDownloader.resume(downloadId);
+//            return;
+//        }
+//
+//
+//        if (file != null) {
+//            downloadId = PRDownloader.download(url, file.getPath() + "/Playerhub/videos", "play.mp4")
+//                    .build()
+//                    .setOnProgressListener(new com.downloader.OnProgressListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onProgress(Progress progress) {
+//
+//                            progressBar1.setMax((int) progress.totalBytes);
+//                            progressBar1.setProgress((int) progress.currentBytes, true);
+//                            Log.e(TAG, "onProgress: " + progress.currentBytes + " " + progress.totalBytes);
+//
+//                        }
+//                    })
+//                    .start(new OnDownloadListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onDownloadComplete() {
+//                            progressBar1.setProgress(0, true);
+//                            ProgressUtils.hideProgress();
+//                        }
+//
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onError(Error error) {
+//                            progressBar1.setProgress(0, true);
+//                        }
+//
+//                    });
+//        }
 
 
     }
@@ -127,11 +152,11 @@ public class VideoUploadTestActivity extends BaseActivity {
 
     public void onUpload(View view) {
 
-        Intent takeVideoIntent = new Intent();
-        takeVideoIntent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
-        takeVideoIntent.setAction(Intent.ACTION_GET_CONTENT);
-        takeVideoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+//        Intent takeVideoIntent = new Intent();
+//        takeVideoIntent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
+//        takeVideoIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        takeVideoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
 
     }
 
@@ -140,28 +165,31 @@ public class VideoUploadTestActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_TAKE_VIDEO && resultCode == RESULT_OK) {
+        cameraAndGallary.onActivityResult(requestCode, resultCode, data);
 
-            if (data != null && data.getData() != null) {
-
-
-                String filePath = null;
-                try {
-                    filePath = Util.getFilePath(getApplicationContext(), data.getData());
-                    File file = new File(filePath);
-
-                    Log.e(TAG, "onActivityResult: " + filePath);
-
-                    uploadVideo(file);
-
-
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        }
+//        if (requestCode == REQUEST_TAKE_VIDEO && resultCode == RESULT_OK) {
+//
+//            if (data != null && data.getData() != null) {
+//
+//                String filePath = null;
+//
+//                try {
+//
+//                    filePath = Util.getFilePath(getApplicationContext(), data.getData());
+//                    File file = new File(filePath);
+//
+//                    Log.e(TAG, "onActivityResult: " + filePath);
+//
+//                    uploadVideo(file);
+//
+//
+//                } catch (URISyntaxException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//        }
 
     }
 
@@ -221,6 +249,28 @@ public class VideoUploadTestActivity extends BaseActivity {
 //                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                     }
                 });
+
+
+    }
+
+    @Override
+    public void onSelectFromGalleryResult(Bitmap bitmap) {
+
+    }
+
+
+    @Override
+    public void onVideo(File file) {
+
+
+        count++;
+
+        Log.e(TAG, "onVideo: " + file.getPath() + " " + count);
+
+//        Intent intent = new Intent(this, UploadVideoService.class);
+//        intent.putExtra("url", file.getPath());
+//        intent.putExtra("position", count);
+//        startService(intent);
 
 
     }

@@ -435,10 +435,11 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
 
         if (o instanceof User) {
 
-            callUserChat((User) o);
+            callUserChat((User) o, position);
+
         } else if (o instanceof ConversationsLayout) {
 
-            callGroupChat((ConversationsLayout) o);
+            callGroupChat((ConversationsLayout) o, position);
 
         }
 
@@ -446,17 +447,18 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
     }
 
 
-    private void callUserChat(User user) {
+    private void callUserChat(User user, int position) {
 
         Intent intent = new Intent(getContext(), ChatActivity.class);
 
         intent.putExtra("user", user);
+        intent.putExtra("position", position);
 
         startActivity(intent);
 
     }
 
-    private void callGroupChat(ConversationsLayout conversationsLayout) {
+    private void callGroupChat(ConversationsLayout conversationsLayout, int position) {
 
         Conversations conversations = new Conversations();
         conversations.setTitle(conversationsLayout.getTitle());
@@ -471,7 +473,7 @@ public class RecentFragment extends MessageBaseFragment implements OnRecyclerIte
         conversations.setIs_typing(conversationsLayout.getIs_typing());
 
         Intent intent = new Intent(getContext(), GroupChatActivity.class);
-
+        intent.putExtra("position", position);
         intent.putExtra("user", (Serializable) conversations);
 
         startActivity(intent);

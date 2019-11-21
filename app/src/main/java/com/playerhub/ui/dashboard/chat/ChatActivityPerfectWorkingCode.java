@@ -542,4 +542,9 @@ public class ChatActivityPerfectWorkingCode extends BaseActivity implements Chat
     public void updateDownloadID(String msgID, String downloadID) {
 
     }
+
+    @Override
+    public void downloadVideo(int position, String url) {
+
+    }
 }

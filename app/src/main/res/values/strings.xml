@@ -112,6 +112,7 @@
     <string name="title">title</string>
     <string name="description">description</string>
     <string name="my_receipt_title">My Receipt</string>
+    <string name="progress_uploading">Sending video to </string>
 
 
 </resources>

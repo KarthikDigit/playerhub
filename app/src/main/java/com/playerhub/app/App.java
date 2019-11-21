@@ -3,14 +3,21 @@ package com.playerhub.app;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.playerhub.R;
 import com.playerhub.notification.Constants;
@@ -26,12 +33,18 @@ import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
+import static com.google.android.exoplayer2.ExoPlayerLibraryInfo.TAG;
+
 public class App extends Application {
+
+    FirebaseAuth mAuth;// = FirebaseAuth.getInstance();
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
+        signInFirebase();
         // Enabling database for resume support even after the application is killed:
         PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
                 .setDatabaseEnabled(true)
@@ -81,6 +94,35 @@ public class App extends Application {
 
 
         Picasso.setSingletonInstance(getCustomPicasso());
+    }
+
+
+    private void signInFirebase() {
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            // do your stuff
+        } else {
+            signInAnonymously();
+        }
+
+    }
+
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+
+                Log.e(TAG, "onSuccess: " + authResult.getAdditionalUserInfo().getUsername());
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e(TAG, "signInAnonymously:FAILURE " + exception.getMessage());
+            }
+        });
     }
 
     private Picasso getCustomPicasso() {

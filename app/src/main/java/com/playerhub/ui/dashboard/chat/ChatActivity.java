@@ -5,8 +5,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.icu.util.Calendar;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,6 +59,7 @@ import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.playerhub.R;
 import com.playerhub.cameraorgallery.CameraAndGallary;
+import com.playerhub.downloadservice.DownloadIntentService;
 import com.playerhub.network.RetrofitAdapter;
 import com.playerhub.network.response.ContactListApi;
 import com.playerhub.notification.Constants;
@@ -124,6 +128,8 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     private Object user;
     private DatabaseReference databaseReference;
 
+    private int chatUserPosition = -1;
+
     private long messageCount = 0;
 
     @Override
@@ -148,6 +154,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
 
         user = getIntent().getSerializableExtra("user");
+        chatUserPosition = getIntent().getIntExtra("position", -1);
         showLoading();
 
         String title = "Chat";
@@ -273,9 +280,18 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                progressReceiver, new IntentFilter("download_progress"));
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         setIsTypingNone(databaseReference);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver);
     }
 
     private void setIsTypingYes(DatabaseReference databaseReference) {
@@ -427,7 +443,9 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
                 addMessageToList(dataSnapshot);
             }
+
         });
+
     }
 
 
@@ -635,7 +653,15 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
     }
 
-    private void sendMessages(String imageUrl) {
+    @Override
+    public void downloadVideo(int position, String url) {
+        File file = getExternalCacheDir();
+        startService(DownloadIntentService
+                .getDownloadService(this, url, file.getPath().concat("/Playerhub/videos/"), position, chatUserPosition));
+
+    }
+
+    private void sendMessages(final String imageUrl) {
         messageCount++;
 //        FirebaseDatabase.getInstance().getReference().child(Constants.ARG_CONVERSATION).keepSynced(true);
 
@@ -643,13 +669,13 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         msg = TextUtils.isEmpty(msg) ? "" : msg;
 
-        Messages messages = new Messages();
+        final Messages messages = new Messages();
         messages.setMsg(msg);
 //        messages.setImg_url(imageUrl);
         if (!TextUtils.isEmpty(imageUrl)) {
 
             if (isVideo) {
-                messages.setVideo_url(imageUrl);
+                messages.setLocalFile(imageUrl);
             } else {
                 messages.setImg_url(imageUrl);
             }
@@ -663,7 +689,7 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
         showLoading();
 
-        isVideo = false;
+//        isVideo = false;
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -767,60 +793,100 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
             }
         });
 
+        if (isVideo) {
 
-        if (user instanceof ContactListApi.Datum) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    String token_Id = "";
+                    String userName = "";
+                    if (user instanceof ContactListApi.Datum) {
+                        ContactListApi.Datum datum = (ContactListApi.Datum) user;
+                        token_Id = datum.getTokenId();
+                        userName = datum.getName();
+                    } else if (user instanceof User) {
+                        User user1 = (User) user;
+                        token_Id = user1.token_id;
+                        userName = user1.name;
+                    }
+
+                    int count = mChatRecyclerAdapter.getItemCount() - 1;
+                    Intent intent = new Intent(ChatActivity.this, UploadVideoService.class);
+                    intent.putExtra("tokenid", token_Id);
+                    intent.putExtra("name", userName);
+                    intent.putExtra("isGroup", false);
+                    intent.putExtra("message", messages);
+                    intent.putExtra("conversation", conversations);
+                    intent.putExtra("url", imageUrl);
+                    intent.putExtra("position", count);
+                    intent.putExtra("chatUserPosition", chatUserPosition);
+                    startService(intent);
+
+                }
+            }, 2000);
+
+
+        }
+
+        if (!isVideo) {
+
+            if (user instanceof ContactListApi.Datum) {
 
 //            showToast("Test");
 
-            ContactListApi.Datum datum = (ContactListApi.Datum) user;
+                ContactListApi.Datum datum = (ContactListApi.Datum) user;
 
-            String token_Id = datum.getTokenId();
+                String token_Id = datum.getTokenId();
 
-            if (token_Id != null) {
+                if (token_Id != null) {
 
-                String m = comments.getText().toString();
+                    String m = comments.getText().toString();
 
-                if (TextUtils.isEmpty(m)) {
+                    if (TextUtils.isEmpty(m)) {
 
-                    m = "You have a message from " + datum.getName();
-                }
+                        m = "You have a message from " + datum.getName();
+                    }
 
 //                sendPushMessage(datum.getName(), m, token_Id);
 
-                byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
+                    byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
 
-                sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
+                    sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
 
-            }
+                }
 
 //            else {
 //
 //                showToast("There is no token id");
 //            }
 
-        } else if (user instanceof User) {
+            } else if (user instanceof User) {
 
-            User user1 = (User) user;
-
-            String token_Id = user1.token_id;
-
-            if (token_Id != null && !TextUtils.isEmpty(token_Id)) {
+                User user1 = (User) user;
 
 
-                String m = comments.getText().toString();
+                String token_Id = user1.token_id;
 
-                if (TextUtils.isEmpty(m)) {
+                if (token_Id != null && !TextUtils.isEmpty(token_Id)) {
 
-                    m = "You have a message from " + user1.name;
+
+                    String m = comments.getText().toString();
+
+                    if (TextUtils.isEmpty(m)) {
+
+                        m = "You have a message from " + user1.name;
+                    }
+
+                    byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
+
+                    sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
+
                 }
 
-                byte[] decodeValue = Base64.decode(Preferences.INSTANCE.getMsgUserId(), Base64.DEFAULT);
-
-                sendPushMessage(Preferences.INSTANCE.getUserName(), m, Long.parseLong(new String(decodeValue)), token_Id);
-
             }
-
         }
+        isVideo = false;
 
     }
 
@@ -927,18 +993,37 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
     @Override
     public void onVideo(File file) {
 
-//        long maxLength = 20000000;
+
+        long maxLength = 50000000;
+
+        if (file.length() > maxLength) {
+            //failed length validation
+
+            showToast("Video file is too big, Please select less than 50MB Video file...");
+
+        } else {
+
+            isVideo = true;
+
+            sendMessages(file.getPath());
+
+//            continue
+//                    uploadVideo (file);
+//            compressVideo(file);
+        }
+
+//        Messages messages = new Messages();
+//        messages.setVideo_url("test");
 //
-//        if (file.length() > maxLength) {
-//            //failed length validation
+//        mChatRecyclerAdapter.add(messages);
 //
-//            showToast("Too big file, Please select less than 10MB Video file...");
+//        int count = mChatRecyclerAdapter.getItemCount() - 1;
 //
-//        } else {
-        //continue
-        uploadVideo(file);
-//        compressVideo(file);
-//        }
+//        Intent intent = new Intent(this, UploadVideoService.class);
+//        intent.putExtra("conversation", conversations);
+//        intent.putExtra("url", file.getPath());
+//        intent.putExtra("position", count);
+//        startService(intent);
 
 
     }
@@ -1106,4 +1191,37 @@ public class ChatActivity extends ChatBaseActivity implements ChatRecyclerAdapte
 
 
     }
+
+
+    private BroadcastReceiver progressReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            long percentage = intent.getLongExtra("percentage", 0);
+            final long position = intent.getLongExtra("position", -1);
+            final long chatUserPos = intent.getLongExtra("chatUserPosition", -1);
+
+//            Log.e(TAG, "onReceive: " + percentage + " pos " + position);
+
+//            System.out.format("%d%% done of element position %d\n", percentage, position);
+
+
+            if (chatUserPosition != -1 && chatUserPosition == chatUserPos) {
+
+                if (mChatRecyclerAdapter.getAllItems() != null && mChatRecyclerAdapter.getAllItems().size() > 0) {
+
+
+                    if (mChatRecyclerAdapter.isThere((int) position)) {
+
+                        mChatRecyclerAdapter.getAllItems().get((int) position).setPercentage(percentage);
+                        mChatRecyclerAdapter.notifyItemChanged((int) position);
+
+                    }
+
+                }
+            }
+
+        }
+    };
 }

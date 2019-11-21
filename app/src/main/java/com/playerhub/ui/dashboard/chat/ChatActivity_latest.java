@@ -651,6 +651,11 @@ public class ChatActivity_latest extends ChatBaseActivity implements ChatRecycle
     }
 
     @Override
+    public void downloadVideo(int position, String url) {
+
+    }
+
+    @Override
     public void onSelectFromGalleryResult(Bitmap bitmap) {
 
 
